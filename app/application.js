@@ -17,6 +17,9 @@ Matsi.run(['$rootScope', function($rootScope) {
   $rootScope.moment = window.moment;
 }]);
 
+if(window.location.toString().indexOf('#&__firebase_request_key')>-1)
+  window.location = '/';
+
 Matsi.config(['$stateProvider', '$urlRouterProvider','$locationProvider', function($stateProvider, $urlRouterProvider, $locationProvider) {
 
   $locationProvider.html5Mode(true);

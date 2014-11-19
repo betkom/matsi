@@ -6,7 +6,6 @@ angular.module("matsi.directives", ['firebase','ngCookies'])
        function($rootScope, $scope, $firebase, $cookies) {
         var rootRef = new Firebase($cookies.rootRef);
         var usersRef = rootRef.child('users');
-        var welcomeRef = rootRef.child('welcome');
 
         // Start with no user logged in
         $rootScope.currentUser = null;
@@ -17,26 +16,32 @@ angular.module("matsi.directives", ['firebase','ngCookies'])
           if(authData) {
             console.log("auth: user is logged in");
             var user = buildUserObjectFromGoogle(authData);
-
+            $rootScope.currentUser = user;
             var userRef = usersRef.child(user.uid);
             userRef.on('value', function(snap) {
               if(!snap.val()) {
                 user.created = Firebase.ServerValue.TIMESTAMP;
+                user.isAdmin = false;
+                user.isMentor = false;
+                user.isFellow = user.email.indexOf('@andela.co')>-1;
+                user.disabled = !user.isFellow;
                 userRef.set(user);
-                welcomeRef.child(user.uid).set(user);
-                analytics.track('Signup');
+                $rootScope.currentUser = user;
+                //welcomeRef.child(user.uid).set(user);
+                //analytics.track('Signup');
               }
+              else
+                  $rootScope.currentUser = snap.val();
             });
 
             // indicate to the rest of the app that we're logged in
-            $rootScope.currentUser = user;
-
-            analytics.identify(user.uid, {
-              name: user.name,
-              firstName: user.firstName,
-              lastName: user.lastName,
-              email: user.email
-            });
+           
+            // analytics.identify(user.uid, {
+            //   name: user.name,
+            //   firstName: user.firstName,
+            //   lastName: user.lastName,
+            //   email: user.email
+            // });
           }
           else {
             // user is logged out
@@ -46,7 +51,7 @@ angular.module("matsi.directives", ['firebase','ngCookies'])
         });
 
         $scope.login = function() {
-          analytics.track('Login');
+          //analytics.track('Login');  
           options = { remember: true, scope: "email" };
           rootRef.authWithOAuthRedirect("google", function(err, authData) {
             if(err) {
