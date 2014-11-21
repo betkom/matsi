@@ -15,6 +15,7 @@ var browserify = require('browserify'),
     streamify = require('gulp-streamify'),
     stringify = require('stringify'),
     uglify = require('gulp-uglify'),
+    karma = require('gulp-karma'),
     watchify = require('watchify');
 
 var paths = {
@@ -23,6 +24,24 @@ var paths = {
   scripts: 'app/**/*.js',
   styles: 'app/styles/*.+(less|css)'
 }
+
+var testFiles = [
+  'test-main.js',
+  'public/lib/angular/angular.js',
+  'public/lib/angular-mocks/angular-mocks.js',
+  'public/lib/moment/moment.js',
+  'public/lib/angular-material/angular-material.js',
+  'public/lib/angular-route/angular-route.js',
+  'public/lib/angular-cookies/angular-cookies.js',
+  'public/lib/angular-bootstrap/ui-bootstrap.js',
+  'public/lib/angular-animate/angular-animate.js',
+  'public/lib/angular-sanitize/angular-sanitize.js',
+  'public/lib/angularfire/dist/angularfire.js',
+  'public/lib/firebase/firebase.js',
+  'public/js/index.js',
+  'app/test/controller.js'
+];
+
 gulp.task('jade', function() {
   gulp.src('./app/**/*.jade')
     .pipe(jade())
@@ -48,19 +67,6 @@ gulp.task('nodemon', function () {
     .on('restart', function () {
       console.log('>> node restart');
     })
-});
-
-gulp.task('test', function() {
-  // Be sure to return the stream
-  return gulp.src(testFiles)
-    .pipe(karma({
-      configFile: 'karma.conf2.js',
-      action: 'run'
-    }))
-    .on('error', function(err) {
-      // Make sure failed tests cause gulp to exit non-zero
-      throw err;
-    });
 });
 
 
@@ -99,6 +105,20 @@ gulp.task('usemin', function() {
     }))
     .pipe(gulp.dest('public'));
 });
+
+gulp.task('test', function() {
+// Be sure to return the stream
+return gulp.src(testFiles)
+  .pipe(karma({
+    configFile: 'karma.conf.js',
+    action: 'run'
+  }))
+  .on('error', function(err) {
+    // Make sure failed tests cause gulp to exit non-zero
+    //throw err;
+  });
+});
+
 
 
 

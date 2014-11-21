@@ -1,17 +1,17 @@
 angular.module("matsi.services", ['firebase','ngCookies'])
 
-.factory('',['$firebase','$cookies',function($firebase,$cookies){
-	// var rootRef = new Firebase($cookies.rootRef);
-	// console.log($cookies);
-	// return {
+.factory('FellowService',['$firebase','$cookies',function($firebase,$cookies){
+	var rootRef = new Firebase($cookies.rootRef);
+	console.log($cookies);
+	return {
 
 	// 	create:function(stuff){
 	// 		rootRef.child('stuff').push(stuff);
 	// 	},
-	// 	read: function()
-	// 	{
-	// 		return $firebase(rootRef.child('stuff')).$asArray();
-	// 	},
+		readFellow: function()
+		{
+			return $firebase(rootRef.child('users').orderBy('role').equalTo('-fellow-')).$asArray();
+		}
 	// 	createItems:function(item){
 	// 		rootRef.child('item').push(item);
 	// 	},
@@ -19,5 +19,5 @@ angular.module("matsi.services", ['firebase','ngCookies'])
 	// 	{
 	// 		return $firebase(rootRef.child('item').child(' -Jb6cvofk70B9T-T6bzP')).$asArray();
 	// 	}
-	// }
+	 };
 }]);
