@@ -1,7 +1,7 @@
 {
-  "name": "skilltree.andela.co",
-  "version": "0.0.1",
-  "description": "",
+  "name": "MATSi",
+  "version": "0.0.2",
+  "description": "Fellows, Ninjas and Mentors applications and placement engine",
   "main": "index.js",
   "engines": {
     "node": "0.10.31",
@@ -13,7 +13,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/obie/ahhlife.com"
+    "url": "https://github.com/andela-tkomolafe/matsi1"
   },
   "author": "Andela",
   "license": "Proprietary",
@@ -29,6 +29,8 @@
     "uglifyify": "^2.5.0"
   },
   "dependencies": {
+    "angular":"1.3.*",
+    "nodemailer":"1.*.*",
     "body-parser": "^1.9.0",
     "brfs": "1.0.2",
     "browserify": "^5.12.0",

@@ -2,8 +2,8 @@ angular.module("matsi.directives", ['firebase','ngCookies'])
   .directive('header', function() {
     return {
       restrict: 'E',
-      controller: ['$rootScope', '$scope', '$firebase', '$cookies',
-       function($rootScope, $scope, $firebase, $cookies) {
+      controller: ['$rootScope', '$scope', '$firebase', '$cookies','$http',
+       function($rootScope, $scope, $firebase, $cookies,$http) {
         var rootRef = new Firebase($cookies.rootRef);
         var usersRef = rootRef.child('users');
 
@@ -24,6 +24,11 @@ angular.module("matsi.directives", ['firebase','ngCookies'])
                 user.isAdmin = false;
                 user.isMentor = false;
                 user.isFellow = user.email.indexOf('@andela.co')>-1;
+                //mail.sendMail(1,user);
+              $http.post('mail/user/'+1,{params:user}).success(function (r) {
+
+               }) ;
+
                 user.disabled = !user.isFellow;
                 userRef.set(user);
                 $rootScope.currentUser = user;
