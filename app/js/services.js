@@ -10,7 +10,7 @@ angular.module("matsi.services", ['firebase','ngCookies'])
 	// 	},
 		readFellow: function()
 		{
-			return $firebase(rootRef.child('users').orderBy('role').equalTo('-fellow-')).$asArray();
+			return $firebase(rootRef.child('users').orderByChild('role').equalTo('-fellow-')).$asArray();
 		}
 	// 	createItems:function(item){
 	// 		rootRef.child('item').push(item);

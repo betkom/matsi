@@ -26,6 +26,7 @@ function run(appdir) {
 	app.use(express.static(app.dir + '/public'));
 
 	app.get('/*',function(req,res){
+		console.log(req.body);
 		res.sendFile('index.html',{root:'./public/'});
 	});
 	// Standard error handling
