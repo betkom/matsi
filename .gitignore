@@ -40,3 +40,5 @@ public/shared
 public/index.html
 
 export_*
+
+.idea/

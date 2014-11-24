@@ -1,7 +1,6 @@
 require("./js/controllers.js");
 require("./js/directives.js");
 require("./js/services.js");
-
 window.Matsi = angular.module("Matsi", [
   'matsi.controllers',
   'matsi.services',
