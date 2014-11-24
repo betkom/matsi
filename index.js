@@ -49,7 +49,6 @@ function run(appdir) {
 			to: 'terwase.gberikon@andela.co', // list of receivers
 			subject: 'Hello ✔', // Subject line
 			text: 'This is a mail from Case 1', // plaintext body
-			//html: '<b>Hello world ✔</b>' // html body
 		};
 
 		// send mail with defined transport object

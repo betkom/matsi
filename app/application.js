@@ -31,6 +31,14 @@ Matsi.config(['$stateProvider', '$urlRouterProvider','$locationProvider', functi
         access: 'public'
       }
     })
+    .state('editMentor', {
+      url:'/editMentor',
+      templateUrl: 'pages/editMentor.html',
+      controller: 'MentorController',
+      data: {
+        access: 'private'
+      }
+    })
      .state('settings', {
       url: '/settings',
       templateUrl: 'pages/settings.html',
@@ -39,6 +47,7 @@ Matsi.config(['$stateProvider', '$urlRouterProvider','$locationProvider', functi
         access: 'private'
       }
     });
+
 }]);
 
 
