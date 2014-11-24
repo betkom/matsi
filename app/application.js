@@ -31,6 +31,14 @@ Matsi.config(['$stateProvider', '$urlRouterProvider','$locationProvider', functi
       data: {
         access: 'public'
       }
+    }) 
+    .state('fellowProfile', {
+      url: '/fellowProfile',
+      templateUrl: 'pages/updateFellowProfile.html',
+      controller: 'FellowController',
+      data: {
+        access: 'private'
+      }
     })
      .state('settings', {
       url: '/settings',

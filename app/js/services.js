@@ -4,10 +4,10 @@ angular.module("matsi.services", ['firebase','ngCookies'])
 	var rootRef = new Firebase($cookies.rootRef);
 	// console.log($cookies);
 	return {
-
-	// 	create:function(stuff){
-	// 		rootRef.child('stuff').push(stuff);
-	// 	},
+	updateFellow:function(fellowData,currentUID){
+			console.log(currentUID);
+			rootRef.child('users').child(currentUID).update(fellowData);
+	},
 	readFellow: function(){
 		return $firebase(rootRef.child('users').orderByChild('role').equalTo('-fellow-')).$asArray();
 	}

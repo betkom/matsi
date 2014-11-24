@@ -4,6 +4,18 @@ angular.module("matsi.controllers", ['firebase','ngCookies'])
 
 
 }])
+.controller("FellowController",['$rootScope', '$scope', '$firebase', '$cookies', 'FellowService',
+       function($rootScope, $scope, $firebase, $cookies, FellowService) {
+      var rootRef = new Firebase($cookies.rootRef);
+      $scope.rootRef = new Firebase($cookies.rootRef);
+
+    $scope.fellowData = {};
+    // console.log( $rootScope.currentUser.uid);
+    $scope.submitFellow = function(data){
+    FellowService.updateFellow(data,$rootScope.currentUser.uid);
+  };
+
+}])
 .controller("MainCtrl",['$rootScope', '$scope', '$firebase', '$cookies', 'FellowService',
        function($rootScope, $scope, $firebase, $cookies, FellowService) {
         
@@ -57,10 +69,10 @@ angular.module("matsi.controllers", ['firebase','ngCookies'])
           window.location.pathname = "/";
         };
 
-        $scope.fellowData =  FellowService.readFellow();
-        console.log(typeof $scope.fellowData);
-        console.log($scope.fellowData);
-        console.log($scope.fellowData.length);
+        // $scope.readFellowData =  FellowService.readFellow();
+        // console.log(typeof $scope.fellowData);
+        // // console.log($scope.fellowData);
+        // console.log($scope.fellowData.length);
       }]);
 
 function buildUserObjectFromGoogle(authData) {
