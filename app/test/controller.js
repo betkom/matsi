@@ -29,8 +29,21 @@ describe('Testing 001', function(){
 		console.log(fellowData);
 		expect(typeof fellowData).toEqual('object');
 	});
-	it('should be equal', function(){
+	it('should be an object', function(){
 		var mentorData = MentorService.readMentor();
 		expect(typeof mentorData).toEqual('object');
-	}); 
+	});
+	
+	var mentor = {
+		name: 'kenny',
+		email: 'kenny@yahoo.com',
+		uid: '872862926098'
+	};
+
+	it('should update a mentor', function(){
+		MentorService.updateMentor(mentor, mentor.uid);
+		expect(mentor.name).not.toBeUndefined();
+		expect(mentor.name).toEqual('kenny');
+		expect(mentor.email).toMatch(/*.\@\.*/);
+	});
 });
