@@ -57,7 +57,10 @@ angular.module("matsi.controllers", ['firebase','ngCookies'])
           window.location.pathname = "/";
         };
 
-        $scope.fellowData =  FellowService.read();
+        $scope.fellowData =  FellowService.readFellow();
+        console.log(typeof $scope.fellowData);
+        console.log($scope.fellowData);
+        console.log($scope.fellowData.length);
       }]);
 
 function buildUserObjectFromGoogle(authData) {

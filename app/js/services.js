@@ -2,16 +2,15 @@ angular.module("matsi.services", ['firebase','ngCookies'])
 
 .factory('FellowService',['$firebase','$cookies',function($firebase,$cookies){
 	var rootRef = new Firebase($cookies.rootRef);
-	console.log($cookies);
+	// console.log($cookies);
 	return {
 
 	// 	create:function(stuff){
 	// 		rootRef.child('stuff').push(stuff);
 	// 	},
-		readFellow: function()
-		{
-			return $firebase(rootRef.child('users').orderBy('role').equalTo('-fellow-')).$asArray();
-		}
+	readFellow: function(){
+		return $firebase(rootRef.child('users').orderByChild('role').equalTo('-fellow-')).$asArray();
+	}
 	// 	createItems:function(item){
 	// 		rootRef.child('item').push(item);
 	// 	},
