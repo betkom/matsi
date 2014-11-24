@@ -2,12 +2,19 @@ angular.module("matsi.controllers", ['firebase', 'ngCookies'])
     .controller('HomeController', ['$rootScope', '$scope', '$mdSidenav', '$location', '$state', 'FellowService',
         function($rootScope, $scope, $mdSidenav, $location, $state, FellowService) {
 
-            $scope.hello = function() {
-                alert("CLICKED!!");
-            }
-        }
-    ])
-    .controller("MainCtrl", ['$rootScope', '$scope', '$firebase', '$cookies', 'FellowService',
+}])
+.controller("FellowController",['$rootScope', '$scope', '$firebase', '$cookies', 'FellowService',
+       function($rootScope, $scope, $firebase, $cookies, FellowService) {
+      var rootRef = new Firebase($cookies.rootRef);
+      $scope.rootRef = new Firebase($cookies.rootRef);
+
+    $scope.fellowData = {};
+    $scope.submitFellow = function(data){
+    FellowService.updateFellow(data,$rootScope.currentUser.uid);
+  };
+
+}]) 
+.controller("MainCtrl", ['$rootScope', '$scope', '$firebase', '$cookies', 'FellowService',
         function($rootScope, $scope, $firebase, $cookies, FellowService) {
 
             var rootRef = new Firebase($cookies.rootRef);
@@ -40,7 +47,6 @@ angular.module("matsi.controllers", ['firebase', 'ngCookies'])
                     $rootScope.currentUser = null;
                 }
             });
-
             $scope.login = function() {
                 //analytics.track('Login');  
                 options = {
@@ -60,12 +66,6 @@ angular.module("matsi.controllers", ['firebase', 'ngCookies'])
                 rootRef.unauth();
                 window.location.pathname = "/";
             };
-
-            $scope.fellowData = FellowService.readFellow();
-
-            console.log(typeof $scope.fellowData);
-            console.log($scope.fellowData);
-            console.log($scope.fellowData.length);
         }
     ])
     .controller("MentorController", ['$rootScope', '$scope', '$firebase', '$cookies', 'MentorService',
@@ -82,8 +82,6 @@ angular.module("matsi.controllers", ['firebase', 'ngCookies'])
 
         }
     ]);
-
-
 function buildUserObjectFromGoogle(authData) {
     return {
         uid: authData.uid,
