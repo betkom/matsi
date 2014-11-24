@@ -25,14 +25,16 @@ function run(appdir) {
 	// static files
 	app.use(express.static(app.dir + '/public'));
 	var sendMail = function(emailAddress,emailBody,callback) {
-
 	};
 
 	app.use(bodyParser.urlencoded({ extended: true }));
 
-
 	app.post('/mail/user/:type',function(req, res){
-
+		var type = req.params.type;
+		//var emailAddress,emailBody;
+		var _res = req.body;
+		_res.type= type;
+		var user = req.body.user;
 		// create reusable transporter object using SMTP transport
 		var transporter = nodemailer.createTransport({
 			service: "Gmail",
@@ -41,13 +43,15 @@ function run(appdir) {
 				pass: "p87654321"
 			}
 		});
+		// create email options
 		var mailOptions = {
 			from: 'Andela ✔ <1testertest1@gmail.com>', // sender address
 			to: 'terwase.gberikon@andela.co', // list of receivers
 			subject: 'Hello ✔', // Subject line
-			text: 'Hello world ✔ yyy', // plaintext body
+			text: 'This is a mail from Case 1', // plaintext body
 			//html: '<b>Hello world ✔</b>' // html body
 		};
+
 		// send mail with defined transport object
 		transporter.sendMail(mailOptions, function(e, i){
 			if(e){
@@ -56,32 +60,7 @@ function run(appdir) {
 				console.log('Message sent: ' + i.response);
 			}
 		});
-
-
-		var type = req.params.type;
-		var emailAddress,emailBody;
-		var _res = req.body;
-		_res.type= type;
-
 		res.status(200).send(_res);
-		if(true)
-			return;
-		var user = req.body.user;
-
-		switch (type)
-		{
-			case 1://Mail to Mentor and Admin
-				emailBody = '<h2>Hello '+user.name+'<h2/>';
-				emailAddress = user.email;
-
-				sendMail('e@andela.co','Hello Admin,<br/>'+user.name+' requested to be a Mentor');
-				break;
-			case 2:
-
-				break;
-		}
-
-		sendMail(emailAddress,emailBody);
 	});
 
 	app.get('/*',function(req,res){
@@ -99,5 +78,4 @@ function run(appdir) {
 	  console.log('Listening on port %d', server.address().port);
 	});
 }
-
 run(process.cwd());
