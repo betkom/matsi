@@ -12,4 +12,16 @@ angular.module("matsi.services", ['firebase','ngCookies'])
 		return $firebase(rootRef.child('users').orderByChild('role').equalTo('-fellow-')).$asArray();
 	}
 	 };
+}])
+.factory('MentorService', ['$firebase', '$cookies', function($firebase,$cookies){
+	var rootRef = new Firebase($cookies.rootRef);
+
+	return {
+		readMentor: function(){
+			return $firebase(rootRef.child('users').orderByChild('role').equalTo('-mentor-')).$asArray();
+		},
+		updateMentor: function(mentorData, currentUId){
+			 rootRef.child('users').child(currentUId).update(mentorData);
+		}
+	};
 }]);
