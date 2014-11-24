@@ -11,12 +11,5 @@ angular.module("matsi.services", ['firebase','ngCookies'])
 	readFellow: function(){
 		return $firebase(rootRef.child('users').orderByChild('role').equalTo('-fellow-')).$asArray();
 	}
-	// 	createItems:function(item){
-	// 		rootRef.child('item').push(item);
-	// 	},
-	// 	readItems: function()
-	// 	{
-	// 		return $firebase(rootRef.child('item').child(' -Jb6cvofk70B9T-T6bzP')).$asArray();
-	// 	}
 	 };
 }]);

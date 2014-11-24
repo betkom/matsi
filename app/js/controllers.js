@@ -2,7 +2,9 @@ angular.module("matsi.controllers", ['firebase','ngCookies'])
 .controller('HomeController',['$rootScope', '$scope','$mdSidenav','$location','$state', 'FellowService',
 	function($rootScope, $scope,$mdSidenav,$location,$state, FellowService){
 
-
+	$scope.hello = function(){
+		alert("CLICKED!!");
+	}
 }])
 .controller("FellowController",['$rootScope', '$scope', '$firebase', '$cookies', 'FellowService',
        function($rootScope, $scope, $firebase, $cookies, FellowService) {
@@ -86,6 +88,3 @@ function buildUserObjectFromGoogle(authData) {
     picture: authData.google.cachedUserProfile.picture
   }
 };
-
-
-  
