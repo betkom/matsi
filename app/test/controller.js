@@ -23,7 +23,6 @@ describe('Testing 001', function(){
 			// });
 		}));
 	it('should be equal', function(){
-		expect('godson').toMatch(/g/ig);
 			var data = FellowService.readFellow();
 			console.log(data);
 			// console.log(FellowService.readFellow());
