@@ -1,6 +1,7 @@
 describe('Testing 001', function(){
 	var FellowService,
 		scope,
+		MentorService,
 		$httpBackend,
 		$stateParams,
 		$location;
@@ -12,21 +13,23 @@ describe('Testing 001', function(){
 			scope = $rootScope;
 			// Point global var
 
-			iables to injected services
 			$stateParams = _$stateParams_;
 			$httpBackend = _$httpBackend_;
 			//$location = _$location_;
 			FellowService = $injector.get('FellowService');
+			MentorService = $injector.get('MentorService');
 			// Initialize the Patients controller.
 			// FellowService = $controller('FellowService', {
 			// 	$scope: scope
 			// });
 		}));
 	it('should be equal', function(){
-		expect('godson').toMatch(/g/ig);
-			var data = FellowService.readFellow();
-			console.log(data);
-			// console.log(FellowService.readFellow());
-		expect(typeof data).toEqual("object");
+			var fellowData = FellowService.readFellow();
+			console.log(fellowData);
+		expect(typeof fellowData).toEqual('object');
 	});
+	it('should be equal', function(){
+		var mentorData = MentorService.readMentor();
+		expect(typeof mentorData).toEqual('object');
+	}); 
 });
