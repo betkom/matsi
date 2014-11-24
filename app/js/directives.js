@@ -74,15 +74,9 @@ angular.module("matsi.directives", ['firebase','ngCookies'])
       }]
     }
   });
+  
+//     }
+//   });
+// ]);
 
-function buildUserObjectFromGoogle(authData) {
-  return {
-    uid: authData.uid,
-    name: authData.google.displayName,
-    email: authData.google.email,
-    accessToken: authData.google.accessToken,
-    firstName: authData.google.cachedUserProfile.given_name,
-    lastName: authData.google.cachedUserProfile.family_name,
-    picture: authData.google.cachedUserProfile.picture
-  }
-}
+
