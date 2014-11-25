@@ -75,7 +75,13 @@ angular.module("matsi.controllers", ['firebase', 'ngCookies'])
 
             $scope.submitMentor = function(data) {
                 if (document.getElementById('Agree').checked) {
-                    MentorService.updateMentor(data, $rootScope.currentUser.uid);
+                    MentorService.updateMentor(data, $rootScope.currentUser.uid, function(error){
+                      if(error){
+                        alert('Hoops! Data not updated succesfully');
+                      }else{
+                        alert('Data updated successfully');
+                      }
+                    });
                 } else {
                     alert('You must agree to the Terms')
                 }

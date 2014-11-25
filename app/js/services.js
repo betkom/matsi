@@ -18,15 +18,12 @@ angular.module("matsi.services", ['firebase','ngCookies'])
 
 	return {
 		readSingleMentor: function(currentUId){
-			return $firebase(rootRef.child('users').orderByChild('uid').equalTo(currentUId)).$asObject();ß
+			return $firebase(rootRef.child('users').orderByChild('uid').equalTo(currentUId)).$asObject();
 		},
 		readMentor: function(){
 			return $firebase(rootRef.child('users').orderByChild('role').equalTo('-mentor-')).$asArray();
 		},
-		readSingleMentor: function(currentUID){
-			return $firebase(rootRef.child('users').orderByChild('uid').equalTo('currentUID')).$asObject();
-		}
-		updateMentor: function(mentorData, currentUId){
+		updateMentor: function(mentorData,currentUId){
 			 rootRef.child('users').child(currentUId).update(mentorData);
 		}
 	};
