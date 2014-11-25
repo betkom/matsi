@@ -71,7 +71,12 @@ angular.module("matsi.controllers", ['firebase', 'ngCookies'])
     .controller("MentorController", ['$rootScope', '$scope', '$firebase', '$cookies', 'MentorService',
         function($rootScope, $scope, $firebase, $cookies, MentorService) {
             $scope.mentorData = {};
-            MentorService.readSingleMentor($rootScope.currentUser.uid);
+            $scope.mentors = [];
+            $scope.mentors = MentorService.readMentor();
+            $scope.mentorData = MentorService.readSingleMentor($rootScope.currentUser.uid);
+            //console.log($scope.FindOneMentor, 'fireeee');
+                //$scope.FindOneMentor.$bindTo($scope, 'mentorData');
+
 
             $scope.submitMentor = function(data) {
                 if (document.getElementById('Agree').checked) {
@@ -86,7 +91,7 @@ angular.module("matsi.controllers", ['firebase', 'ngCookies'])
 function buildUserObjectFromGoogle(authData) {
     return {
         uid: authData.uid,
-        name: authData.google.displayName,
+        fullName: authData.google.displayName,
         email: authData.google.email,
         accessToken: authData.google.accessToken,
         firstName: authData.google.cachedUserProfile.given_name,
