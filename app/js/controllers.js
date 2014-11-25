@@ -71,9 +71,20 @@ angular.module("matsi.controllers", ['firebase', 'ngCookies'])
     .controller("MentorController", ['$rootScope', '$scope', '$firebase', '$cookies', 'MentorService',
         function($rootScope, $scope, $firebase, $cookies, MentorService) {
             $scope.mentorData = {};
+            $scope.mentors = [];
+            $scope.mentors = MentorService.readMentor();
+            $scope.mentorData = MentorService.readSingleMentor($rootScope.currentUser.uid);
+            //console.log($scope.FindOneMentor, 'fireeee');
+                //$scope.FindOneMentor.$bindTo($scope, 'mentorData');
             $scope.submitMentor = function(data) {
                 if (document.getElementById('Agree').checked) {
-                    MentorService.updateMentor(data, $rootScope.currentUser.uid);
+                    MentorService.updateMentor(data, $rootScope.currentUser.uid, function(error){
+                      if(error){
+                        alert('Hoops! Data not updated succesfully');
+                      }else{
+                        alert('Data updated successfully');
+                      }
+                    });
                 } else {
                     alert('You must agree to the Terms')
                 }
@@ -83,7 +94,7 @@ angular.module("matsi.controllers", ['firebase', 'ngCookies'])
 function buildUserObjectFromGoogle(authData) {
     return {
         uid: authData.uid,
-        name: authData.google.displayName,
+        fullName: authData.google.displayName,
         email: authData.google.email,
         accessToken: authData.google.accessToken,
         firstName: authData.google.cachedUserProfile.given_name,
