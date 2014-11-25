@@ -33,7 +33,7 @@ angular.module("matsi.services", ['firebase','ngCookies'])
 			delete mentorData1.$id;
 			delete mentorData1.$priority;
 			delete mentorData1._proto_;
-			 rootRef.child('users').child(currentUId).update(mentorData1);
+			rootRef.child('users').child(currentUId).update(mentorData1);
 		}
 	};
 }]);
