@@ -47,6 +47,14 @@ Matsi.config(['$stateProvider', '$urlRouterProvider','$locationProvider', functi
         access: 'private'
       }
     })
+    .state('findOneMentor', {
+      url:'/mentor',
+      templateUrl:'pages/viewMentor.html',
+      controller:'MentorController',
+      data: {
+        access: 'private'
+      }
+    })
      .state('settings', {
       url: '/settings',
       templateUrl: 'pages/settings.html',

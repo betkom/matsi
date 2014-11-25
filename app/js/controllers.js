@@ -71,6 +71,7 @@ angular.module("matsi.controllers", ['firebase', 'ngCookies'])
     .controller("MentorController", ['$rootScope', '$scope', '$firebase', '$cookies', 'MentorService',
         function($rootScope, $scope, $firebase, $cookies, MentorService) {
             $scope.mentorData = {};
+            MentorService.readSingleMentor($rootScope.currentUser.uid);
 
             $scope.submitMentor = function(data) {
                 if (document.getElementById('Agree').checked) {
