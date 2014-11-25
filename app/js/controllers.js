@@ -13,6 +13,9 @@ angular.module("matsi.controllers", ['firebase', 'ngCookies'])
 
     };
     $scope.fellowData = FellowService.readSingleFellow($rootScope.currentUser.uid);
+
+    $scope.allFellows = FellowService.readFellow();
+    console.log($scope.allFellows);
 }]) 
 .controller("MainCtrl", ['$rootScope', '$scope', '$firebase', '$cookies', 'FellowService',
         function($rootScope, $scope, $firebase, $cookies, FellowService) {

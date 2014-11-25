@@ -1,0 +1,12 @@
+h1 All fellows page......
+
+
+div(ng-repeat="fellow in allFellows")
+	img(ng-src="{{fellow.picture}}")
+	{{fellow.name}}
+	br
+	{{fellow.fullName}}
+	br
+	{{fellow.created | date }}
+	br
+	br
