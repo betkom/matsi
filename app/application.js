@@ -1,6 +1,7 @@
 require("./js/controllers.js");
 require("./js/directives.js");
 require("./js/services.js");
+
 window.Matsi = angular.module("Matsi", [
   'matsi.controllers',
   'matsi.services',
@@ -8,7 +9,7 @@ window.Matsi = angular.module("Matsi", [
   'ngAnimate', 
   'ngMaterial',
   'ui.router'
-   ]);
+]);
 
 Matsi.run(['$rootScope', function($rootScope) {
   // set globals we want available in ng expressions
@@ -17,7 +18,7 @@ Matsi.run(['$rootScope', function($rootScope) {
 }]);
 
 if(window.location.toString().indexOf('#&__firebase_request_key')>-1)
-  window.location = '/';
+   window.location = '/';
 
 Matsi.config(['$stateProvider', '$urlRouterProvider','$locationProvider', function($stateProvider, $urlRouterProvider, $locationProvider) {
 
@@ -32,7 +33,7 @@ Matsi.config(['$stateProvider', '$urlRouterProvider','$locationProvider', functi
       }
     }) 
     .state('fellowProfile', {
-      url: '/fellowProfile',
+      url: '/updateFellowProfile',
       templateUrl: 'pages/updateFellowProfile.html',
       controller: 'FellowController',
       data: {
@@ -57,7 +58,6 @@ Matsi.config(['$stateProvider', '$urlRouterProvider','$locationProvider', functi
     });
 
 }]);
-
 
 window.escapeEmailAddress = function(email) {
   if (!email) {

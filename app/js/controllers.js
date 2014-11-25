@@ -8,20 +8,18 @@ angular.module("matsi.controllers", ['firebase', 'ngCookies'])
       var rootRef = new Firebase($cookies.rootRef);
       $scope.rootRef = new Firebase($cookies.rootRef);
 
-    $scope.fellowData = {};
-    $scope.submitFellow = function(data){
-    FellowService.updateFellow(data,$rootScope.currentUser.uid);
-  };
+    $scope.submitFellow = function(){
+    FellowService.updateFellow($scope.fellowData,$rootScope.currentUser.uid);
 
+    };
+    $scope.fellowData = FellowService.readSingleFellow($rootScope.currentUser.uid);
 }]) 
 .controller("MainCtrl", ['$rootScope', '$scope', '$firebase', '$cookies', 'FellowService',
         function($rootScope, $scope, $firebase, $cookies, FellowService) {
-
             var rootRef = new Firebase($cookies.rootRef);
             $scope.rootRef = new Firebase($cookies.rootRef);
             // Start with no user logged in
             $rootScope.currentUser = null;
-
             rootRef.onAuth(function(authData) {
                 if (authData) {
                     console.log("auth: user is logged in");
@@ -48,7 +46,6 @@ angular.module("matsi.controllers", ['firebase', 'ngCookies'])
                 }
             });
             $scope.login = function() {
-                //analytics.track('Login');  
                 options = {
                     remember: true,
                     scope: "email"
@@ -71,7 +68,6 @@ angular.module("matsi.controllers", ['firebase', 'ngCookies'])
     .controller("MentorController", ['$rootScope', '$scope', '$firebase', '$cookies', 'MentorService',
         function($rootScope, $scope, $firebase, $cookies, MentorService) {
             $scope.mentorData = {};
-
             $scope.submitMentor = function(data) {
                 if (document.getElementById('Agree').checked) {
                     MentorService.updateMentor(data, $rootScope.currentUser.uid);
@@ -79,7 +75,6 @@ angular.module("matsi.controllers", ['firebase', 'ngCookies'])
                     alert('You must agree to the Terms')
                 }
             };
-
         }
     ]);
 function buildUserObjectFromGoogle(authData) {
