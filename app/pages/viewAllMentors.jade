@@ -9,4 +9,5 @@ div(ng-repeat = "mentor in mentors")
   h2 {{mentor.twitterHandle}}
   h2 {{mentor.Skype}}
   h2 {{mentor.location}}
-
+  label(for="isAvailable") Status
+  input(type="button" ng-disabled="true" name="isAvailable" value="Available")
