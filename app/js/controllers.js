@@ -85,7 +85,7 @@ angular.module("matsi.controllers", ['firebase', 'ngCookies'])
 function buildUserObjectFromGoogle(authData) {
     return {
         uid: authData.uid,
-        name: authData.google.displayName,
+        fullName: authData.google.displayName,
         email: authData.google.email,
         accessToken: authData.google.accessToken,
         firstName: authData.google.cachedUserProfile.given_name,

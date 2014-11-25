@@ -17,6 +17,9 @@ angular.module("matsi.services", ['firebase','ngCookies'])
 	var rootRef = new Firebase($cookies.rootRef);
 
 	return {
+		readSingleMentor: function(currentUId){
+			return $firebase(rootRef.child('users').orderByChild('uid').equalTo(currentUId)).$asObject();ß
+		},
 		readMentor: function(){
 			return $firebase(rootRef.child('users').orderByChild('role').equalTo('-mentor-')).$asArray();
 		},
