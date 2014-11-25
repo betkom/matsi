@@ -3,8 +3,8 @@ angular.module("matsi.controllers", ['firebase', 'ngCookies'])
         function($rootScope, $scope, $mdSidenav, $location, $state, FellowService) {
 
 }])
-.controller("FellowController",['$rootScope', '$scope', '$firebase', '$cookies', 'FellowService',
-       function($rootScope, $scope, $firebase, $cookies, FellowService) {
+.controller("FellowController",['$rootScope', '$scope', '$firebase', '$cookies', 'FellowService','$http','MentorService',
+       function($rootScope, $scope, $firebase, $cookies, FellowService, $http, MentorService) {
       var rootRef = new Firebase($cookies.rootRef);
       $scope.rootRef = new Firebase($cookies.rootRef);
 
@@ -16,6 +16,25 @@ angular.module("matsi.controllers", ['firebase', 'ngCookies'])
 
     $scope.allFellows = FellowService.readFellow();
     console.log($scope.allFellows);
+
+    $scope.sendMail = function(){
+        var paramsFellow = angular.copy($scope.fellowData);
+        delete paramsFellow.$id;
+        delete paramsFellow.$priority;
+
+        console.log(paramsFellow,'rackCity');
+        //var paramsMentor = MentorService.readSingleMentor();
+        $http.post('/mail/user/1',paramsFellow).success(function(r){
+            console.log(r);
+        });
+        // $http({
+        //     method:'POST',
+        // url: '/mail/user/1',
+        // data: {
+        //   body:$scope.fellowData
+        //      }
+        // });
+    };
 }]) 
 .controller("MainCtrl", ['$rootScope', '$scope', '$firebase', '$cookies', 'FellowService',
         function($rootScope, $scope, $firebase, $cookies, FellowService) {

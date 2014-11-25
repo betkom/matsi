@@ -24,13 +24,16 @@ function run(appdir) {
 	});
 	// static files
 	app.use(express.static(app.dir + '/public'));
-	var sendMail = function(emailAddress,emailBody,callback) {
-	};
-
+	
 	app.use(bodyParser.urlencoded({ extended: true }));
-
+	app.use(bodyParser.json());
 	app.post('/mail/user/:type',function(req, res){
+		console.log(req.body.email);
+		
+		var fellowMail = req.body.email;
 		var type = req.params.type;
+		//var data = req.params.fellow;
+		console.log(type);
 		//var emailAddress,emailBody;
 		var _res = req.body;
 		_res.type= type;
@@ -43,13 +46,38 @@ function run(appdir) {
 				pass: "p87654321"
 			}
 		});
-		// create email options
-		var mailOptions = {
-			from: 'Andela ✔ <1testertest1@gmail.com>', // sender address
-			to: 'terwase.gberikon@andela.co', // list of receivers
-			subject: 'Hello ✔', // Subject line
-			text: 'This is a mail from Case 1', // plaintext body
+
+		if (type) {
+			type = parseInt(type, 10);
+			switch(type){
+				case 1:
+							var mailOptions = {
+								from: 'Andela ✔ <1testertest1@gmail.com>', // sender address
+								to: fellowMail, // list of receivers
+								subject: 'Hello ✔', // Subject line
+								text: 'This is a mail from Case 1', // plaintext body
+							};
+					break;
+				case 2:
+							var mailOptions = {
+								from: 'Andela ✔ <1testertest1@gmail.com>', // sender address
+								to: 'terwase.gberikon@andela.co', // list of receivers
+								subject: 'Hello ✔', // Subject line
+								text: 'This is a mail from Case 2', // plaintext body
+							};
+					break;
+				case 3:
+							var mailOptions = {
+								from: 'Andela ✔ <1testertest1@gmail.com>', // sender address
+								to: 'terwase.gberikon@andela.co', // list of receivers
+								subject: 'Hello ✔', // Subject line
+								text: 'This is a mail from Case 3', // plaintext body
+							};
+					break;
+			}
 		};
+		// create email options
+		
 
 		// send mail with defined transport object
 		transporter.sendMail(mailOptions, function(e, i){
@@ -63,6 +91,8 @@ function run(appdir) {
 	});
 
 	app.get('/*',function(req,res){
+		//res.header('Access-Control-Allow-Origin', '*');
+   		//res.header('Access-Control-Allow-Headers', 'Content-Type,X-Requested-With');
 		console.log(req.body);
 		res.sendFile('index.html',{root:'./public/'});
 	});
