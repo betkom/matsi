@@ -48,6 +48,14 @@ Matsi.config(['$stateProvider', '$urlRouterProvider','$locationProvider', functi
         access: 'private'
       }
     })
+    .state('fellowProfile', {
+      url: '/fellowProfile/:uid',
+      templateUrl: 'pages/fellowProfile.html',
+      controller: 'FellowController',
+      data: {
+        access: 'private'
+      }
+    })
     .state('fellows', {
       url: '/fellows',
       templateUrl: 'pages/fellows.html',
@@ -60,6 +68,14 @@ Matsi.config(['$stateProvider', '$urlRouterProvider','$locationProvider', functi
       url:'/editMentor',
       templateUrl: 'pages/editMentor.html',
       controller: 'MentorController',
+      data: {
+        access: 'private'
+      }
+    })
+    .state('findOneMentor', {
+      url:'/mentors/:uid',
+      templateUrl:'pages/viewMentor.html',
+      controller:'MentorController',
       data: {
         access: 'private'
       }
