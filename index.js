@@ -32,6 +32,7 @@ function run(appdir) {
 		
 		var fellowMail = req.body.email;
 		var type = req.params.type;
+		var adminMail = 'Andela ✔ <1testertest1@gmail.com>';
 		//var data = req.params.fellow;
 		console.log(type);
 		//var emailAddress,emailBody;
@@ -52,7 +53,7 @@ function run(appdir) {
 			switch(type){
 				case 1:
 							var mailOptions = {
-								from: 'Andela ✔ <1testertest1@gmail.com>', // sender address
+								from: adminMail, // sender address
 								to: fellowMail, // list of receivers
 								subject: 'Hello ✔', // Subject line
 								text: 'This is a mail from Case 1', // plaintext body

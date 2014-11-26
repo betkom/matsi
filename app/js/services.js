@@ -25,7 +25,7 @@ angular.module("matsi.services", ['firebase','ngCookies'])
 
 		return $firebase(rootRef.child('users').orderByChild('role').equalTo('-fellow-')).$asObject();
 	},
-	readSingleFellow: function(currentUID){
+	readMyProfile: function(currentUID){
 		return $firebase(rootRef.child('users').child(currentUID)).$asObject();
 	}
 	 }
@@ -42,7 +42,7 @@ angular.module("matsi.services", ['firebase','ngCookies'])
 				mentors.$loaded().then(callback);
 			return mentors;
 		},
-		readSingleMentor: function(currentUID){
+		readMyProfile: function(currentUID){
 			 return $firebase(rootRef.child('users').child(currentUID)).$asObject();
 		},
 		updateMentor: function(mentorData, currentUId){
