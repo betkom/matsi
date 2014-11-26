@@ -1,5 +1,6 @@
-div(ng-repeat = "mentor in mentors")
+a(ng-repeat = "mentor in mentors" ng-href="mentors/{{mentor.uid}}")
   img(ng-src="{{mentor.picture}}")
+  h2 {{mentor.uid}}
   h2 {{mentor.name}}
   h2 {{mentor.email}}
   h2 {{mentor.Title}}
