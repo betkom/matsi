@@ -27,13 +27,6 @@ angular.module("matsi.controllers", ['firebase', 'ngCookies'])
         $http.post('/mail/user/1',paramsFellow).success(function(r){
             console.log(r);
         });
-        // $http({
-        //     method:'POST',
-        // url: '/mail/user/1',
-        // data: {
-        //   body:$scope.fellowData
-        //      }
-        // });
     };
 }]) 
 .controller("MainCtrl", ['$rootScope', '$scope', '$firebase', '$cookies', 'FellowService',
@@ -93,15 +86,15 @@ angular.module("matsi.controllers", ['firebase', 'ngCookies'])
             $scope.mentors = [];
             $scope.mentors = MentorService.readMentor();
             $scope.mentorData = MentorService.readSingleMentor($rootScope.currentUser.uid);
-            //console.log($scope.FindOneMentor, 'fireeee');
-                //$scope.FindOneMentor.$bindTo($scope, 'mentorData');
             $scope.submitMentor = function(data) {
                 if (document.getElementById('Agree').checked) {
                     MentorService.updateMentor(data, $rootScope.currentUser.uid, function(error){
                       if(error){
                         alert('Hoops! Data not updated succesfully');
                       }else{
-                        alert('Data updated successfully');
+                        console.log('Updated');
+                        //alert('Data updated successfully');
+
                       }
                     });
                 } else {
