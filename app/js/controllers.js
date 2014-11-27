@@ -6,49 +6,62 @@ angular.module("matsi.controllers", ['firebase', 'ngCookies'])
     ])
     .controller("FellowController", ['$rootScope', '$scope', '$cookies', 'FellowService', '$http', '$stateParams', 'MentorService',
         function($rootScope, $scope, $cookies, FellowService, $http, $stateParams, MentorService) {
-            
-            if ($rootScope.currentUser) {
-                $scope.fellowData = FellowService.readMyProfile($rootScope.currentUser.uid);
+
+
+            var currentUserUid = $stateParams.uid || $rootScope.currentUser.uid;
+
+            // if ($rootScope.currentUser) {
+            //     $scope.fellowData = FellowService.readMyProfile($rootScope.currentUser.uid);
+            // };
+
+            $scope.getAllFellows = function() {
+                $scope.allFellows = FellowService.readFellow();
             };
-            
-            $scope.allFellows = FellowService.readFellow();
-            $scope.oneFellowData = FellowService.readSingleFellow();
+
+            $scope.getCurrentFellow = function() {
+              console.log($stateParams.uid,'user_uid');
+                $scope.fellowData = FellowService.readSingleFellow(currentUserUid);
+            };
             $scope.submitFellow = function() {
                 FellowService.updateFellow($scope.fellowData, $rootScope.currentUser.uid);
             };
-    $scope.sendMail = function(){
-        var paramsFellow = angular.copy($scope.oneFellowData);
-        delete paramsFellow.$id;
-        delete paramsFellow.$priority;
+            $scope.sendMail = function() {
+                var paramsFellow = angular.copy($scope.fellowData);
+                delete paramsFellow.$id;
+                delete paramsFellow.$priority;
 
-        console.log(paramsFellow,'rackCity');
-        //var paramsMentor = MentorService.readSingleMentor();
-        $http.post('/mail/user/1',paramsFellow).success(function(r){
-            console.log(r);
-        });
-        $scope.sendRequests();
-    };
+                console.log(paramsFellow, 'rackCity');
+                $http.post('/mail/user/1', paramsFellow).success(function(r) {
+                    console.log(r);
+                });
+                $scope.sendRequests();
+            };
+            $scope.accept = function(mentor) {
+                console.log(mentor);
+                FellowService.acceptRequest(mentor);
+            };
 
-    $scope.sendRequests = function(){
-        FellowService.regRequest($rootScope.currentUser);
-    };
-}]) 
-    .controller("MainCtrl", ['$rootScope', '$scope', '$firebase', '$cookies', 'FellowService',
-        function($rootScope, $scope, $firebase, $cookies, FellowService) {
-          
+            $scope.sendRequests = function() {
+                FellowService.regRequest($scope.fellowData.uid);
+            };
         }
     ])
-    .controller("MentorController", ['$rootScope', '$scope', '$cookies', 'MentorService',
-        function($rootScope, $scope, $cookies, MentorService) {
+    .controller("MainCtrl", ['$rootScope', '$scope', '$firebase', '$cookies', 'FellowService',
+        function($rootScope, $scope, $firebase, $cookies, FellowService) {
+
+        }
+    ])
+    .controller("MentorController", ['$rootScope', '$scope', '$cookies', 'MentorService', '$stateParams',
+        function($rootScope, $scope, $cookies, MentorService, $stateParams) {
             // $stateParams.uid = "hello";
             $scope.mentorData = {};
             $scope.mentors = [];
-            
+
             if ($rootScope.currentUser) {
-              $scope.mentorData = MentorService.readMyProfile($rootScope.currentUser.uid);
+                $scope.mentorData = MentorService.readMyProfile($rootScope.currentUser.uid);
             };
             $scope.mentors = MentorService.readMentor();
-            $scope.OneMentorData = MentorService.readSingleMentor();
+            $scope.OneMentorData = MentorService.readSingleMentor($stateParams.uid);
             //console.log($scope.FindOneMentor, 'fireeee');
             //$scope.FindOneMentor.$bindTo($scope, 'mentorData');
             $scope.submitMentor = function(data) {
@@ -66,5 +79,3 @@ angular.module("matsi.controllers", ['firebase', 'ngCookies'])
             };
         }
     ]);
-
-
