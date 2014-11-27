@@ -10,4 +10,5 @@ a(ng-repeat = "mentor in mentors" ng-href="mentors/{{mentor.uid}}")
   h2 {{mentor.twitterHandle}}
   h2 {{mentor.Skype}}
   h2 {{mentor.location}}
-
+  label(for="isAvailable") Status
+  input(type="button" ng-disabled="true" name="isAvailable" value="Available")
