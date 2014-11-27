@@ -23,7 +23,14 @@ angular.module("matsi.controllers", ['firebase', 'ngCookies'])
         $http.post('/mail/user/1',paramsFellow).success(function(r){
             console.log(r);
         });
-        };
+        $scope.sendRequests();
+    };
+
+    $scope.sendRequests = function(){
+        FellowService.regRequest($rootScope.currentUser);
+    };
+
+
 }]) 
 .controller("MainCtrl", ['$rootScope', '$scope', '$firebase', '$cookies', 'FellowService',
         function($rootScope, $scope, $firebase, $cookies, FellowService) {

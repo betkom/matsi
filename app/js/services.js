@@ -31,6 +31,15 @@ angular.module("matsi.services", ['firebase','ngCookies'])
 			if($stateParams.uid) {
 				return $firebase(rootRef.child('users').child($stateParams.uid)).$asObject();
 			}
+		},
+		regRequest: function(value){
+			console.log(value,"this is value");
+			var data = {};
+			data.uid = value.uid;
+			data.fullName = value.fullName;
+			data.email = value.email;
+			console.log(data);
+			rootRef.child('users').child($stateParams.uid).child('request').push(data);
 		}
 	};	
 }])

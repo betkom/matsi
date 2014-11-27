@@ -5,7 +5,9 @@ h1 Welcome to matsi you are a fellow.....
 		div(class="col-md-4")
 			img(ng-src="{{fellowData.picture}}" width="320px" height="320px")
 			p Name : {{fellowData.fullName}}
-			input(type="button" value="submit" ng-click="sendMail()")
+			p You have a mentor request from : 
+			div(ng-repeat="requests in oneFellowData.request")
+				p {{requests.fullName}} {{requests.email}}
 br
 br
 br
