@@ -1,7 +1,8 @@
 header
   p
     a(ng-hide="currentUser" ng-click="login('google')") login
+    p(ng-if="allowUser") Account disabled, contact the Administrator.
   div(ng-show="currentUser")
     p
-      | {{ currentUser.email }}&nbsp;
+      | {{currentUser.email }}&nbsp;
       a(ng-click="logout()") sign out
