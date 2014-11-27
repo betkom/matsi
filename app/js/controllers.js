@@ -72,6 +72,7 @@ angular.module("matsi.controllers", ['firebase', 'ngCookies'])
                         console.log('login successful');
                     }
                 }, options);
+                
             }
             $scope.logout = function() {
                 rootRef.unauth();

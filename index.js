@@ -91,7 +91,7 @@ function run(appdir) {
 		res.status(200).send(_res);
 	});
 
-	app.get('/*',function(req,res){
+	app.get('/',function(req,res){
 		//res.header('Access-Control-Allow-Origin', '*');
    		//res.header('Access-Control-Allow-Headers', 'Content-Type,X-Requested-With');
 		console.log(req.body);
