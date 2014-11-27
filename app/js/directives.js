@@ -14,6 +14,7 @@ angular.module("matsi.directives", ['firebase', 'ngCookies'])
                             var user = buildUserObjectFromGoogle(authData);
                             console.log(user, 'isUser');
                             var userRef = rootRef.child('users').child(user.uid);
+                             $rootScope.currentUser = user;
                             userRef.on('value', function(snap) {
                                 if (!snap.val()) {
                                     user.created = Firebase.ServerValue.TIMESTAMP;

@@ -6,14 +6,21 @@ angular.module("matsi.controllers", ['firebase', 'ngCookies'])
     ])
     .controller("FellowController", ['$rootScope', '$scope', '$cookies', 'FellowService', '$http', '$stateParams', 'MentorService',
         function($rootScope, $scope, $cookies, FellowService, $http, $stateParams, MentorService) {
-          
-            $scope.fellowData = FellowService.readMyProfile($rootScope.currentUser.uid);
+            
+            if ($rootScope.currentUser) {
+                $scope.fellowData = FellowService.readMyProfile($rootScope.currentUser.uid);
+            };
+            
             $scope.allFellows = FellowService.readFellow();
             $scope.oneFellowData = FellowService.readSingleFellow();
             $scope.submitFellow = function() {
                 FellowService.updateFellow($scope.fellowData, $rootScope.currentUser.uid);
             };
             $scope.sendMail = function() {
+              // if (!$rootScope.currentUser) { 
+              //   alert("You Need to be logged in before you can mentor This fellow!!");
+              //   return false;
+              // };
                 var paramsFellow = angular.copy($scope.oneFellowData);
                 delete paramsFellow.$id;
                 delete paramsFellow.$priority;
@@ -36,8 +43,11 @@ angular.module("matsi.controllers", ['firebase', 'ngCookies'])
             // $stateParams.uid = "hello";
             $scope.mentorData = {};
             $scope.mentors = [];
+            
+            if ($rootScope.currentUser) {
+              $scope.mentorData = MentorService.readMyProfile($rootScope.currentUser.uid);
+            };
             $scope.mentors = MentorService.readMentor();
-            $scope.mentorData = MentorService.readMyProfile($rootScope.currentUser.uid);
             $scope.OneMentorData = MentorService.readSingleMentor();
             //console.log($scope.FindOneMentor, 'fireeee');
             //$scope.FindOneMentor.$bindTo($scope, 'mentorData');
