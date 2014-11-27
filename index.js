@@ -28,7 +28,7 @@ function run(appdir) {
 	app.use(bodyParser.urlencoded({ extended: true }));
 	app.use(bodyParser.json());
 	app.post('/mail/user/:type',function(req, res){
-		console.log(req.body.email);
+		console.log(req.body);
 		
 		var fellowMail = req.body.email;
 		var type = req.params.type;
@@ -61,8 +61,8 @@ function run(appdir) {
 					break;
 				case 2:
 							var mailOptions = {
-								from: 'Andela ✔ <1testertest1@gmail.com>', // sender address
-								to: 'terwase.gberikon@andela.co', // list of receivers
+								from: adminMail, // sender address
+								to: fellowMail, // list of receivers
 								subject: 'Hello ✔', // Subject line
 								text: 'This is a mail from Case 2', // plaintext body
 							};
@@ -78,8 +78,6 @@ function run(appdir) {
 			}
 		};
 		// create email options
-		
-
 		// send mail with defined transport object
 		transporter.sendMail(mailOptions, function(e, i){
 			if(e){
@@ -90,7 +88,7 @@ function run(appdir) {
 		});
 		res.status(200).send(_res);
 	});
-
+//all routes #shittu
 	app.get('/*',function(req,res){
 		//res.header('Access-Control-Allow-Origin', '*');
    		//res.header('Access-Control-Allow-Headers', 'Content-Type,X-Requested-With');
@@ -105,7 +103,7 @@ function run(appdir) {
 
   // Fire up server
 	var server = app.listen(process.env.PORT || 5555, function() {
-	  console.log('Listening on port %d', server.address().port);
+	  console.log('Up Matsi Listening on port %d', server.address().port);
 	});
 }
 run(process.cwd());

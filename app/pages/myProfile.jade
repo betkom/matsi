@@ -6,11 +6,6 @@ h1 Welcome to matsi you are a fellow.....
 			img(ng-src="{{fellowData.picture}}" width="320px" height="320px")
 			p Name : {{fellowData.fullName}}
 			input(type="button" value="submit" ng-click="sendMail()")
-br
-br
-br
-br
-br
 
 .row(ng-controller="MentorController")
 	div(ng-if="mentorData.role==='-mentor-'")
