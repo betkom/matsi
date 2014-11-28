@@ -99,7 +99,7 @@ function run(appdir) {
         // send mail with defined transport object
         transporter.sendMail(mailOptions, function(e, i) {
             if (e) {
-                console.log(e);
+                console.log(e, "fgfhdhdhdhhd");
             } else {
                 console.log('Message sent: ' + i.response);
             }
@@ -120,7 +120,6 @@ function run(appdir) {
         console.error(err.stack);
         res.status(500).send('Something broke!');
     });
-
     // Fire up server
     var server = app.listen(process.env.PORT || 5555, function() {
         console.log('Up Matsi Listening on port %d', server.address().port);
