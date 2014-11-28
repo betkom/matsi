@@ -6,13 +6,8 @@ h1 Welcome to matsi you are a fellow.....
 			img(ng-src="{{fellowData.picture}}" width="320px" height="320px")
 			p Name : {{fellowData.fullName}}
 			p You have a mentor request from : 
-			div(ng-repeat="requests in oneFellowData.request")
+			div(ng-repeat="requests in fellowData.request")
 				p {{requests.fullName}} {{requests.email}}
-br
-br
-br
-br
-br
 
 .row(ng-controller="MentorController")
 	div(ng-if="mentorData.role==='-mentor-'")
