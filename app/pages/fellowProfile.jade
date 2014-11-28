@@ -1,6 +1,7 @@
-h1 Welcome to matsi you are a fellow.....
-.row(ng-controller="FellowController" )
+h1(ng-init="getCurrentFellow()") Welcome to matsi you are a fellow.....
+.row
 	.col-md-4
-		img(ng-src="{{oneFellowData.picture}}" width="320px" height="320px")
-		p Name : {{oneFellowData.fullName}}
-input(type="button" value="submit" ng-click="sendMail()")
+		img(ng-src="{{fellowData.picture}}" width="320px" height="320px")
+		p Name : {{fellowData.fullName}}
+input(type="button" value="Apply to Mentor" ng-click="sendMail()")
+
