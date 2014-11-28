@@ -99,7 +99,7 @@ function run(appdir) {
         // send mail with defined transport object
         transporter.sendMail(mailOptions, function(e, i) {
             if (e) {
-                console.log(e);
+                console.log(e, "fgfhdhdhdhhd");
             } else {
                 console.log('Message sent: ' + i.response);
             }
