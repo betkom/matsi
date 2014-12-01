@@ -25,6 +25,10 @@ angular.module("matsi.controllers", ['firebase', 'ngCookies'])
             $scope.submitFellow = function() {
                 FellowService.updateFellow($scope.fellowData, $rootScope.currentUser.uid);
             };
+            $scope.mentorConstraints = function() {
+                console.log($stateParams, 'helloooo');
+                FellowService.mentorConstraint();
+                };
             $scope.sendMail = function() {
                 var paramsFellow = angular.copy($scope.fellowData);
                 delete paramsFellow.$id;

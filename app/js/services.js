@@ -32,6 +32,23 @@ angular.module("matsi.services", ['firebase', 'ngCookies'])
           return $firebase(rootRef.child('users').child(uid)).$asObject();
       }
     },
+    mentorConstraint: function(){
+      // console.log($stateParams.uid,"awh yeah")
+      var data ={};
+      var result = $firebase(rootRef.child('users').child($stateParams.uid)).$asObject();
+      result.$loaded().then(function(response){
+      data = response;
+      if (data.isMentored === false) {
+          // var unMentoredFellows = $firebase(rootRef.child('users').orderByChild('isMentored').equalTo('false')).$asArray();
+          // console.log(unMentoredFellows);
+      }
+      console.log(data.fullName,"lmaoo");
+      return data;
+      }); 
+
+      
+     
+    },
     regRequest: function(uid) {
       rootRef.child('users').child($rootScope.currentUser.uid).child('sentRequests').child(uid).push({timestamp:Firebase.ServerValue.TIMESTAMP});
       rootRef.child('users').child(uid).child('requests').child($rootScope.currentUser.uid).push({timestamp:Firebase.ServerValue.TIMESTAMP});
@@ -40,10 +57,10 @@ angular.module("matsi.services", ['firebase', 'ngCookies'])
     	// var data = {};
     	// data.uid = fellow.uid;
     	// data.fullName = fellow.fullName;
+      rootRef.child('users').child($rootScope.currentUser.uid).set({'isMentored':'true'});
     	rootRef.child('users').child($rootScope.currentUser.uid).child('mentors').child(mentor).set({timestamp:Firebase.ServerValue.TIMESTAMP});
       rootRef.child('users').child($rootScope.currentUser.uid).child('requests').child(mentor).remove();
-      rootRef.child('users').child(mentor).child('sentRequests').child($rootScope.currentUser.uid).remove();
-       
+      rootRef.child('users').child(mentor).child('sentRequests').child($rootScope.currentUser.uid).remove();  
     }
   };
 }])

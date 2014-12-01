@@ -32,10 +32,13 @@ angular.module("matsi.directives", ['firebase', 'ngCookies'])
                                     user.isAdmin = false;
                                     user.role = user.email.indexOf('@andela.co') > -1 ? '-fellow-' : '-mentor-';
                                     user.disabled = !(user.role === "-fellow-");
-                                    userRef.set(user);
-                                    $rootScope.currentUser = user;
                                     if ($rootScope.currentUser.disabled) {
+                                        userRef.set(user);
                                         sendMail($rootScope.currentUser, $http);
+                                    } else {
+                                        user.isMentored = false;
+                                        userRef.set(user);
+                                        $rootScope.currentUser = user;
                                     }
                                 } else {
                                     $rootScope.currentUser = snap.val();
@@ -46,7 +49,7 @@ angular.module("matsi.directives", ['firebase', 'ngCookies'])
                                         rootRef.unauth();
                                     }
                                 }
-                                //$scope.$apply();
+                                $scope.$apply();
                             });
                         } else {
                             // user is logged out
