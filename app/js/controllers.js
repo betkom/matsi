@@ -19,16 +19,17 @@ angular.module("matsi.controllers", ['firebase', 'ngCookies'])
             };
 
             $scope.getCurrentFellow = function() {
-              console.log($stateParams.uid,'user_uid');
+                console.log($stateParams.uid, 'user_uid');
                 $scope.fellowData = FellowService.readSingleFellow(currentUserUid);
             };
             $scope.submitFellow = function() {
                 FellowService.updateFellow($scope.fellowData, $rootScope.currentUser.uid);
             };
             $scope.mentorConstraints = function() {
-                console.log($stateParams, 'helloooo');
-                FellowService.mentorConstraint();
-                };
+                if (FellowService.mentorConstraint()) {
+                    $scope.sendMail();
+                }
+            };
             $scope.sendMail = function() {
                 var paramsFellow = angular.copy($scope.fellowData);
                 delete paramsFellow.$id;
@@ -46,6 +47,7 @@ angular.module("matsi.controllers", ['firebase', 'ngCookies'])
             };
 
             $scope.sendRequests = function() {
+                console.log("blue berry")
                 FellowService.regRequest($scope.fellowData.uid);
             };
         }
