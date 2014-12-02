@@ -31,6 +31,27 @@ angular.module("matsi.services", ['firebase', 'ngCookies'])
           return $firebase(rootRef.child('users').child(uid)).$asObject();
       }
     },
+    mentorConstraint: function() {
+                // console.log($stateParams.uid,"awh yeah")
+                var data = {};
+                var result = $firebase(rootRef.child('users').child($stateParams.uid)).$asObject();
+                var check = result.$loaded().then(function(response) {
+                    data = response;
+                    if (data.isMentored === true) {
+                        var unMentoredFellows = $firebase(rootRef.child('users').orderByChild('isMentored').equalTo('false')).$asArray();
+                        console.log(unMentoredFellows.length);
+                        if (unMentoredFellows.length > 0) {
+                            alert("Sorry this fellow already has a mentor, all other fellows must have mentors");
+                        } else {
+                            return true;
+                        }
+                    } else {
+                        return true;
+                    }
+                });
+
+                return check;
+            },
     regRequest: function(fellow) {
       rootRef.child('users').child($rootScope.currentUser.uid).child('sentRequests').child(fellow.uid).push({timestamp:Firebase.ServerValue.TIMESTAMP, message:fellow.message});
       rootRef.child('users').child(fellow.uid).child('requests').child($rootScope.currentUser.uid).set({timestamp:Firebase.ServerValue.TIMESTAMP, message:fellow.message});
@@ -84,3 +105,4 @@ angular.module("matsi.services", ['firebase', 'ngCookies'])
     }
   };
 }]);
+
