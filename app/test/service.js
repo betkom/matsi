@@ -6,48 +6,70 @@ describe('matsi.services test',function(){
 
 	var FellowService,
 	MentorService,
-	scope;
+	scope,
+	cookies;
 	var mockFellow = {
-			uid: 'ggoogle:117109096177371390026',
+			uid: 'ggoogle:happy-fellow-id',
 			name: 'Happy Fellow',
 			email: 'happy-fellow@andela.co'
+		};
+
+	var mockMentor = {
+			uid: 'ggoogle:happy-mentor-id',
+			name: 'Happy Menthor',
+			email: 'happy-mentor@andela.co'
 		};
 			
 	beforeEach(inject(function($cookies,$rootScope, $injector){
 
 		scope = $rootScope;
 		$cookies.rootRef = 'https://brilliant-heat-9512.firebaseio.com/';
+		//cookies = $cookies;
 		FellowService =  $injector.get('FellowService');
 		MentorService = $injector.get('MentorService');
 
 	}));
-	describe ('MentorService', function(){
-		
-		beforeEach(function(){
 
-		});
-
-		it('MentorService should create mock Fellow mentorship request', function(){
-
-
-		});
-
+	it('should create a happy-fellow', function(){
+			
+			var rootRef = new Firebase('https://brilliant-heat-9512.firebaseio.com/');
+			console.log('creating happy-fellow');
+			rootRef.child('users').child(mockFellow.uid).set(mockFellow,function(err){
+				console.log('mockFellow created',err,'err');
+			});	
+			expect(1).toBe(1);
 	});
 
-	describe ('FellowService', function(){
+	// describe ('MentorService', function(){
 		
-		beforeEach(function(){
+	// 	beforeEach(function(){
+	// 		scope.curruentUser = mockMentor;
+	// 	});
 
-		});
+	// 	// it('MentorService should create mock Fellow mentorship request', function(){
 
-		it('FellowService should update/create a fellow', function(){
-			console.log('Running FellowService Update');
-			FellowService.update(mockFellow,function(err){
-				console.log(err,'isError2');
-				expect(err).toBeUndefined();
-				expect(err).toBeDefined();
-			});
-		});
 
-	});
+	// 	// });
+
+	// });
+
+	// describe ('FellowService', function(){	
+
+	// 	beforeEach(function(){
+			
+	// 		scope.currentUser = mockFellow;
+	// 	});
+
+		
+
+	// 	it('FellowService should update/create a fellow', function(){
+	// 		console.log('Running FellowService Update');
+	// 		FellowService.updateFellow(mockFellow,function(err){
+	// 			console.log(err,'isError2');
+	// 			expect(err).toBeUndefined();
+	// 			expect(err).toBeDefined();
+	// 		});
+	// 	});
+
+	// });
 });

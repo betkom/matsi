@@ -13,45 +13,66 @@ angular.module("matsi.directives", ['firebase', 'ngCookies'])
     .directive('header', function() {
         return {
             restrict: 'E',
-            controller: ['$rootScope', '$scope', '$firebase', '$cookies', 'FellowService', '$http',
-                function($rootScope, $scope, $firebase, $cookies, FellowService, $http) {
+            controller: ['$rootScope', '$scope', '$firebase', '$cookies', 'FellowService', 'AuthService','$timeout',
+                function($rootScope, $scope, $firebase, $cookies, FellowService, AuthService, $timeout) {
                     var rootRef = new Firebase($cookies.rootRef);
                     // Start with no user logged in
                     $rootScope.currentUser = null;
-                    $rootScope.allowUser = false;
+                    //$rootScope.allowUser = false;
                     rootRef.onAuth(function(authData) {
                         if (authData) {
                             console.log("auth: user is logged in");
+                             // $rootScope.currentUser = user;
                             var user = buildUserObjectFromGoogle(authData);
-                            console.log(user, 'isUser');
-                            var userRef = rootRef.child('users').child(user.uid);
-                             $rootScope.currentUser = user;
+                            var userRef = rootRef.child('users').child(user.uid); 
                             userRef.on('value', function(snap) {
+                             //$timeout(function(){
                                 if (!snap.val()) {
+                                    console.log("am here no val");
                                     user.created = Firebase.ServerValue.TIMESTAMP;
                                     user.isAdmin = false;
                                     user.role = user.email.indexOf('@andela.co') > -1 ? '-fellow-' : '-mentor-';
                                     user.disabled = !(user.role === "-fellow-");
-                                    userRef.set(user);
-                                    $rootScope.currentUser = user;
-                                    if ($rootScope.currentUser.disabled) {
-                                        sendMail($rootScope.currentUser, $http);
-                                    }
+                                    // if (user.disabled) {
+                                    //     userRef.set(user);
+                                    //     $rootScope.currentUser = user;
+                                    //     AuthService.currentUser = user;
+                                    //     sendMail($rootScope.currentUser, $http);
+                                    // }
+                                    // else{
+                                    //     user.isMentored = false;
+                                    //     userRef.set(user);
+                                    //     $rootScope.currentUser = user;
+                                    //     AuthService.currentUser = user;
+                                    // }
+
+                                    if(!user.disabled)
+                                      user.isMentored = false;
+                                    else
+                                      AuthService.sendMail(2,user);
+                                    userRef.set(user);   
                                 } else {
-                                    $rootScope.currentUser = snap.val();
-                                    if ($rootScope.currentUser.disabled) {
-                                        $rootScope.allowUser = true;
-                                        $rootScope.currentUser = null;
+                                    console.log(snap.val(),"this is snap");
+                                    user = snap.val();
+                                    //$rootScope.currentUser = snap.val();
+                                    AuthService.user = snap.val();
+                                    console.log(snap.val(),"this is root");
+                                    if (user.disabled) {
+                                        // console.log('you called me lmaoooooo');
+                                        user = null;
+                                        //$rootScope.currentUser = null;
                                         console.log('user FOH');
                                         rootRef.unauth();
                                     }
                                 }
-                                //$scope.$apply();
+                                $timeout(function(){
+                                  $rootScope.currentUser = user;
+                                },1);
                             });
                         } else {
-                            // user is logged out
                             console.log("auth: user is logged out");
                             $rootScope.currentUser = null;
+                            AuthService.user = null;
                         }
                     });
 

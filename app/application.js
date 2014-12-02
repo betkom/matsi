@@ -21,15 +21,14 @@ if (window.location.toString().indexOf('#&__firebase_request_key') > -1) {
     window.location = '/';
 }
 
-
-Matsi.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', function($stateProvider, $urlRouterProvider, $locationProvider) {
+Matsi.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', function($stateProvider, $urlRouterProvider, $locationProvider, $rootScope) {
 
     $locationProvider.html5Mode(true);
     $stateProvider
         .state('home', {
             url: '/',
             templateUrl: 'pages/home.html',
-            controller: 'MainCtrl',
+            controller: '',
             data: {
                 access: 'public'
             }
@@ -38,8 +37,11 @@ Matsi.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', funct
             url: '/updateFellowProfile',
             templateUrl: 'pages/updateFellowProfile.html',
             controller: 'FellowController',
+            
             data: {
-                access: 'private'
+                access: 'private',
+                authorizedRoles: [false],
+                authenticate: true
             }
         })
         .state('myProfile', {
@@ -98,6 +100,7 @@ Matsi.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', funct
                 access: 'private'
             }
         });
+        $urlRouterProvider.otherwise("/");
 
 }]);
 
@@ -105,7 +108,6 @@ window.escapeEmailAddress = function(email) {
     if (!email) {
         return false;
     }
-
     // Replace '.' (not allowed in a Firebase key) with ',' (not allowed in an email address)
     email = email.toLowerCase();
     email = email.replace(/\./g, ',');

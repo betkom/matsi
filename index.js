@@ -106,7 +106,6 @@ function run(appdir) {
         });
         res.status(200).send(_res);
     });
-    //all routes #shittu
     app.get('/*', function(req, res) {
         //res.header('Access-Control-Allow-Origin', '*');
         //res.header('Access-Control-Allow-Headers', 'Content-Type,X-Requested-With');

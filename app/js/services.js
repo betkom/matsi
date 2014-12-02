@@ -9,8 +9,8 @@ angular.module("matsi.services", ['firebase', 'ngCookies'])
   // };
   // console.log($cookies);
   return {
-    updateFellow: function(fellowData, currentUID) {
-      console.log(currentUID);
+    updateFellow: function(fellowData, cb) {
+      console.log(fellowData.uid);
       var fellowData1 = angular.copy(fellowData);
       console.log(fellowData1);
       delete fellowData1.$$conf;
@@ -18,13 +18,13 @@ angular.module("matsi.services", ['firebase', 'ngCookies'])
       delete fellowData1.$id;
       delete fellowData1.__proto__;
       console.log("final", fellowData1);
-      rootRef.child('users').child(currentUID).update(fellowData1);
+      rootRef.child('users').child(fellowData.uid).update(fellowData1,cb);
     },
     readFellow: function() {
       return $firebase(rootRef.child('users').orderByChild('role').equalTo('-fellow-')).$asObject();
     },
     readMyProfile: function(currentUID) {
-        return $firebase(rootRef.child('users').child(currentUID)).$asObject();
+      return $firebase(rootRef.child('users').child(currentUID)).$asObject();
     },
     readSingleFellow: function(uid) {
       if (uid) {
@@ -51,7 +51,7 @@ angular.module("matsi.services", ['firebase', 'ngCookies'])
   return {
     readMentor: function(callback) {
       console.log($stateParams);
-      var mentors = $firebase(rootRef.child('users').orderByChild('role').equalTo('-mentor-')).$asArray();
+      var mentors = $firebase(rootRef.child('users').orderByChild('role').equalTo('-mentor-')).$asObject();
       if (callback && typeof callback === typeof
           function() {})
           mentors.$loaded().then(callback);
@@ -73,6 +73,21 @@ angular.module("matsi.services", ['firebase', 'ngCookies'])
       delete mentorData1.$priority;
       delete mentorData1._proto_;
       rootRef.child('users').child(currentUId).update(mentorData1);
+    }
+  };
+}])
+.factory('AuthService', ['$firebase','$http',function($firebase,$http){
+    return {
+    user: {def: "hello"},
+    allowUser : false,
+    sendMail: function(id,param,cb){
+      var paramsMentor = angular.copy(param);
+      delete paramsMentor.$id;
+      delete paramsMentor.$priority;
+      $http.post('/mail/user/'+id, paramsMentor).success(function(r,s){
+        if(cb)
+          cb(r,s);
+      });
     }
   };
 }]);
