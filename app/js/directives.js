@@ -64,7 +64,6 @@ angular.module("matsi.directives", ['firebase', 'ngCookies'])
                                         rootRef.unauth();
                                     }
                                 }
-                                $scope.$apply();
                             });
                         } else {
                             // user is logged out

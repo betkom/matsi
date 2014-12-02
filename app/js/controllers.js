@@ -28,6 +28,7 @@ angular.module("matsi.controllers", ['firebase', 'ngCookies'])
             };
             $scope.showBox1 = function(){
                 $scope.showMessageBox = false;
+            };
             $scope.mentorConstraints = function() {
                 if (FellowService.mentorConstraint()) {
                     $scope.sendMail();
