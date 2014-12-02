@@ -8,11 +8,15 @@ describe('matsi.services test',function(){
 	MentorService,
 	scope;
 	var mockFellow = {
-			uid: 'ggoogle:117109096177371390026',
+			uid: 'google:117109096177371390026',
 			name: 'Happy Fellow',
 			email: 'happy-fellow@andela.co'
 		};
-			
+	var mockMentor = {
+		uid: 'google:1123545666666666666',
+		name: 'Happy Mentor',
+		email: 'happy-fellow@gmail.com'
+	};	
 	beforeEach(inject(function($cookies,$rootScope, $injector){
 
 		scope = $rootScope;
@@ -27,8 +31,8 @@ describe('matsi.services test',function(){
 
 		});
 
-		it('MentorService should create mock Fellow mentorship request', function(){
-
+		it('MentorService should create get mentors', function(){
+			MentorService.readMentor();
 
 		});
 

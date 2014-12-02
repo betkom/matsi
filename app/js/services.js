@@ -17,7 +17,7 @@ angular.module("matsi.services", ['firebase', 'ngCookies'])
       delete fellowData1.$priority;
       delete fellowData1.$id;
       delete fellowData1.__proto__;
-      console.log("final", fellowData1);
+      //console.log("final", fellowData1);
       rootRef.child('users').child(currentUID).update(fellowData1);
     },
     readFellow: function() {
@@ -31,18 +31,20 @@ angular.module("matsi.services", ['firebase', 'ngCookies'])
           return $firebase(rootRef.child('users').child(uid)).$asObject();
       }
     },
-    regRequest: function(uid) {
-      rootRef.child('users').child($rootScope.currentUser.uid).child('sentRequests').child(uid).push({timestamp:Firebase.ServerValue.TIMESTAMP});
-      rootRef.child('users').child(uid).child('requests').child($rootScope.currentUser.uid).push({timestamp:Firebase.ServerValue.TIMESTAMP});
+    regRequest: function(fellow) {
+      rootRef.child('users').child($rootScope.currentUser.uid).child('sentRequests').child(fellow.uid).push({timestamp:Firebase.ServerValue.TIMESTAMP, message:fellow.message});
+      rootRef.child('users').child(fellow.uid).child('requests').child($rootScope.currentUser.uid).set({timestamp:Firebase.ServerValue.TIMESTAMP, message:fellow.message});
     },
     acceptRequest: function(mentor){
-    	// var data = {};
-    	// data.uid = fellow.uid;
-    	// data.fullName = fellow.fullName;
-    	rootRef.child('users').child($rootScope.currentUser.uid).child('mentors').child(mentor).set({timestamp:Firebase.ServerValue.TIMESTAMP});
-      rootRef.child('users').child($rootScope.currentUser.uid).child('requests').child(mentor).remove();
-      rootRef.child('users').child(mentor).child('sentRequests').child($rootScope.currentUser.uid).remove();
-       
+    	rootRef.child('users').child($rootScope.currentUser.uid).child('mentors').child(mentor.uid).set({timestamp:Firebase.ServerValue.TIMESTAMP});
+      rootRef.child('users').child($rootScope.currentUser.uid).update({isMentored: true});
+      rootRef.child('users').child(mentor.uid).child('fellows').child($rootScope.currentUser.uid).set({timestamp:Firebase.ServerValue.TIMESTAMP});
+      rootRef.child('users').child($rootScope.currentUser.uid).child('requests').child(mentor.uid).remove();
+      rootRef.child('users').child(mentor.uid).child('sentRequests').child($rootScope.currentUser.uid).remove();
+    },
+    rejectRequest: function(mentor){
+      rootRef.child('users').child(mentor.uid).child('sentRequests').child($rootScope.currentUser.uid).update({message: mentor.message});
+      rootRef.child('users').child($rootScope.currentUser.uid).child('requests').child(mentor.uid).remove();
     }
   };
 }])
@@ -52,19 +54,25 @@ angular.module("matsi.services", ['firebase', 'ngCookies'])
     readMentor: function(callback) {
       console.log($stateParams);
       var mentors = $firebase(rootRef.child('users').orderByChild('role').equalTo('-mentor-')).$asArray();
-      if (callback && typeof callback === typeof
-          function() {})
+      if (callback && typeof callback === typeof function() {})
           mentors.$loaded().then(callback);
       return mentors;
     },
     readMyProfile: function(currentUID) {
         return $firebase(rootRef.child('users').child(currentUID)).$asObject();
     },
-    readSingleMentor: function(uid) {
+    readSingleMentor: function(uid,cb) {
         if (uid) {
             console.log(uid,'readSingleMentor');
-            return $firebase(rootRef.child('users').child(uid)).$asObject();
+        var mentor = $firebase(rootRef.child('users').child(uid)).$asObject()
+              
+        if(cb){
+            mentor.$loaded().then(function(value){
+              cb(value);
+            });
         }
+        return mentor;
+      }
     },
     updateMentor: function(mentorData, currentUId) {
       mentorData1 = angular.copy(mentorData)
