@@ -29,7 +29,7 @@ var testFiles = [
   // 'test-main.js',
   'public/lib/angular/angular.js',
   'public/lib/angular-mocks/angular-mocks.js',
-  'public/lib/mockfirebase/browser/mockfirebase.js',
+  // 'public/lib/mockfirebase/browser/mockfirebase.js',
   'public/lib/moment/moment.js',
   'public/lib/angular-aria/angular-aria.js',
   'public/lib/angular-ui-router/release/angular-ui-router.min.js',
@@ -43,7 +43,7 @@ var testFiles = [
   'public/lib/angularfire/dist/angularfire.js',
   'public/lib/firebase/firebase.js',
   'public/js/index.js',
-  'app/test/controller.js'
+  'app/test/service.js'
 ];
 
 gulp.task('jade', function() {
