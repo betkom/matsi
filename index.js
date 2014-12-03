@@ -34,6 +34,7 @@ function run(appdir) {
         var fellowMail = req.body.email;
         var mailMessage = req.body.message;
         var type = req.params.type;
+        var reason = req.body.reason;
         var adminMail = 'Andela ✔ <1testertest1@gmail.com>';
         //var data = req.params.fellow;
         console.log(type);
@@ -58,7 +59,7 @@ function run(appdir) {
                         from: adminMail, // sender address
                         to: fellowMail, // list of receivers
                         subject: 'Hello '+fellowName, // Subject line
-                        html: "You have a pending request to be mentored, you can <a href='http://localhost:5555/myProfile'>View them here</a> <br> We hope you have a great time! <br> Team Matsi", // plaintext body
+                        html: "You have a pending request to be mentored, you can <a href='http://localhost:5555/myProfile'>View them here</a> <br> We hope you have a great time! <br> Team Matsi" + reason // plaintext body
                     };
                     break;
                 case 2:

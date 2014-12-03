@@ -8,7 +8,7 @@ angular.module("matsi.controllers", ['firebase', 'ngCookies'])
         function($rootScope, $scope, $cookies, FellowService, $http, $stateParams, MentorService, MailService) {
             console.log($rootScope, "this is root");
             console.log($rootScope.currentUser, "this is val");
-            if ($rootScope.currentUser.uid) {
+            if ($rootScope.currentUser) {
                 var currentUserUid = $stateParams.uid || $rootScope.currentUser.uid;
                 console.log($rootScope.currentUser.uid, 'from tolu');
             } else {
@@ -21,8 +21,8 @@ angular.module("matsi.controllers", ['firebase', 'ngCookies'])
             };
 
             $scope.getCurrentFellow = function() {
-                console.log($scope.fellowData, 'Tolu was here');
                 $scope.fellowData = FellowService.readSingleFellow(currentUserUid);
+                console.log($scope.fellowData, 'Tolu was here');
                 this.showMessageBox = true;
             };
 
@@ -50,6 +50,7 @@ angular.module("matsi.controllers", ['firebase', 'ngCookies'])
             };
 
             $scope.sendMail = function() {
+                $scope.fellowData.reason = $scope.requestMentorshipMsg 
                 MailService.send(1, $scope.fellowData);
                 $scope.sendRequests();
             };
@@ -64,7 +65,7 @@ angular.module("matsi.controllers", ['firebase', 'ngCookies'])
             $scope.mentorData = {};
             $scope.mentors = [];
 
-            if ($rootScope.currentUser.uid) {
+            if ($rootScope.currentUser ) {
                 $scope.mentorData = MentorService.readMyProfile($rootScope.currentUser.uid);
             };
             $scope.mentors = MentorService.readMentor();

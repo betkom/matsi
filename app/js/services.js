@@ -49,11 +49,9 @@ angular.module("matsi.services", ['firebase', 'ngCookies'])
             regRequest: function(fellow) {
                 rootRef.child('users').child($rootScope.currentUser.uid).child('sentRequests').child(fellow.uid).push({
                     timestamp: Firebase.ServerValue.TIMESTAMP,
-                    message: fellow.message
                 });
                 rootRef.child('users').child(fellow.uid).child('requests').child($rootScope.currentUser.uid).set({
                     timestamp: Firebase.ServerValue.TIMESTAMP,
-                    message: fellow.message
                 });
             },
             acceptRequest: function(mentor) {
