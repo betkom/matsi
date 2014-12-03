@@ -32,25 +32,27 @@ angular.module("matsi.services", ['firebase', 'ngCookies'])
                     return $firebase(rootRef.child('users').child(uid)).$asObject();
                 }
             },
-            mentorConstraint: function() {
+            mentorConstraint: function(cb) {
                 // console.log($stateParams.uid,"awh yeah")
+                var unMentoredFellows = [];
+                var unMentoredList = [];
                 var data = {};
                 var result = $firebase(rootRef.child('users').child($stateParams.uid)).$asObject();
                 var check = result.$loaded().then(function(response) {
                     data = response;
                     if (data.isMentored === true) {
-                        var unMentoredFellows = $firebase(rootRef.child('users').orderByChild('isMentored').equalTo('false')).$asArray();
-                        console.log(unMentoredFellows.length);
-                        if (unMentoredFellows.length > 0) {
-                            alert("Sorry this fellow already has a mentor, all other fellows must have mentors");
-                        } else {
-                            return true;
-                        }
-                    } else {
-                        return true;
+                        $firebase(rootRef.child('users').orderByChild('isMentored').equalTo(false)).$asArray().$loaded().then(function(responseData){
+                          if (cb && typeof cb === typeof function(){}) {
+                            cb(responseData);
+                          };
+                        });
+                    }
+                    else {
+                      if(cb){
+                        cb(null);
+                      }
                     }
                 });
-
                 return check;
             },
             regRequest: function(uid) {

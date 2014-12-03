@@ -26,18 +26,27 @@ angular.module("matsi.controllers", ['firebase', 'ngCookies'])
                 FellowService.updateFellow($scope.fellowData, $rootScope.currentUser.uid);
             };
             $scope.mentorConstraints = function() {
-                if (FellowService.mentorConstraint()) {
+                FellowService.mentorConstraint(function(responseData){
+
+                  if (responseData) {
+                      if (responseData.length === 0) {
+                          $scope.sendMail();
+                      } else {
+                        alert("The fellow is already being mentored, there are other fellows waiting")
+                      }
+                  } else {
                     $scope.sendMail();
-                }
+                  }
+                });     
             };
             $scope.sendMail = function() {
                 var paramsFellow = angular.copy($scope.fellowData);
                 delete paramsFellow.$id;
                 delete paramsFellow.$priority;
 
-                console.log(paramsFellow, 'rackCity');
                 $http.post('/mail/user/1', paramsFellow).success(function(r) {
                     console.log(r);
+                    console.log("Mail sent")
                 });
                 $scope.sendRequests();
             };
