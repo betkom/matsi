@@ -8,13 +8,13 @@ angular.module("matsi.controllers", ['firebase', 'ngCookies'])
         function($rootScope, $scope, $cookies, FellowService, $http, $stateParams, MentorService) {
             console.log($rootScope,"this is root");
             console.log($rootScope.currentUser,"this is val");
-            if($rootScope.currentUser){
+            if($rootScope.currentUser.uid){
             var currentUserUid = $stateParams.uid || $rootScope.currentUser.uid;
             console.log($rootScope.currentUser.uid,'from tolu');
         }else{
             var currentUserUid = $stateParams.uid;
         }
-            // if ($rootScope.currentUser) {
+            // if ($rootScope.currentUser.id) {
             //     $scope.fellowData = FellowService.readMyProfile($rootScope.currentUser.uid);
             // };
 
@@ -77,7 +77,7 @@ angular.module("matsi.controllers", ['firebase', 'ngCookies'])
             $scope.mentorData = {};
             $scope.mentors = [];
 
-            if ($rootScope.currentUser) {
+            if ($rootScope.currentUser.uid) {
                 $scope.mentorData = MentorService.readMyProfile($rootScope.currentUser.uid);
             };
             $scope.mentors = MentorService.readMentor();

@@ -33,13 +33,13 @@ angular.module("matsi.directives", ['firebase', 'ngCookies'])
                     var rootRef = new Firebase($cookies.rootRef);
                     // Start with no user logged in
                     $rootScope.currentUser = null;
-                    //$rootScope.allowUser = false;
+                    $rootScope.allowUser = false;
                     rootRef.onAuth(function(authData) {
                         if (authData) {
                             console.log("auth: user is logged in");
-                             // $rootScope.currentUser = user;
                             var user = buildUserObjectFromGoogle(authData);
                             var userRef = rootRef.child('users').child(user.uid); 
+                            $rootScope.currentUser = user;
                             userRef.on('value', function(snap) {
                              //$timeout(function(){
                                 if (!snap.val()) {
