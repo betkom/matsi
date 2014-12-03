@@ -8,22 +8,15 @@ angular.module("matsi.controllers", ['firebase', 'ngCookies'])
         function($rootScope, $scope, $cookies, FellowService, $http, $stateParams, MentorService) {
             console.log($rootScope,"this is root");
             console.log($rootScope.currentUser,"this is val");
-            // console.log($scope.currentUser ,'from child scope');
-            // console.log($rootScope,"first call");
-            // console.log($rootScope.currentUser,"second call");
-            // console.log(AuthService,"service call1");
-            // console.log(AuthService.currentUser,"service call user");
-            // console.log(AuthService.currentUser.role,"service call user role");
-            // console.log(AuthService,"service call2");
-            $scope.fellowData = FellowService.readMyProfile($rootScope.currentUser.uid);
-            if ($rootScope.currentUser) {
-                console.log($rootScope.currentUser,"third call");
-                $scope.fellowData = FellowService.readMyProfile($rootScope.currentUser.uid);
-                var currentUserUid = $stateParams.uid || $rootScope.currentUser.uid;
-            }
-            else{
-                var currentUserUid = $stateParams.uid;
-            };
+            if($rootScope.currentUser){
+            var currentUserUid = $stateParams.uid || $rootScope.currentUser.uid;
+            console.log($rootScope.currentUser.uid,'from tolu');
+        }else{
+            var currentUserUid = $stateParams.uid;
+        }
+            // if ($rootScope.currentUser) {
+            //     $scope.fellowData = FellowService.readMyProfile($rootScope.currentUser.uid);
+            // };
 
             $scope.getAllFellows = function() {
               $scope.allFellows = FellowService.readFellow();
@@ -32,7 +25,8 @@ angular.module("matsi.controllers", ['firebase', 'ngCookies'])
             };
 
             $scope.getCurrentFellow = function() {
-                console.log($stateParams.uid, 'user_uid');
+                //console.log($stateParams.uid, 'user_uid');
+                console.log($scope.fellowData, 'Tolu was here');
                 $scope.fellowData = FellowService.readSingleFellow(currentUserUid);
                 this.showMessageBox = true;
             };
@@ -70,7 +64,8 @@ angular.module("matsi.controllers", ['firebase', 'ngCookies'])
     .controller("MentorController", ['$rootScope', '$scope', '$cookies', 'MentorService', '$stateParams','$location',
         function($rootScope, $scope, $cookies, MentorService, $stateParams, $location) {
             // $stateParams.uid = "hello";
-            // $scope.mentorData = {};
+            // console.log($rootScope.currentUser,"ghgvhvvjvhgghv");
+            $scope.mentorData = {};
             $scope.mentors = [];
 
             if ($rootScope.currentUser) {

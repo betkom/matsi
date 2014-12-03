@@ -1,0 +1,22 @@
+var Firebase = require("firebase");
+var _ = require("lodash");
+
+var Level = function(snap) {
+  var level = snap.val();
+  this.rootRef = snap.ref().root();
+  if(level) {
+    this.id = snap.name();
+    this.name = level.name;
+    this.criteria = level.criteria;
+    this.players = level.players;
+  }
+}
+
+module.exports = function(rootRef) {
+  this.find = function(orgId, roleId, levelId, cb) {
+    var levelRef = rootRef.child(orgId).child('roles').child(roleId).child('levels').child(levelId);
+    levelRef.once('value', function(snap) {
+      cb(new Level(snap));
+    });
+  };
+}

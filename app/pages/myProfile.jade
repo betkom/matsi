@@ -1,5 +1,5 @@
-.row(ng-controller="FellowController")
-	div(ng-if="fellowData.role==='-fellow-'")
+.row(ng-controller="FellowController" ng-init="getCurrentFellow()")
+	div(ng-if="fellowData.role==='-fellow-'" )
 		h1 Welcome to matsi.....myProfile
 		div(class="col-md-4")
 			img(ng-src="{{fellowData.picture}}" width="320px" height="320px")

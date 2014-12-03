@@ -9,19 +9,7 @@ describe('matsi.services test',function(){
 	scope,
 	cookies;
 	var mockFellow = {
-<<<<<<< HEAD
-			uid: 'ggoogle:happy-fellow-id',
-			name: 'Happy Fellow',
-			email: 'happy-fellow@andela.co'
-		};
 
-	var mockMentor = {
-			uid: 'ggoogle:happy-mentor-id',
-			name: 'Happy Menthor',
-			email: 'happy-mentor@andela.co'
-		};
-			
-=======
 			uid: 'google:117109096177371390026',
 			name: 'Happy Fellow',
 			email: 'happy-fellow@andela.co'
@@ -31,7 +19,7 @@ describe('matsi.services test',function(){
 		name: 'Happy Mentor',
 		email: 'happy-fellow@gmail.com'
 	};	
->>>>>>> f1f2cc02499b286359632237369e70b0de3ccec5
+
 	beforeEach(inject(function($cookies,$rootScope, $injector){
 
 		scope = $rootScope;
@@ -60,13 +48,8 @@ describe('matsi.services test',function(){
 
 	// 	// it('MentorService should create mock Fellow mentorship request', function(){
 
-<<<<<<< HEAD
-
-	// 	// });
-=======
 		it('MentorService should create get mentors', function(){
 			MentorService.readMentor();
->>>>>>> f1f2cc02499b286359632237369e70b0de3ccec5
 
 	// });
 
@@ -79,14 +62,13 @@ describe('matsi.services test',function(){
 
 		
 
-	// 	it('FellowService should update/create a fellow', function(){
-	// 		console.log('Running FellowService Update');
-	// 		FellowService.updateFellow(mockFellow,function(err){
-	// 			console.log(err,'isError2');
-	// 			expect(err).toBeUndefined();
-	// 			expect(err).toBeDefined();
-	// 		});
-	// 	});
-
+		it('FellowService should update/create a fellow', function(){
+			console.log('Running FellowService Update');
+			FellowService.updateFellow(mockFellow, mockFellow.uid,function(err){
+				console.log(err,'isError2');
+				expect(err).toBeUndefined();
+				expect(err).toBeDefined();
+			});
+		});
 	// });
 });

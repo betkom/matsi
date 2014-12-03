@@ -18,7 +18,7 @@ angular.module("matsi.services", ['firebase', 'ngCookies'])
       delete fellowData1.$id;
       delete fellowData1.__proto__;
       //console.log("final", fellowData1);
-      rootRef.child('users').child(currentUID).update(fellowData1);
+      rootRef.child('users').child(fellowData.uid).update(fellowData1);
     },
     readFellow: function() {
       return $firebase(rootRef.child('users').orderByChild('role').equalTo('-fellow-')).$asObject();

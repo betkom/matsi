@@ -16,13 +16,15 @@ var browserify = require('browserify'),
     stringify = require('stringify'),
     uglify = require('gulp-uglify'),
     karma = require('gulp-karma'),
-    mocha = require('gulp-mocha'),
-    watchify = require('watchify');
-
+    watchify = require('watchify'),
+    //exit = require('gulp-exit'),
+    mocha = require('gulp-mocha');
+    
 var paths = {
   public: 'public/**',
   jade: 'app/**/*.jade',
   scripts: 'app/**/*.js',
+  libTests: ['mocha.js'],
   styles: 'app/styles/*.+(less|css)'
 }
 
@@ -109,6 +111,14 @@ gulp.task('watchify', function() {
 //     }))
 //     .pipe(gulp.dest('public'));
 // });
+
+gulp.task('mocha', function() {
+ return gulp.src(paths.libTests)
+ .pipe(mocha({
+   reporter: 'dot'
+ }))
+ .pipe(exit());
+});
 
 gulp.task('test', function() {
 // Be sure to return the stream
