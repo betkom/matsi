@@ -4,12 +4,10 @@ angular.module("matsi.controllers", ['firebase', 'ngCookies'])
 
         }
     ])
-    .controller("FellowController", ['$rootScope', '$scope', '$cookies', 'FellowService', '$http', '$stateParams', 'MentorService','AuthService','$location','$timeout',
-        function($rootScope, $scope, $cookies, FellowService, $http, $stateParams, MentorService, AuthService, $location, $timeout) {
-          
-
-
-
+    .controller("FellowController", ['$rootScope', '$scope', '$cookies', 'FellowService', '$http', '$stateParams', 'MentorService',
+        function($rootScope, $scope, $cookies, FellowService, $http, $stateParams, MentorService) {
+            console.log($rootScope,"this is root");
+            console.log($rootScope.currentUser,"this is val");
             // console.log($scope.currentUser ,'from child scope');
             // console.log($rootScope,"first call");
             // console.log($rootScope.currentUser,"second call");
@@ -17,8 +15,7 @@ angular.module("matsi.controllers", ['firebase', 'ngCookies'])
             // console.log(AuthService.currentUser,"service call user");
             // console.log(AuthService.currentUser.role,"service call user role");
             // console.log(AuthService,"service call2");
-
-            
+            $scope.fellowData = FellowService.readMyProfile($rootScope.currentUser.uid);
             if ($rootScope.currentUser) {
                 console.log($rootScope.currentUser,"third call");
                 $scope.fellowData = FellowService.readMyProfile($rootScope.currentUser.uid);
@@ -35,25 +32,38 @@ angular.module("matsi.controllers", ['firebase', 'ngCookies'])
             };
 
             $scope.getCurrentFellow = function() {
-              $scope.authCheck();
-              console.log($stateParams.uid,'user_uid');
-              $scope.fellowData = FellowService.readSingleFellow(currentUserUid);
+                console.log($stateParams.uid, 'user_uid');
+                $scope.fellowData = FellowService.readSingleFellow(currentUserUid);
+                this.showMessageBox = true;
             };
 
             $scope.submitFellow = function() {
               FellowService.updateFellow($scope.fellowData);
             };
 
-            $scope.accept = function(mentor) {
-              console.log(mentor);
-              FellowService.acceptRequest(mentor);
+            $scope.showBox1 = function(){
+                $scope.showMessageBox = false;
             };
 
-            $scope.sendRequest = function() {
-              AuthService.sendMail(1,angular.copy($scope.fellowData),function(res){
-                console.log(res);
-              });
-              FellowService.regRequest($scope.fellowData.uid);
+            $scope.mentorConstraints = function() {
+                if (FellowService.mentorConstraint()) {
+                    $scope.sendMail();
+                }
+            };
+
+            $scope.sendMail = function() {
+                var paramsFellow = angular.copy($scope.fellowData);
+                delete paramsFellow.$id;
+                delete paramsFellow.$priority;
+                console.log(paramsFellow, 'rackCity');
+                $http.post('/mail/user/1', paramsFellow).success(function(r) {
+                    console.log(r);
+                });
+                $scope.sendRequests();
+            };
+
+            $scope.sendRequests = function() {
+                FellowService.regRequest($scope.fellowData);
             };
         }
     ])

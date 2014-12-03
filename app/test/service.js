@@ -9,6 +9,7 @@ describe('matsi.services test',function(){
 	scope,
 	cookies;
 	var mockFellow = {
+<<<<<<< HEAD
 			uid: 'ggoogle:happy-fellow-id',
 			name: 'Happy Fellow',
 			email: 'happy-fellow@andela.co'
@@ -20,6 +21,17 @@ describe('matsi.services test',function(){
 			email: 'happy-mentor@andela.co'
 		};
 			
+=======
+			uid: 'google:117109096177371390026',
+			name: 'Happy Fellow',
+			email: 'happy-fellow@andela.co'
+		};
+	var mockMentor = {
+		uid: 'google:1123545666666666666',
+		name: 'Happy Mentor',
+		email: 'happy-fellow@gmail.com'
+	};	
+>>>>>>> f1f2cc02499b286359632237369e70b0de3ccec5
 	beforeEach(inject(function($cookies,$rootScope, $injector){
 
 		scope = $rootScope;
@@ -48,8 +60,13 @@ describe('matsi.services test',function(){
 
 	// 	// it('MentorService should create mock Fellow mentorship request', function(){
 
+<<<<<<< HEAD
 
 	// 	// });
+=======
+		it('MentorService should create get mentors', function(){
+			MentorService.readMentor();
+>>>>>>> f1f2cc02499b286359632237369e70b0de3ccec5
 
 	// });
 

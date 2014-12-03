@@ -1,54 +1,54 @@
-div(ng-init="authCheck()")
-	div(ng-if="fellowData")
-		h1 Fellow Profile Page
-		form
-			label(for="fullName") Full Name 
-			br
-			input(type="text" name="fullName" data-ng-model="fellowData.fullName")
-			br
-			br
-			label(for="joinDate") Join Date
-			br
-			input(type="text" name="joinDate" ng-model="fellowData.joinDate")
-			br
-			br
-			label(for="shortBio") Short Bio
-			br
-			input(type="text" name="shortBio" ng-model="fellowData.shortBio")
-			br
-			br
-			label(for="gitHubUrl") Github URL
-			br
-			input(type="text" name="gitHubUrl" ng-model="fellowData.gitHubUrl")
-			br
-			br
-			label(for="longBio") Long Bio (life story and experience so far at Andela at least 700 words)
-			br
-			input(type="text" name="longBio" ng-model="fellowData.longBio")
-			br
-			br
-			label(for="location") Location
-			br
-			input(type="text" name="location" ng-model="fellowData.location")
-			br
-			br
-			label(for="andelaDeveloperRank") Andela Developer Rank
-			br
-			input(type="text" name="andelaDeveloperRank" ng-model="fellowData.andelaDeveloperRank")
-			br
-			br
-			label(for="smartererScores") Smarterer Scores
-			br
-			input(type="text" name="smartererScores" ng-model="fellowData.smartererScores")
-			br
-			br
-			r
-			label(for="linkToPlum") Link to Plum public profile and badges
-			br
-			input(type="text" name="linkToPlum" ng-model="fellowData.linkToPlum")
-			br
-			br
-			input(type="submit" name="submit" ng-click="submitFellow()")
+.content
+br
+h1 Fellow Profile Page
+form
+	label(for="fullName") Full Name 
+	br
+	input(type="text" name="fullName" data-ng-model="fellowData.fullName")
+	br
+	br
+	label(for="joinDate") Join Date
+	br
+	input(type="text" name="joinDate" ng-model="fellowData.joinDate")
+	br
+	br
+	label(for="shortBio") Short Bio
+	br
+	input(type="text" name="shortBio" ng-model="fellowData.shortBio")
+	br
+	br
+	label(for="gitHubUrl") Github URL
+	br
+	input(type="text" name="gitHubUrl" ng-model="fellowData.gitHubUrl")
+	br
+	br
+	label(for="longBio") Long Bio (life story and experience so far at Andela at least 700 words)
+	br
+	input(type="text" name="longBio" ng-model="fellowData.longBio")
+	br
+	br
+	label(for="location") Location
+	br
+	input(type="text" name="location" ng-model="fellowData.location")
+	br
+	br
+	label(for="andelaDeveloperRank") Andela Developer Rank
+	br
+	input(type="text" name="andelaDeveloperRank" ng-model="fellowData.andelaDeveloperRank")
+	br
+	br
+	label(for="smartererScores") Smarterer Scores
+	br
+	input(type="text" name="smartererScores" ng-model="fellowData.smartererScores")
+	br
+	br
+	r
+	label(for="linkToPlum") Link to Plum public profile and badges
+	br
+	input(type="text" name="linkToPlum" ng-model="fellowData.linkToPlum")
+	br
+	br
+	input(type="submit" name="submit" ng-click="submitFellow()")
 
 
 
