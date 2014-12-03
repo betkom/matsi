@@ -5,4 +5,4 @@ p
   input(type="button" value="Reject Request" ng-click="showBox()" ng-if="showMessageBox")
   .messageBox(ng-hide="showMessageBox")
   input(type="text" class="messageBox" ng-hide="showMessageBox" ng-model="mentor.message")
-  input(type="button" value="Submit" ng-hide="showMessageBox" ng-click="reject()")
+  input(type="button" value="Submit" ng-hide="showMessageBox" ng-click="sendRejectMail()")

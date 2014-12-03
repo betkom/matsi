@@ -8,29 +8,22 @@ angular.module("matsi.directives", ['firebase', 'ngCookies'])
                 $scope.mentorData = MentorService.readSingleMentor($scope.mentor_uid, function(value) {
                     $scope.mentor.uid = value.uid;
                     $scope.mentor.email = value.email;
-                    $scope.mentor.name = value.name;
+                    $scope.mentor.firstName = value.firstName;
                 });
-                //$scope.mentor = {};
                 $scope.accept = function() {
-                    console.log($scope.mentor);
                     FellowService.acceptRequest($scope.mentor);
                 };
                 $scope.sendMail1 = function() {
-                    // paramsMentor = angular.copy($scope.mentor);
-                    // delete paramsMentor.$id;
-                    // delete paramsMentor.$priority;
-                    // console.log(paramsMentor, 'Toluuuuuuu');
-                    // $http.post('/mail/user/3', paramsMentor).success(function(r) {
-                    //     console.log(r);
-                    // });
                     MailService.send(3,$scope.mentor);
                     $scope.accept();
                 };
                 $scope.reject = function() {
-                    console.log($scope.mentor);
                     FellowService.rejectRequest($scope.mentor);
-                    console.log($scope.mentor.message);
                     $scope.showMessageBox = true;
+                };
+                $scope.sendRejectMail = function(){
+                    MailService.send(4,$scope.mentor);
+                    $scope.reject();
                 };
 
                 $scope.showBox = function() {
@@ -42,8 +35,8 @@ angular.module("matsi.directives", ['firebase', 'ngCookies'])
     .directive('header', function() {
         return {
             restrict: 'E',
-            controller: ['$rootScope', '$scope', '$firebase', '$cookies', 'FellowService', '$http','MailService',
-                function($rootScope, $scope, $firebase, $cookies, FellowService, $http, MailService) {
+            controller: ['$rootScope', '$scope', '$firebase', '$cookies', 'FellowService', '$http','MailService', '$timeout',
+                function($rootScope, $scope, $firebase, $cookies, FellowService, $http, MailService, $timeout) {
                     var rootRef = new Firebase($cookies.rootRef);
                     // Start with no user logged in
                     $rootScope.currentUser = null;
@@ -52,40 +45,35 @@ angular.module("matsi.directives", ['firebase', 'ngCookies'])
                         if (authData) {
                             console.log("auth: user is logged in");
                             var user = buildUserObjectFromGoogle(authData);
-                            console.log(user, 'isUser');
-                            var userRef = rootRef.child('users').child(user.uid);
-                             $rootScope.currentUser = user;
+                            var userRef = rootRef.child('users').child(user.uid); 
+                            $rootScope.currentUser = user;
                             userRef.on('value', function(snap) {
                                 if (!snap.val()) {
                                     user.created = Firebase.ServerValue.TIMESTAMP;
                                     user.isAdmin = false;
                                     user.role = user.email.indexOf('@andela.co') > -1 ? '-fellow-' : '-mentor-';
                                     user.disabled = !(user.role === "-fellow-");
-                                    if ($rootScope.currentUser.disabled) {
-                                        userRef.set(user);
-                                        MailService.send(2,$rootScope.currentUser);
-                                    } else {
-                                        user.isMentored = false;
-                                        userRef.set(user);
-                                        $rootScope.currentUser = user;
-                                    }
+                                    if(!user.disabled)
+                                      user.isMentored = false;
+                                    else
+                                      MailService.send(2,user);
+                                    userRef.set(user);   
                                 } else {
-                                    $rootScope.currentUser = snap.val();
-                                    if ($rootScope.currentUser.disabled) {
-                                        $rootScope.allowUser = true;
-                                        $rootScope.currentUser = null;
-                                        console.log('user FOH');
+                                    user = snap.val();
+                                    if (user.disabled) {
+                                        user = null;
                                         rootRef.unauth();
                                     }
                                 }
+                                $timeout(function(){
+                                  $rootScope.currentUser = user;
+                                },1);
                             });
                         } else {
-                            // user is logged out
                             console.log("auth: user is logged out");
                             $rootScope.currentUser = null;
                         }
                     });
-
                     $scope.login = function() {
                         options = {
                             remember: false,
@@ -119,10 +107,3 @@ function buildUserObjectFromGoogle(authData) {
         picture: authData.google.cachedUserProfile.picture
     }
 };
-
-// function sendMail(value, $http) {
-//     var paramsMentor = angular.copy(value);
-//     delete paramsMentor.$id;
-//     delete paramsMentor.$priority;
-//     $http.post('/mail/user/2', paramsMentor);
-// };

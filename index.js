@@ -32,6 +32,7 @@ function run(appdir) {
         console.log(req.body);
         var fellowName = req.body.firstName;
         var fellowMail = req.body.email;
+        var mailMessage = req.body.message;
         var type = req.params.type;
         var adminMail = 'Andela ✔ <1testertest1@gmail.com>';
         //var data = req.params.fellow;
@@ -80,8 +81,8 @@ function run(appdir) {
                     var mailOptions = {
                         from: adminMail, // sender address
                         to: fellowMail, // list of receivers
-                        subject: 'Hello ✔', // Subject line
-                        html: 'This is a mail from Case 2', // plaintext body
+                        subject: 'Hello '+ fellowName, // Subject line
+                        html: 'Your mentor request has been rejected because '+ mailMessage, // plaintext body
                     };
                     break;
                 case 5:
@@ -106,7 +107,6 @@ function run(appdir) {
         });
         res.status(200).send(_res);
     });
-    //all routes #shittu
     app.get('/*', function(req, res) {
         //res.header('Access-Control-Allow-Origin', '*');
         //res.header('Access-Control-Allow-Headers', 'Content-Type,X-Requested-With');

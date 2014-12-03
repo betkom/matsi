@@ -19,8 +19,7 @@ var browserify = require('browserify'),
     watchify = require('watchify'),
     //exit = require('gulp-exit'),
     mocha = require('gulp-mocha');
-
-
+    
 var paths = {
   public: 'public/**',
   jade: 'app/**/*.jade',
@@ -30,11 +29,11 @@ var paths = {
 }
 
 var testFiles = [
-  // 'test-main.js',
+ // 'test-main.js',
   'public/lib/angular/angular.js',
   'public/lib/angular-mocks/angular-mocks.js',
-  // 'public/lib/mockfirebase/browser/mockfirebase.js',
   'public/lib/moment/moment.js',
+  'public/lib/firebase/firebase.js',
   'public/lib/angular-aria/angular-aria.js',
   'public/lib/angular-ui-router/release/angular-ui-router.min.js',
   'public/lib/hammerjs/hammer.min.js',
@@ -45,9 +44,8 @@ var testFiles = [
   'public/lib/angular-animate/angular-animate.js',
   'public/lib/angular-sanitize/angular-sanitize.js',
   'public/lib/angularfire/dist/angularfire.js',
-  'public/lib/firebase/firebase.js',
   'public/js/index.js',
-  'app/test/service.js'
+  'app/test/specs.js'
 ];
 
 gulp.task('jade', function() {
@@ -135,9 +133,23 @@ return gulp.src(testFiles)
   });
 });
 
-
-
-
+gulp.task('default', function () {
+    return gulp.src('app/test/service.js', {read: false})
+        .pipe(mocha({reporter: 'nyan'}));
+});
+// gulp.task('mocha', function() {
+// // Be sure to return the stream
+// return gulp.src(testFiles)
+//   .pipe(mocha({
+//     configFile:
+//     action:run
+    
+//   }))
+//   .on('error', function(err) {
+//     // Make sure failed tests cause gulp to exit non-zero
+//     //throw err;
+//   });
+// });
 gulp.task('heroku:production', ['scripts', 'jade', 'less']);
 gulp.task('production', ['nodemon']);
 gulp.task('default', ['nodemon','jade','less','watch','watchify']);
