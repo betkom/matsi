@@ -73,7 +73,7 @@ function run(appdir) {
                         from: adminMail, // sender address
                         to: fellowMail, // list of receivers
                         subject: 'Hello '+fellowName, // Subject line
-                        html: 'This is a mail from Case 3', // plaintext body
+                        html: 'Your mentor request has been accepted', // plaintext body
                     };
                     break;
                 case 4:

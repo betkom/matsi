@@ -1,25 +1,39 @@
 angular.module("matsi.directives", ['firebase', 'ngCookies'])
-    .directive('mentorRequest', function () {
+    .directive('mentorRequest', function() {
         return {
             restrict: 'E',
             templateUrl: '/pages/mentor-request.html',
-            controller: ['$scope' ,'MentorService', 'FellowService', function ($scope, MentorService, FellowService) {
-                
-                $scope.mentorData = MentorService.readSingleMentor($scope.mentor_uid,function(value){
+            controller: ['$scope', '$http', 'MentorService', 'MailService', 'FellowService', function($scope, $http, MentorService, MailService, FellowService) {
+
+                $scope.mentorData = MentorService.readSingleMentor($scope.mentor_uid, function(value) {
                     $scope.mentor.uid = value.uid;
+                    $scope.mentor.email = value.email;
+                    $scope.mentor.name = value.name;
                 });
                 //$scope.mentor = {};
                 $scope.accept = function() {
-                console.log($scope.mentor);
+                    console.log($scope.mentor);
                     FellowService.acceptRequest($scope.mentor);
                 };
-                $scope.reject = function(){
+                $scope.sendMail1 = function() {
+                    // paramsMentor = angular.copy($scope.mentor);
+                    // delete paramsMentor.$id;
+                    // delete paramsMentor.$priority;
+                    // console.log(paramsMentor, 'Toluuuuuuu');
+                    // $http.post('/mail/user/3', paramsMentor).success(function(r) {
+                    //     console.log(r);
+                    // });
+                    MailService.send(3,$scope.mentor);
+                    $scope.accept();
+                };
+                $scope.reject = function() {
                     console.log($scope.mentor);
                     FellowService.rejectRequest($scope.mentor);
                     console.log($scope.mentor.message);
                     $scope.showMessageBox = true;
                 };
-                $scope.showBox =function(){
+
+                $scope.showBox = function() {
                     $scope.showMessageBox = false;
                 }
             }]
@@ -28,8 +42,8 @@ angular.module("matsi.directives", ['firebase', 'ngCookies'])
     .directive('header', function() {
         return {
             restrict: 'E',
-            controller: ['$rootScope', '$scope', '$firebase', '$cookies', 'FellowService', '$http',
-                function($rootScope, $scope, $firebase, $cookies, FellowService, $http) {
+            controller: ['$rootScope', '$scope', '$firebase', '$cookies', 'FellowService', '$http','MailService',
+                function($rootScope, $scope, $firebase, $cookies, FellowService, $http, MailService) {
                     var rootRef = new Firebase($cookies.rootRef);
                     // Start with no user logged in
                     $rootScope.currentUser = null;
@@ -49,7 +63,7 @@ angular.module("matsi.directives", ['firebase', 'ngCookies'])
                                     user.disabled = !(user.role === "-fellow-");
                                     if ($rootScope.currentUser.disabled) {
                                         userRef.set(user);
-                                        sendMail($rootScope.currentUser, $http);
+                                        MailService.send(2,$rootScope.currentUser);
                                     } else {
                                         user.isMentored = false;
                                         userRef.set(user);
@@ -106,9 +120,9 @@ function buildUserObjectFromGoogle(authData) {
     }
 };
 
-function sendMail(value, $http) {
-    var paramsMentor = angular.copy(value);
-    delete paramsMentor.$id;
-    delete paramsMentor.$priority;
-    $http.post('/mail/user/2', paramsMentor);
-};
+// function sendMail(value, $http) {
+//     var paramsMentor = angular.copy(value);
+//     delete paramsMentor.$id;
+//     delete paramsMentor.$priority;
+//     $http.post('/mail/user/2', paramsMentor);
+// };

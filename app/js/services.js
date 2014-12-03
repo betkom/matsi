@@ -57,7 +57,7 @@ angular.module("matsi.services", ['firebase', 'ngCookies'])
       rootRef.child('users').child(fellow.uid).child('requests').child($rootScope.currentUser.uid).set({timestamp:Firebase.ServerValue.TIMESTAMP, message:fellow.message});
     },
     acceptRequest: function(mentor){
-    	rootRef.child('users').child($rootScope.currentUser.uid).child('mentors').child(mentor.uid).set({timestamp:Firebase.ServerValue.TIMESTAMP});
+    	rootRef.child('users').child($rootScope.currentUser.uid).child('mentors').child(mentor.uid).set({timestamp:Firebase.ServerValue.TIMESTAMP, email:mentor.email});
       rootRef.child('users').child($rootScope.currentUser.uid).update({isMentored: true});
       rootRef.child('users').child(mentor.uid).child('fellows').child($rootScope.currentUser.uid).set({timestamp:Firebase.ServerValue.TIMESTAMP});
       rootRef.child('users').child($rootScope.currentUser.uid).child('requests').child(mentor.uid).remove();
@@ -104,5 +104,19 @@ angular.module("matsi.services", ['firebase', 'ngCookies'])
       rootRef.child('users').child(currentUId).update(mentorData1);
     }
   };
+}])
+.factory('MailService', ['$http',function($http){
+  return {
+  send: function(type,params) {
+    var paramsFellow = angular.copy(params);
+                delete paramsFellow.$id;
+                delete paramsFellow.$priority;
+                console.log(paramsFellow, 'rackCity');
+                
+                $http.post('/mail/user/'+type, paramsFellow).success(function(r) {
+                    console.log(r);
+                });
+  }
+};
 }]);
 

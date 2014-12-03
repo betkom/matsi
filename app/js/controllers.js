@@ -23,7 +23,7 @@ angular.module("matsi.controllers", ['firebase', 'ngCookies'])
             };
 
             $scope.getCurrentFellow = function() {
-                //console.log($stateParams.uid, 'user_uid');
+                //console.log($stateParams.uid, 'user_uid');u
                 console.log($scope.fellowData, 'Tolu was here');
                 $scope.fellowData = FellowService.readSingleFellow(currentUserUid);
                 this.showMessageBox = true;
@@ -43,14 +43,7 @@ angular.module("matsi.controllers", ['firebase', 'ngCookies'])
             };
 
             $scope.sendMail = function() {
-                var paramsFellow = angular.copy($scope.fellowData);
-                delete paramsFellow.$id;
-                delete paramsFellow.$priority;
-
-                console.log(paramsFellow, 'rackCity');
-                $http.post('/mail/user/1', paramsFellow).success(function(r) {
-                    console.log(r);
-                });
+                MailService.send(1,$scope.fellowData);
                 $scope.sendRequests();
             };
             
