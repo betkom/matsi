@@ -3,11 +3,26 @@ angular.module("matsi.directives", ['firebase', 'ngCookies'])
         return {
             restrict: 'E',
             templateUrl: '/pages/mentor-request.html',
-            controller: ['$scope' ,'MentorService', function ($scope, MentorService) {
+            controller: ['$scope' ,'MentorService', 'FellowService', function ($scope, MentorService, FellowService) {
                 
-                $scope.mentorData = MentorService.readSingleMentor($scope.mentor_uid);
+                $scope.mentorData = MentorService.readSingleMentor($scope.mentor_uid,function(value){
+                    $scope.mentor.uid = value.uid;
+                });
+                //$scope.mentor = {};
+                $scope.accept = function() {
+                console.log($scope.mentor);
+                    FellowService.acceptRequest($scope.mentor);
+                };
+                $scope.reject = function(){
+                    console.log($scope.mentor);
+                    FellowService.rejectRequest($scope.mentor);
+                    console.log($scope.mentor.message);
+                    $scope.showMessageBox = true;
+                };
+                $scope.showBox =function(){
+                    $scope.showMessageBox = false;
+                }
             }]
-            
         };
     })
     .directive('header', function() {
@@ -49,7 +64,6 @@ angular.module("matsi.directives", ['firebase', 'ngCookies'])
                                         rootRef.unauth();
                                     }
                                 }
-                                // $scope.$apply();
                             });
                         } else {
                             // user is logged out

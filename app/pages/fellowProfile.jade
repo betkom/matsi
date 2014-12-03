@@ -3,5 +3,6 @@ h1(ng-init="getCurrentFellow()") Welcome to matsi you are a fellow.....
 	.col-md-4
 		img(ng-src="{{fellowData.picture}}" width="320px" height="320px")
 		p Name : {{fellowData.fullName}}
-input(type="button" value="Apply to Mentor" ng-click="mentorConstraints()")
-
+input(type="button" value="Apply to Mentor" ng-click="showBox1()" ng-show="showMessageBox" ng-if="currentUser.role === '-mentor-'")
+input(type="text" ng-hide="showMessageBox" ng-model="fellowData.message")
+input(type="button" ng-hide="showMessageBox" value="Apply" ng-click="mentorConstraints()" ng-disabled="!fellowData.message.length")
