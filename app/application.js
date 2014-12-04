@@ -1,9 +1,11 @@
+angular.module("matsi.services", ['firebase', 'ngCookies']);
 require("./js/config/config.js");
 require("./js/controllers/mentor.js");
 require("./js/controllers/fellow.js");
 require("./js/directives/mentor-request.js");
 require("./js/directives/header.js");
-require("./js/services.js");
+require("./js/services/mentor.js");
+require("./js/services/fellow.js");
 
 Matsi.run(['$rootScope', function($rootScope) {
     // set globals we want available in ng expressions
