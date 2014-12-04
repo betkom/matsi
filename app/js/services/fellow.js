@@ -1,4 +1,5 @@
-Matsi.factory('FellowService', ['$firebase', '$cookies', '$stateParams', '$rootScope', function($firebase, $cookies, $stateParams, $rootScope) {
+//angular.module("matsi.services", ['firebase', 'ngCookies'])
+    Matsi.factory('FellowService', ['$firebase', '$cookies', '$stateParams', '$rootScope', function($firebase, $cookies, $stateParams, $rootScope) {
         var rootRef = new Firebase($cookies.rootRef);
         return {
             updateFellow: function(fellowData, currentUID) {

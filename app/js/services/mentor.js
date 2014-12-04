@@ -1,4 +1,5 @@
-Matsi.factory('MentorService', ['$firebase', '$cookies', '$stateParams', function($firebase, $cookies, $stateParams) {
+//angular.module("matsi.services", ['firebase', 'ngCookies'])
+    Matsi.factory('MentorService', ['$firebase', '$cookies', '$stateParams', function($firebase, $cookies, $stateParams) {
         var rootRef = new Firebase($cookies.rootRef);
         return {
             readMentor: function(callback) {
