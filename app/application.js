@@ -1,5 +1,7 @@
-require("./js/controllers.js");
-require("./js/directives.js");
+require("./js/controllers/MentorController.js");
+require("./js/controllers/FellowController.js");
+require("./js/directives/mentorRequest.js");
+require("./js/directives/header.js");
 require("./js/services.js");
 
 window.Matsi = angular.module("Matsi", [
