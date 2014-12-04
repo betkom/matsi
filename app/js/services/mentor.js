@@ -1,4 +1,5 @@
-Matsi.factory('MentorService', ['$firebase', '$cookies', '$stateParams', function($firebase, $cookies, $stateParams) {
+//angular.module("matsi.services", ['firebase', 'ngCookies'])
+    Matsi.factory('MentorService', ['$firebase', '$cookies', '$stateParams', function($firebase, $cookies, $stateParams) {
         var rootRef = new Firebase($cookies.rootRef);
         return {
             readMentor: function(callback) {
@@ -31,16 +32,6 @@ Matsi.factory('MentorService', ['$firebase', '$cookies', '$stateParams', functio
                 delete mentorData1.$priority;
                 delete mentorData1._proto_;
                 rootRef.child('users').child(currentUId).update(mentorData1);
-            }
-        };
-    }])
-    .factory('MailService', ['$http', function($http) {
-        return {
-            send: function(type, params) {
-                var paramsFellow = angular.copy(params);
-                delete paramsFellow.$id;
-                delete paramsFellow.$priority;
-                $http.post('/mail/user/' + type, paramsFellow);
             }
         };
     }]);
