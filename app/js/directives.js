@@ -4,7 +4,6 @@ angular.module("matsi.directives", ['firebase', 'ngCookies'])
             restrict: 'E',
             templateUrl: '/pages/mentor-request.html',
             controller: ['$scope', '$http', 'MentorService', 'MailService', 'FellowService', function($scope, $http, MentorService, MailService, FellowService) {
-
                 $scope.mentorData = MentorService.readSingleMentor($scope.mentor_uid, function(value) {
                     $scope.mentor.uid = value.uid;
                     $scope.mentor.email = value.email;
@@ -25,7 +24,6 @@ angular.module("matsi.directives", ['firebase', 'ngCookies'])
                     MailService.send(4,$scope.mentor);
                     $scope.reject();
                 };
-
                 $scope.showBox = function() {
                     $scope.showMessageBox = false;
                 }
@@ -57,7 +55,8 @@ angular.module("matsi.directives", ['firebase', 'ngCookies'])
                                       user.isMentored = false;
                                     else
                                       MailService.send(2,user);
-                                    userRef.set(user);   
+                                    userRef.set(user);
+                                    $rootScope.allowUser = true;
                                 } else {
                                     user = snap.val();
                                     if (user.disabled) {

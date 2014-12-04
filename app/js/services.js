@@ -10,7 +10,6 @@ angular.module("matsi.services", ['firebase', 'ngCookies'])
                 delete fellowData1.$priority;
                 delete fellowData1.$id;
                 delete fellowData1.__proto__;
-                console.log("final", fellowData1);
                 rootRef.child('users').child(currentUID).update(fellowData1);
             },
             readFellow: function() {

@@ -1,28 +1,17 @@
 angular.module("matsi.controllers", ['firebase', 'ngCookies'])
-    .controller('HomeController', ['$rootScope', '$scope', '$mdSidenav', '$location', '$state', 'FellowService',
-        function($rootScope, $scope, $mdSidenav, $location, $state, FellowService) {
-
-        }
-    ])
     .controller("FellowController", ['$rootScope', '$scope', '$cookies', 'FellowService', '$http', '$stateParams', 'MentorService', 'MailService',
         function($rootScope, $scope, $cookies, FellowService, $http, $stateParams, MentorService, MailService) {
-            console.log($rootScope, "this is root");
-            console.log($rootScope.currentUser, "this is val");
             if ($rootScope.currentUser) {
                 var currentUserUid = $stateParams.uid || $rootScope.currentUser.uid;
-                console.log($rootScope.currentUser.uid, 'from tolu');
             } else {
                 var currentUserUid = $stateParams.uid;
             }
             $scope.getAllFellows = function() {
                 $scope.allFellows = FellowService.readFellow();
-                console.log($scope.allFellows);
-                console.log($scope.allFellows.length);
             };
 
             $scope.getCurrentFellow = function() {
                 $scope.fellowData = FellowService.readSingleFellow(currentUserUid);
-                console.log($scope.fellowData, 'Tolu was here');
                 this.showMessageBox = true;
             };
 
@@ -36,7 +25,6 @@ angular.module("matsi.controllers", ['firebase', 'ngCookies'])
 
             $scope.mentorConstraints = function() {
                 FellowService.mentorConstraint(function(responseData) {
-
                     if (responseData) {
                         if (responseData.length === 0) {
                             $scope.sendMail();
@@ -64,7 +52,6 @@ angular.module("matsi.controllers", ['firebase', 'ngCookies'])
         function($rootScope, $scope, $cookies, MentorService, $stateParams, $location) {
             $scope.mentorData = {};
             $scope.mentors = [];
-
             if ($rootScope.currentUser ) {
                 $scope.mentorData = MentorService.readMyProfile($rootScope.currentUser.uid);
             };
