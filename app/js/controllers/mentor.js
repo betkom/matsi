@@ -3,7 +3,7 @@ angular.module("matsi.controllers", ['firebase', 'ngCookies'])
         function($rootScope, $scope, $cookies, MentorService, $stateParams, $location) {
             $scope.mentorData = {};
             $scope.mentors = [];
-            if ($rootScope.currentUser ) {
+            if ($rootScope.currentUser) {
                 $scope.mentorData = MentorService.readMyProfile($rootScope.currentUser.uid);
             };
             $scope.mentors = MentorService.readMentor();

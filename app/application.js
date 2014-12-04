@@ -1,4 +1,3 @@
-angular.module("matsi.services", ['firebase', 'ngCookies']);
 require("./js/config/config.js");
 require("./js/controllers/mentor.js");
 require("./js/controllers/fellow.js");

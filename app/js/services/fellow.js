@@ -2,9 +2,7 @@ Matsi.factory('FellowService', ['$firebase', '$cookies', '$stateParams', '$rootS
         var rootRef = new Firebase($cookies.rootRef);
         return {
             updateFellow: function(fellowData, currentUID) {
-                console.log(currentUID);
                 var fellowData1 = angular.copy(fellowData);
-                console.log(fellowData1);
                 delete fellowData1.$$conf;
                 delete fellowData1.$priority;
                 delete fellowData1.$id;
