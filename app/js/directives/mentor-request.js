@@ -1,4 +1,4 @@
-angular.module("matsi.directives", ['firebase', 'ngCookies'])
+angular.module("matsi.directives")
     .directive('mentorRequest', function() {
         return {
             restrict: 'E',

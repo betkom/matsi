@@ -1,14 +1,14 @@
-section.content.fellows
-  .container
-    h2.blue.light Mentors at Andela
-    hr
-    .row
-      .col-sm-3
-        a(ng-repeat = "mentor in mentors" ng-href="mentors/{{mentor.uid}}")
-        .user-wrap
-          .profile-pic
-            span.f-badge F
-            img(ng-src="{{mentor.picture}}")
-          .user-name
-            h5 {{mentor.name}}
-            p.text-muted {{mentor.Title}}
+.container
+  h2.blue.light Mentors at Andela
+  hr
+  .row
+    .col-sm-3(ng-repeat = "mentor in mentors" ng-href="mentors/{{mentor.uid}}")
+      .user-wrap
+        .profile-pic
+          span.f-badge F
+          img(ng-src="{{mentor.picture}}")
+        .user-name
+          h5 {{mentor.fullName}}
+          p.text-muted {{mentor.email}}
+          br
+          br

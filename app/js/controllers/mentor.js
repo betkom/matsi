@@ -1,4 +1,4 @@
-angular.module("matsi.controllers", ['firebase', 'ngCookies'])
+angular.module("matsi.controllers")
     .controller("MentorController", ['$rootScope', '$scope', '$cookies', 'MentorService', '$stateParams', '$location',
         function($rootScope, $scope, $cookies, MentorService, $stateParams, $location) {
             $scope.mentorData = {};
@@ -15,18 +15,22 @@ angular.module("matsi.controllers", ['firebase', 'ngCookies'])
                 }
             };
 
-            $scope.submitMentor = function(data) {
-                if (document.getElementById('Agree').checked) {
-                    MentorService.updateMentor(data, $rootScope.currentUser.uid, function(error) {
-                        if (error) {
-                            alert('Hoops! Data not updated succesfully');
-                        } else {
-                            alert('Data updated successfully');
-                        }
-                    });
-                } else {
-                    alert('You must agree to the Terms')
-                }
-            };
+            $scope.checked = false;
+           $scope.toggleCheck = function(){
+               $scope.checked = !$scope.checked;
+           };
+           $scope.submitMentor = function(data) {
+               if ($scope.checked) {
+                   MentorService.updateMentor(data, $rootScope.currentUser.uid, function(err) {
+                       if (err) {
+                           alert('Hoops! Data not updated succesfully');
+                       } else {
+                           alert('Data updated successfully');
+                       }
+                   });
+               } else {
+                   alert('You must agree to the Terms');
+               }
+           };
         }
     ]);
