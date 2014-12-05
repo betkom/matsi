@@ -1,5 +1,5 @@
-//angular.module("matsi.services", ['firebase', 'ngCookies'])
-    Matsi.factory('MailService', ['$http', function($http) {
+angular.module("matsi.services")
+    .factory('MailService', ['$http', function($http) {
         return {
             send: function(type, params) {
                 var paramsFellow = angular.copy(params);
