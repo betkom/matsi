@@ -1,34 +1,9 @@
 angular.module("matsi.directives", ['firebase', 'ngCookies'])
-    .directive('mentorRequest', function() {
-        return {
-            restrict: 'E',
-            templateUrl: '/pages/mentor-request.html',
-            controller: ['$scope', 'MentorService', 'FellowService', function($scope, MentorService, FellowService) {
-
-                $scope.mentorData = MentorService.readSingleMentor($scope.mentor_uid, function(value) {
-                    $scope.mentor.uid = value.uid;
-                });
-                $scope.accept = function() {
-                    console.log($scope.mentor);
-                    FellowService.acceptRequest($scope.mentor);
-                };
-                $scope.reject = function() {
-                    console.log($scope.mentor);
-                    FellowService.rejectRequest($scope.mentor);
-                    console.log($scope.mentor.message);
-                    $scope.showMessageBox = true;
-                };
-                $scope.showBox = function() {
-                    $scope.showMessageBox = false;
-                };
-            }]
-        };
-    })
     .directive('header', function() {
         return {
             restrict: 'E',
-            controller: ['$rootScope', '$scope', '$firebase', '$cookies', 'FellowService', 'AuthService', '$timeout',
-                function($rootScope, $scope, $firebase, $cookies, FellowService, AuthService, $timeout) {
+            controller: ['$rootScope', '$scope', '$firebase', '$cookies', 'FellowService', '$timeout',
+                function($rootScope, $scope, $firebase, $cookies, FellowService, $timeout) {
                     var rootRef = new Firebase($cookies.rootRef);
                     // Start with no user logged in
                     $rootScope.currentUser = null;
