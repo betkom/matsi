@@ -1,4 +1,4 @@
-angular.module("matsi.controllers", ['firebase', 'ngCookies'])
+angular.module("matsi.controllers")
     .controller("FellowController", ['$rootScope', '$scope', '$cookies', 'FellowService', '$http', '$stateParams', 'MentorService', 'MailService',
     function($rootScope, $scope, $cookies, FellowService, $http, $stateParams, MentorService, MailService) {
         if ($rootScope.currentUser) {
@@ -13,6 +13,7 @@ angular.module("matsi.controllers", ['firebase', 'ngCookies'])
         $scope.getCurrentFellow = function() {
             $scope.fellowData = FellowService.readSingleFellow(currentUserUid);
             this.showMessageBox = true;
+            //console.log($scope.fellowData.requests, "This is #Yeet");
         };
 
         $scope.submitFellow = function() {

@@ -1,4 +1,4 @@
-angular.module("matsi.controllers", ['firebase', 'ngCookies'])
+angular.module("matsi.controllers")
     .controller("MentorController", ['$rootScope', '$scope', '$cookies', 'MentorService', '$stateParams', '$location',
         function($rootScope, $scope, $cookies, MentorService, $stateParams, $location) {
             $scope.mentorData = {};
