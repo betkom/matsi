@@ -30,6 +30,7 @@ node_modules
 public/lib/**/*.gzip
 public/lib/**/*.min.js
 public/lib/**/*.min.css
+public/lib/**/*.min.less
 public/lib/**/*.md
 public/lib/**/*.js
 

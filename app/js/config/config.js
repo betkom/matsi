@@ -1,31 +1,12 @@
-
-angular.module("matsi.services", ['firebase', 'ngCookies']);
-angular.module("matsi.controllers", ['firebase', 'ngCookies']);
-angular.module("matsi.directives", ['firebase', 'ngCookies']);
-
-require("./js/config/config.js");
-require("./js/services/mentor.js");
-require("./js/services/fellow.js");
-require("./js/services/mail.js");
-
-require("./js/controllers/mentor.js");
-require("./js/controllers/fellow.js");
-
-require("./js/directives/mentor-request.js");
-require("./js/directives/header.js");
-
-Matsi.run(['$rootScope', function($rootScope) {
-    // set globals we want available in ng expressions
-    $rootScope._ = window._;
-    $rootScope.moment = window.moment;
-}]);
-
-if (window.location.toString().indexOf('#&__firebase_request_key') > -1) {
-    window.location = '/';
-}
-
+window.Matsi = angular.module("Matsi", [
+    'matsi.controllers',
+    'matsi.services',
+    'matsi.directives',
+    'ngAnimate',
+    'ngMaterial',
+    'ui.router'
+]);
 Matsi.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', function($stateProvider, $urlRouterProvider, $locationProvider, $rootScope) {
-
     $locationProvider.html5Mode(true);
     $stateProvider
         .state('home', {
@@ -40,7 +21,7 @@ Matsi.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', funct
             url: '/updateFellowProfile',
             templateUrl: 'pages/updateFellowProfile.html',
             controller: 'FellowController',
-            
+
             data: {
                 access: 'private',
                 authorizedRoles: [false],
@@ -50,7 +31,7 @@ Matsi.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', funct
         .state('myProfile', {
             url: '/myProfile',
             templateUrl: 'pages/myProfile.html',
-            controller: 'FellowController',
+            controller: '',
             data: {
                 access: 'private'
             }
@@ -103,15 +84,6 @@ Matsi.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', funct
                 access: 'private'
             }
         });
-        $urlRouterProvider.otherwise("/");
+    $urlRouterProvider.otherwise("/");
 
 }]);
-window.escapeEmailAddress = function(email) {
-    if (!email) {
-        return false;
-    }
-    // Replace '.' (not allowed in a Firebase key) with ',' (not allowed in an email address)
-    email = email.toLowerCase();
-    email = email.replace(/\./g, ',');
-    return email;
-};

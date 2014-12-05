@@ -1,1 +1,49 @@
-h1 Welcome to Matsi.....
+#page-wrap
+  section.banner
+  .container
+    .caption
+      h3 Bring the world’s brightest minds to your team.
+      p
+        | Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsa, quisquam hic soluta delectus ad vel eum autem distinctio quo deserunt incidunt. Magnam nesciunt quisquam odio commodi doloremque molestiae impedit, eius.
+  section.features
+  .container
+    h3.text-center.red Our Fellows
+    p.text-muted.text-center
+      | Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+      br
+      | Velit quia, maiores ipsum recusandae..
+    hr
+    br
+    .row(ng-controller="FellowController" ng-init="getAllFellows()")
+      a(data-ng-repeat='fellow in allFellows | limitTo:3' ng-href="fellowProfile/{{fellow.uid}}")
+          .col-md-4
+            .user-wrap
+              .profile-pic
+                span.f-badge F
+                img(ng-src="{{fellow.picture}}")
+                h5 {{fellow.fullName}}
+                p {{fellow.title}}
+            br
+    a(class="viewMore" ng-href="fellows") View more Fellows >>
+  section.features.alt
+  .container
+    h3.text-center.blue Some title
+    p.text-muted.text-center
+      | Lorem ipsum dolor sit amet, consectetur adipisicing elit. Velit quia, maiores ipsum recusandae..
+    br
+    .row
+      .col-md-6
+        p
+          | Lorem ipsum dolor sit amet, consectetur adipisicing elit. In quam facere amet quas inventore. Ab adipisci minima officia provident quaerat magnam aspernatur ratione, repellendus repudiandae necessitatibus explicabo sed beatae enim.
+      .col-md-6
+        p
+          | Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolorem molestiae, laborum! Consequatur autem optio explicabo nisi architecto ipsum, sit quod officia, iusto voluptatibus beatae ea facere omnis ducimus, quas tenetur.
+    .row
+      .col-md-6
+        p
+          | Lorem ipsum dolor sit amet, consectetur adipisicing elit. In quam facere amet quas inventore. Ab adipisci minima officia provident quaerat magnam aspernatur ratione, repellendus repudiandae necessitatibus explicabo sed beatae enim.
+      .col-md-6
+        p
+          | Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolorem molestiae, laborum! Consequatur autem optio explicabo nisi architecto ipsum, sit quod officia, iusto voluptatibus beatae ea facere omnis ducimus, quas tenetur.
+
+      

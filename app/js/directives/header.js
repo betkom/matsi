@@ -41,34 +41,29 @@ angular.module("matsi.directives", ['firebase', 'ngCookies'])
                             $rootScope.currentUser = user;
                             userRef.on('value', function(snap) {
                                 if (!snap.val()) {
-                                    console.log("am here no val");
                                     user.created = Firebase.ServerValue.TIMESTAMP;
                                     user.isAdmin = false;
                                     user.role = user.email.indexOf('@andela.co') > -1 ? '-fellow-' : '-mentor-';
                                     user.disabled = !(user.role === "-fellow-");
-                                    if (!user.disabled)
-                                        user.isMentored = false;
+                                    if(!user.disabled)
+                                      user.isMentored = false;
                                     else
-                                        AuthService.sendMail(2, user);
+                                      MailService.send(2,user);
                                     userRef.set(user);
+                                    $rootScope.allowUser = true;
                                 } else {
-                                    console.log(snap.val(), "this is snap");
                                     user = snap.val();
-                                    AuthService.user = snap.val();
-                                    console.log(snap.val(), "this is root");
                                     if (user.disabled) {
                                         user = null;
-                                        console.log('user FOH');
                                         rootRef.unauth();
                                     }
                                 }
-                                $timeout(function() {
-                                    $rootScope.currentUser = user;
-                                }, 1);
+                                $timeout(function(){
+                                  $rootScope.currentUser = user;
+                                },1);
                             });
                         } else {
                             $rootScope.currentUser = null;
-                            AuthService.user = null;
                         }
                     });
                     $scope.login = function() {
