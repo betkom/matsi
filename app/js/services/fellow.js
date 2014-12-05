@@ -11,7 +11,7 @@ angular.module("matsi.services")
                 rootRef.child('users').child(currentUID).update(fellowData1);
             },
             readFellow: function() {
-                return $firebase(rootRef.child('users').orderByChild('role').equalTo('-fellow-')).$asObject();
+                return $firebase(rootRef.child('users').orderByChild('role').equalTo('-fellow-')).$asArray();
             },
             readMyProfile: function(currentUID) {
                 return $firebase(rootRef.child('users').child(currentUID)).$asObject();

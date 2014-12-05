@@ -8,6 +8,7 @@ angular.module("matsi.controllers")
             };
             $scope.mentors = MentorService.readMentor();
             $scope.OneMentorData = MentorService.readSingleMentor($stateParams.uid);
+            console.log($scope.OneMentorData);
             $scope.authCheck = function() {
                 if ((!$rootScope.currentUser) || ($rootScope.currentUser.role !== "-mentor-")) {
                     $location.path('/');
