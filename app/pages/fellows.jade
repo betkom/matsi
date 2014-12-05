@@ -1,10 +1,16 @@
-h1(ng-init="getAllFellows()") All fellows page......
-a(ng-repeat="fellow in allFellows" ng-href="fellowProfile/{{fellow.uid}}")
-	img(ng-src="{{fellow.picture}}")
-	p {{fellow.name}}
-	br
-	p {{fellow.fullName}}
-	br
-	p {{fellow.created | date }}
-	br
-	br
+section.content.fellows(ng-init="getAllFellows()")
+  .container
+    h2.blue.light Fellows at Andela
+    hr
+    .row
+      .col-sm-3(ng-repeat="fellow in allFellows" ng-href="fellowProfile/{{fellow.uid}}")
+        .user-wrap
+          .profile-pic
+            span.f-badge F
+            img(ng-src="{{fellow.picture}}")
+          .user-name
+            h5 {{fellow.fullName}}
+            p.text-muted {{fellow.created | date }}
+            br
+            br
+
