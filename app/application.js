@@ -47,7 +47,7 @@ Matsi.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', funct
         .state('myProfile', {
             url: '/myProfile',
             templateUrl: 'pages/myProfile.html',
-            controller: '',
+            controller: 'FellowController',
             data: {
                 access: 'private'
             }

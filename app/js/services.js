@@ -2,13 +2,6 @@ angular.module("matsi.services", ['firebase', 'ngCookies'])
 
 .factory('FellowService', ['$firebase', '$cookies', '$stateParams', '$rootScope', function($firebase, $cookies, $stateParams, $rootScope) {
         var rootRef = new Firebase($cookies.rootRef);
-        // rootRef.__proto__.orderByChild = rootRef.__proto__.orderByChild || function(x){
-        //  return this;
-        // };
-        // rootRef.__proto__.equalTo = rootRef.__proto__.equalTo || function(x){
-        //  return this;
-        // };
-        // console.log($cookies);
         return {
             updateFellow: function(fellowData, currentUID) {
                 console.log(currentUID);
@@ -44,7 +37,7 @@ angular.module("matsi.services", ['firebase', 'ngCookies'])
                         $firebase(rootRef.child('users').orderByChild('isMentored').equalTo(false)).$asArray().$loaded().then(function(responseData){
                           if (cb && typeof cb === typeof function(){}) {
                             cb(responseData);
-                          };
+                          }
                         });
                     }
                     else {
@@ -88,7 +81,7 @@ angular.module("matsi.services", ['firebase', 'ngCookies'])
     readSingleMentor: function(uid,cb) {
         if (uid) {
             console.log(uid,'readSingleMentor');
-        var mentor = $firebase(rootRef.child('users').child(uid)).$asObject()
+        var mentor = $firebase(rootRef.child('users').child(uid)).$asObject();
               
         if(cb){
             mentor.$loaded().then(function(value){
@@ -99,7 +92,7 @@ angular.module("matsi.services", ['firebase', 'ngCookies'])
       }
     },
     updateMentor: function(mentorData, currentUId) {
-      mentorData1 = angular.copy(mentorData)
+      mentorData1 = angular.copy(mentorData);
       delete mentorData1.$$conf;
       delete mentorData1.$id;
       delete mentorData1.$priority;

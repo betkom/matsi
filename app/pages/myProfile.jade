@@ -1,19 +1,111 @@
-.row(ng-controller="FellowController" ng-init="getCurrentFellow()")
-	div(ng-if="fellowData.role==='-fellow-'" )
-		h1 Welcome to matsi.....myProfile
-		div(class="col-md-4")
-			img(ng-src="{{fellowData.picture}}" width="320px" height="320px")
-			p Name : {{fellowData.fullName}}
-			p You have a mentor request from :
-			mentor-request(ng-repeat="(mentor_uid,mentor) in fellowData.requests")
-br
-br
-br
-br
-br
-
-.row(ng-controller="MentorController")
-	div(ng-if="mentorData.role==='-mentor-'")
-		div(class="col-md-4")
-			img(ng-src="{{mentorData.picture}}" width="320px" height="320px")
-			p Name : {{mentorData.fullName}}
+section.content.fellows(ng-controller="FellowController" ng-init="getCurrentFellow()")
+  .container(ng-if="fellowData.role==='-fellow-'" )
+    .row
+      .col-sm-3
+        .user-wrap
+          .profile-pic
+            span.f-badge.purple F
+            img(ng-src="{{fellowData.picture}}")
+          .user-name
+            h5
+              p.text-muted {{fellowData.fullName}}
+            p.text-muted Lorem ipsum dolor sit amet
+        .user-wrap
+          p You have mentor request(s) from :
+            mentor-request(ng-repeat="(mentor_uid,mentor) in fellowData.requests")
+        // <a href="" class="btn btn-primary">Accept Request</a>
+      .col-sm-9
+        .user-wrap.bio
+          .user-profile
+            h4 Bio
+            hr
+            p
+              | Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptas aut eligendi fugit, dolores tempore modi consectetur asperiores quo fugiat alias porro delectus saepe unde explicabo omnis mollitia ducimus minima, perspiciatis!
+        .user-wrap.bio
+          .user-profile
+            h4 Profile Details
+            hr
+            dl.dl-horizontal
+              dt Full Name
+              dd {{fellowData.fullName}}
+            dl.dl-horizontal
+              dt Email
+              dd {{fellowData.email}}
+            dl.dl-horizontal
+              dt Date Joined
+              dd {{fellowData.created | date}}
+            dl.dl-horizontal
+              dt Github
+              dd
+                a(href='') http://github.com/sam
+            dl.dl-horizontal
+              dt Location
+              dd Lagos, Nigeria
+            dl.dl-horizontal
+              dt Rank
+              dd
+                span.label.label-success Ninja
+            dl.dl-horizontal
+              dt Smarterer score
+              dd 200
+        .user-wrap.bio
+          .user-profile
+            h4 Badges
+            hr
+            h5
+              p.text-muted {{fellowData.fullName}}
+            p.text-muted Lorem ipsum dolor sit amet
+section.content.fellows(ng-controller="MentorController")
+  .container(ng-if="mentorData.role==='-mentor-'" )
+    .row
+      .col-sm-3
+        .user-wrap
+          .profile-pic
+            span.f-badge.purple F
+            img(ng-src="{{mentorData.picture}}")
+          .user-name
+            h5
+              p.text-muted {{mentorData.fullName}}
+            p.text-muted Lorem ipsum dolor sit amet
+        // <a href="" class="btn btn-primary">Accept Request</a>
+      .col-sm-9
+        .user-wrap.bio
+          .user-profile
+            h4 Bio
+            hr
+            p
+              | Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptas aut eligendi fugit, dolores tempore modi consectetur asperiores quo fugiat alias porro delectus saepe unde explicabo omnis mollitia ducimus minima, perspiciatis!
+        .user-wrap.bio
+          .user-profile
+            h4 Profile Details
+            hr
+            dl.dl-horizontal
+              dt Full Name
+              dd {{mentorData.fullName}}
+            dl.dl-horizontal
+              dt Email
+              dd {{mentorData.email}}
+            dl.dl-horizontal
+              dt Date Joined
+              dd {{mentorData.created | date}}
+            dl.dl-horizontal
+              dt Github
+              dd
+                a(href='') http://github.com/sam
+            dl.dl-horizontal
+              dt Location
+              dd Lagos, Nigeria
+            dl.dl-horizontal
+              dt Rank
+              dd
+                span.label.label-success Ninja
+            dl.dl-horizontal
+              dt Smarterer score
+              dd 200
+        .user-wrap.bio
+          .user-profile
+            h4 Badges
+            hr
+            h5
+              p.text-muted {{mentorData.fullName}}
+            p.text-muted Lorem ipsum dolor sit amet

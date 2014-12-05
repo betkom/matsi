@@ -1,8 +1,57 @@
-h1(ng-init="getCurrentFellow()") Welcome to matsi you are a fellow.....
-.row
-	.col-md-4
-		img(ng-src="{{fellowData.picture}}" width="320px" height="320px")
-		p Name : {{fellowData.fullName}}
-input(type="button" value="Apply to Mentor" ng-click="showBox1()" ng-show="showMessageBox" ng-if="currentUser.role === '-mentor-'")
-input(type="text" ng-hide="showMessageBox" ng-model="fellowData.message")
-input(type="button" ng-hide="showMessageBox" value="Apply" ng-click="mentorConstraints()" ng-disabled="!fellowData.message.length")
+section.content.fellows(ng-init="getCurrentFellow()")
+  .container(ng-if="fellowData.role==='-fellow-'" )
+    .row
+      .col-sm-3
+        .user-wrap
+          .profile-pic
+            span.f-badge.purple F
+            img(ng-src="{{fellowData.picture}}")
+          .user-name
+            h5
+              p.text-muted {{fellowData.fullName}}
+            p.text-muted Lorem ipsum dolor sit amet
+        .user-wrap(ng-if="currentUser.role === '-mentor-'")
+          input(type="button" value="Apply to Mentor" ng-click="showBox1()" ng-show="showMessageBox")
+          input(type="text" ng-hide="showMessageBox" ng-model="fellowData.message")
+          input(type="button" ng-hide="showMessageBox" value="Apply" ng-click="mentorConstraints()" ng-disabled="!fellowData.message.length")
+      .col-sm-9
+        .user-wrap.bio
+          .user-profile
+            h4 Bio
+            hr
+            p
+              | Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptas aut eligendi fugit, dolores tempore modi consectetur asperiores quo fugiat alias porro delectus saepe unde explicabo omnis mollitia ducimus minima, perspiciatis!
+        .user-wrap.bio
+          .user-profile
+            h4 Profile Details
+            hr
+            dl.dl-horizontal
+              dt Full Name
+              dd {{fellowData.fullName}}
+            dl.dl-horizontal
+              dt Email
+              dd {{fellowData.email}}
+            dl.dl-horizontal
+              dt Date Joined
+              dd {{fellowData.created | date}}
+            dl.dl-horizontal
+              dt Github
+              dd
+                a(href='') http://github.com/sam
+            dl.dl-horizontal
+              dt Location
+              dd Lagos, Nigeria
+            dl.dl-horizontal
+              dt Rank
+              dd
+                span.label.label-success Ninja
+            dl.dl-horizontal
+              dt Smarterer score
+              dd 200
+        .user-wrap.bio
+          .user-profile
+            h4 Badges
+            hr
+            h5
+              p.text-muted {{fellowData.fullName}}
+            p.text-muted Lorem ipsum dolor sit amet

@@ -2,6 +2,7 @@ var browserify = require('browserify'),
     concat = require('gulp-concat'),
     es6ify = require('es6ify'),
     gulp = require('gulp'),
+    jshint = require('gulp-jshint'),
     gutil = require('gulp-util'),
     jade = require('gulp-jade'),
     jshint = require('gulp-jshint'),
@@ -17,89 +18,97 @@ var browserify = require('browserify'),
     uglify = require('gulp-uglify'),
     karma = require('gulp-karma'),
     watchify = require('watchify'),
-    //exit = require('gulp-exit'),
     mocha = require('gulp-mocha');
-    
+
 var paths = {
-  public: 'public/**',
-  jade: 'app/**/*.jade',
-  scripts: 'app/**/*.js',
-  libTests: ['mocha.js'],
-  styles: 'app/styles/*.+(less|css)'
+    public: 'public/**',
+    jade: 'app/**/*.jade',
+    scripts: 'app/**/*.js',
+    libTests: ['mocha.js'],
+    styles: 'app/styles/*.+(less|css)'
 }
 
 var testFiles = [
- // 'test-main.js',
-  'public/lib/angular/angular.js',
-  'public/lib/angular-mocks/angular-mocks.js',
-  'public/lib/moment/moment.js',
-  'public/lib/firebase/firebase.js',
-  'public/lib/angular-aria/angular-aria.js',
-  'public/lib/angular-ui-router/release/angular-ui-router.min.js',
-  'public/lib/hammerjs/hammer.min.js',
-  'public/lib/angular-material/angular-material.js',
-  'public/lib/angular-route/angular-route.js',
-  'public/lib/angular-cookies/angular-cookies.js',
-  'public/lib/angular-bootstrap/ui-bootstrap.js',
-  'public/lib/angular-animate/angular-animate.js',
-  'public/lib/angular-sanitize/angular-sanitize.js',
-  'public/lib/angularfire/dist/angularfire.js',
-  'public/js/index.js',
-  'app/test/specs.js'
+    'public/lib/angular/angular.js',
+    'public/lib/angular-mocks/angular-mocks.js',
+    'public/lib/moment/moment.js',
+    'public/lib/firebase/firebase.js',
+    'public/lib/angular-aria/angular-aria.js',
+    'public/lib/angular-ui-router/release/angular-ui-router.min.js',
+    'public/lib/hammerjs/hammer.min.js',
+    'public/lib/angular-material/angular-material.js',
+    'public/lib/angular-route/angular-route.js',
+    'public/lib/angular-cookies/angular-cookies.js',
+    'public/lib/angular-bootstrap/ui-bootstrap.js',
+    'public/lib/angular-animate/angular-animate.js',
+    'public/lib/angular-sanitize/angular-sanitize.js',
+    'public/lib/angularfire/dist/angularfire.js',
+    'public/js/index.js',
+    'app/test/specs.js'
 ];
 
+gulp.task('lint', function() {
+  return gulp.src('./lib/*.js')
+    .pipe(jshint())
+    .pipe(jshint.reporter('YOUR_REPORTER_HERE'));
+});
+
 gulp.task('jade', function() {
-  gulp.src('./app/**/*.jade')
-    .pipe(jade())
-    .pipe(gulp.dest('./public/'))
+    gulp.src('./app/**/*.jade')
+        .pipe(jade())
+        .pipe(gulp.dest('./public/'))
 });
 
-gulp.task('less', function () {
-  gulp.src(paths.styles)
-    .pipe(less({
-      paths: [ path.join(__dirname, 'styles') ]
-    }))
-    .pipe(gulp.dest('./public/css'));
+gulp.task('less', function() {
+    gulp.src(paths.styles)
+        .pipe(less({
+            paths: [path.join(__dirname, 'styles')]
+        }))
+        .pipe(gulp.dest('./public/css'));
 });
 
-gulp.task('lint', function () {
-  gulp.src('./**/*.js').pipe(jshint())
+gulp.task('lint', function() {
+    gulp.src('./**/*.js').pipe(jshint())
 });
 
 //'app/**',
-gulp.task('nodemon', function () {
-  nodemon({ script: 'index.js', ext: 'js', ignore: ['public/'] })
-    .on('change', ['lint'])
-    .on('restart', function () {
-      console.log('>> node restart');
-    })
+gulp.task('nodemon', function() {
+    nodemon({
+            script: 'index.js',
+            ext: 'js',
+            ignore: ['public/']
+        })
+        .on('change', ['lint'])
+        .on('restart', function() {
+            console.log('>> node restart');
+        })
 });
 
 
 gulp.task('watch', function() {
-  // livereload.listen({ port: 35729 });
-  gulp.watch(paths.jade, ['jade']);
-  gulp.watch(paths.styles, ['less']);
-  // gulp.watch(paths.public).on('change', livereload.changed);
+    // livereload.listen({ port: 35729 });
+    gulp.watch(paths.jade, ['jade']);
+    gulp.watch(paths.styles, ['less']);
+    // gulp.watch(paths.public).on('change', livereload.changed);
 });
 
 gulp.task('watchify', function() {
-  var bundler = watchify(browserify('./app/application.js', watchify.args));
+    var bundler = watchify(browserify('./app/application.js', watchify.args));
 
-  bundler.transform(stringify(['.html']));
-  // bundler.transform(es6ify);
+    bundler.transform(stringify(['.html']));
+    // bundler.transform(es6ify);
 
-  bundler.on('update', rebundle);
+    bundler.on('update', rebundle);
 
-  function rebundle() {
-    return bundler.bundle()
-      // log errors if they happen
-      .on('error', gutil.log.bind(gutil, 'Browserify Error'))
-      .pipe(source('index.js'))
-      .pipe(gulp.dest('./public/js'));
-  }
+    function rebundle() {
+        return bundler.bundle()
+            // log errors if they happen
+            .on('error', gutil.log.bind(gutil, 'Browserify Error'))
+            .pipe(source('index.js'))
+            .pipe(gulp.dest('./public/js'));
+    }
 
-  return rebundle();
+    return rebundle();
 });
 
 // gulp.task('usemin', function() {
@@ -113,44 +122,26 @@ gulp.task('watchify', function() {
 // });
 
 gulp.task('mocha', function() {
- return gulp.src(paths.libTests)
- .pipe(mocha({
-   reporter: 'dot'
- }))
- .pipe(exit());
+    return gulp.src(paths.libTests)
+        .pipe(mocha({
+            reporter: 'dot'
+        }))
+        .pipe(exit());
 });
 
 gulp.task('test', function() {
-// Be sure to return the stream
-return gulp.src(testFiles)
-  .pipe(karma({
-    configFile: 'karma.conf.js',
-    action: 'run'
-  }))
-  .on('error', function(err) {
-    // Make sure failed tests cause gulp to exit non-zero
-    //throw err;
-  });
+    // Be sure to return the stream
+    return gulp.src(testFiles)
+        .pipe(karma({
+            configFile: 'karma.conf.js',
+            action: 'run'
+        }))
+        .on('error', function(err) {
+            // Make sure failed tests cause gulp to exit non-zero
+            //throw err;
+        });
 });
-
-gulp.task('default', function () {
-    return gulp.src('app/test/service.js', {read: false})
-        .pipe(mocha({reporter: 'nyan'}));
-});
-// gulp.task('mocha', function() {
-// // Be sure to return the stream
-// return gulp.src(testFiles)
-//   .pipe(mocha({
-//     configFile:
-//     action:run
-    
-//   }))
-//   .on('error', function(err) {
-//     // Make sure failed tests cause gulp to exit non-zero
-//     //throw err;
-//   });
-// });
 gulp.task('heroku:production', ['scripts', 'jade', 'less']);
 gulp.task('production', ['nodemon']);
-gulp.task('default', ['nodemon','jade','less','watch','watchify']);
-gulp.task('build', ['jade','less','watchify']);
+gulp.task('default', ['nodemon', 'jade', 'less', 'watch', 'watchify']);
+gulp.task('build', ['jade', 'less', 'watchify']);
