@@ -1,6 +1,6 @@
 {
   "name": "mockfirebase",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "homepage": "https://github.com/katowulf/mockfirebase",
   "authors": [
     "Kato"
@@ -26,14 +26,13 @@
     "package.json",
     "src"
   ],
-  "_release": "0.5.0",
+  "_release": "0.5.1",
   "_resolution": {
     "type": "version",
-    "tag": "v0.5.0",
-    "commit": "d6c2d05fe669126addfa2e331b53a76351e930b8"
+    "tag": "v0.5.1",
+    "commit": "322a8abca07dd577cccdc0274847a85aa45770fe"
   },
   "_source": "git://github.com/katowulf/mockfirebase.git",
   "_target": "~0.5.0",
-  "_originalSource": "mockfirebase",
-  "_direct": true
+  "_originalSource": "mockfirebase"
 }

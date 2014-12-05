@@ -29,17 +29,16 @@ function run(appdir) {
     }));
     app.use(bodyParser.json());
     app.post('/mail/user/:type', function(req, res) {
-        console.log(req.body);
         var fellowName = req.body.firstName;
         var fellowMail = req.body.email;
+        var mailMessage = req.body.message;
         var type = req.params.type;
+        var reason = req.body.reason;
         var adminMail = 'Andela ✔ <1testertest1@gmail.com>';
-        //var data = req.params.fellow;
-        console.log(type);
-        //var emailAddress,emailBody;
         var _res = req.body;
         _res.type = type;
         var user = req.body.user;
+
         // create reusable transporter object using SMTP transport
         var transporter = nodemailer.createTransport({
             service: "Gmail",
@@ -54,42 +53,42 @@ function run(appdir) {
             switch (type) {
                 case 1:
                     var mailOptions = {
-                        from: adminMail, // sender address
-                        to: fellowMail, // list of receivers
-                        subject: 'Hello '+fellowName, // Subject line
-                        html: "You have a pending request to be mentored, you can <a href='http://localhost:5555/myProfile'>View them here</a> <br> We hope you have a great time! <br> Team Matsi", // plaintext body
+                        from: adminMail,
+                        to: fellowMail,
+                        subject: 'Hello '+fellowName,
+                        html: "You have a pending request to be mentored, you can <a href='http://localhost:5555/myProfile'>View them here</a> <br> We hope you have a great time! <br> Team Matsi" + reason
                     };
                     break;
                 case 2:
                     var mailOptions = {
-                        from: adminMail, // sender address
-                        to: fellowMail, // list of receivers
-                        subject: 'Hello '+fellowName, // Subject line
-                        html: "Your signup request has been recieved and is being processed, until approved<br>you won't be able to login, please be patient as approvals are done by real humans <br>Thank you for your offer of service <br> Team Matsi", // plaintext body
+                        from: adminMail,
+                        to: fellowMail,
+                        subject: 'Hello '+fellowName,
+                        html: "Your signup request has been recieved and is being processed, until approved<br>you won't be able to login, please be patient as approvals are done by real humans <br>Thank you for your offer of service <br> Team Matsi"
                     };
                     break;
                 case 3:
                     var mailOptions = {
-                        from: adminMail, // sender address
-                        to: fellowMail, // list of receivers
-                        subject: 'Hello '+fellowName, // Subject line
-                        html: 'This is a mail from Case 3', // plaintext body
+                        from: adminMail,
+                        to: fellowMail,
+                        subject: 'Hello '+fellowName,
+                        html: 'Your mentor request has been accepted'
                     };
                     break;
                 case 4:
                     var mailOptions = {
-                        from: adminMail, // sender address
-                        to: fellowMail, // list of receivers
-                        subject: 'Hello ✔', // Subject line
-                        html: 'This is a mail from Case 2', // plaintext body
+                        from: adminMail,
+                        to: fellowMail,
+                        subject: 'Hello '+ fellowName,
+                        html: 'Your mentor request has been rejected because '+ mailMessage
                     };
                     break;
                 case 5:
                     var mailOptions = {
-                        from: adminMail, // sender address
-                        to: fellowMail, // list of receivers
-                        subject: 'Hello ✔', // Subject line
-                        html: 'This is a mail from Case 2', // plaintext body
+                        from: adminMail,
+                        to: fellowMail,
+                        subject: 'Hello ✔',
+                        html: 'This is a mail from Case 2'
                     };
                     break;
             }
@@ -106,11 +105,7 @@ function run(appdir) {
         });
         res.status(200).send(_res);
     });
-    //all routes #shittu
     app.get('/*', function(req, res) {
-        //res.header('Access-Control-Allow-Origin', '*');
-        //res.header('Access-Control-Allow-Headers', 'Content-Type,X-Requested-With');
-        console.log(req.body);
         res.sendFile('index.html', {
             root: './public/'
         });

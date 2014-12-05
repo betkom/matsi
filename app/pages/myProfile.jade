@@ -1,12 +1,11 @@
-h1 Welcome to matsi.....myProfile
-p {{fellowData}}
 .row(ng-controller="FellowController" ng-init="getCurrentFellow()")
-	div(ng-if="fellowData.role==='-fellow-'")
+	div(ng-if="fellowData.role==='-fellow-'" )
+		h1 Welcome to matsi.....myProfile
 		div(class="col-md-4")
 			img(ng-src="{{fellowData.picture}}" width="320px" height="320px")
 			p Name : {{fellowData.fullName}}
 			p You have a mentor request from :
-			mentor-request(ng-repeat="(mentor_uid,mentor) in fellowData.requests")
+			mentor-request(ng-repeat="(mentor_uid, mentor) in fellowData.requests")
 br
 br
 br
