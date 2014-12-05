@@ -1,14 +1,51 @@
-h2 {{OneMentorData.Title}} {{OnementorData.firstName}} 
-br
-h3 {{OneMentorData.email}}
-br
-h3 {{OneMentorData.shortBio}}
-br
-h3 {{OneMentorData.linkedInUrl}}
-br
-h3 {{OneMentorData.gitHubUrl}}
-br
-h3 {{OneMentorData.twitterHandle}}
-br
-h3 {{OneMentorData.Skype}}
-h3 {{OneMentorData.location}}
+section.content.fellows
+  .container
+    .row
+      .col-sm-3
+        .user-wrap
+          .profile-pic
+            span.f-badge.purple F
+            img(ng-src='{{OneMentorData.picture}}')
+          .user-name
+            h5
+              a(href='') {{OneMentorData.fullName}}
+            p.text-muted Lorem ipsum dolor sit amet
+      .col-sm-9
+        .user-wrap.bio
+          .user-profile
+            h4 Bio
+            hr
+            p {{OneMentorData.shortBio}}
+        .user-wrap.bio
+          .user-profile
+            h4 Profile Details
+            hr
+            dl.dl-horizontal
+              dt Full Name
+              dd {{OneMentorData.fullName}}
+            dl.dl-horizontal
+              dt Email
+              dd {{OneMentorData.email}}
+            dl.dl-horizontal
+              dt Date Joined
+              dd {{OneMentorData.created}}
+            dl.dl-horizontal
+              dt Github
+              dd
+                a(ng-href='{{OneMentorData.gitHubUrl}}') {{OneMentorData.gitHubUrl}}
+            dl.dl-horizontal
+              dt Location
+              dd {{OneMentorData.location}}
+            dl.dl-horizontal
+              dt LinkedIn
+              dd
+                a(ng-href='{{OneMentorData.linkedInUrl}}') {{OneMentorData.linkedInUrl}}
+            dl.dl-horizontal
+              dt Twitter
+              dd {{OneMentorData.twitterHandle}}
+            dl.dl-horizontal
+              dt Skype
+              dd {{OneMentorData.Skype}}
+            dl.dl-horizontal
+              dt Smarterer score
+              dd 200
