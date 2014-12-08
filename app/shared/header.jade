@@ -14,7 +14,7 @@ nav.navbar.navbar-static-top(role='navigation')
         li
           a(href='fellows') View Fellows
         li.active
-          a(href='myProfile') My Profile
+          a(href='myProfile' ng-show="currentUser") My Profile
         li
           p
             a.bdr(ng-hide="currentUser" ng-click="login('google')") login

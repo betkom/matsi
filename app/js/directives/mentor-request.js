@@ -26,7 +26,7 @@ angular.module("matsi.directives")
                 };
                 $scope.showBox = function() {
                     $scope.showMessageBox = false;
-                }
+                };
             }]
         };
     });
