@@ -1,9 +1,9 @@
 section.content.fellows
-  .container(ng-init="getAllFellows()")
+  .container(ng-init="all()")
     h2.blue.light Fellows at Andela
     hr
     .row
-      a(ng-repeat="fellow in allFellows" ng-href="fellowProfile/{{fellow.uid}}")
+      a(ng-repeat="fellow in fellows" ng-href="fellows/{{fellow.uid}}")
         .col-sm-3
           .user-wrap
             .profile-pic

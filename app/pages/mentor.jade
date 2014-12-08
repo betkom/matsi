@@ -1,51 +1,51 @@
-section.content.fellows
+section.content.fellows(ng-init="findOne()")
   .container
     .row
       .col-sm-3
         .user-wrap
           .profile-pic
-            span.f-badge.purple F
-            img(ng-src='{{OneMentorData.picture}}')
+            span.f-badge.purple M
+            img(ng-src='{{mentor.picture}}')
           .user-name
             h5
-              a(href='') {{OneMentorData.fullName}}
+              a(href='') {{mentor.fullName}}
             p.text-muted Lorem ipsum dolor sit amet
       .col-sm-9
         .user-wrap.bio
           .user-profile
             h4 Bio
             hr
-            p {{OneMentorData.shortBio}}
+            p {{mentor.shortBio}}
         .user-wrap.bio
           .user-profile
             h4 Profile Details
             hr
             dl.dl-horizontal
               dt Full Name
-              dd {{OneMentorData.fullName}}
+              dd {{mentor.fullName}}
             dl.dl-horizontal
               dt Email
-              dd {{OneMentorData.email}}
+              dd {{mentor.email}}
             dl.dl-horizontal
               dt Date Joined
-              dd {{OneMentorData.created}}
+              dd {{mentor.created}}
             dl.dl-horizontal
               dt Github
               dd
-                a(ng-href='{{OneMentorData.gitHubUrl}}') {{OneMentorData.gitHubUrl}}
+                a(ng-href='{{mentor.gitHubUrl}}') {{mentor.gitHubUrl}}
             dl.dl-horizontal
               dt Location
-              dd {{OneMentorData.location}}
+              dd {{mentor.location}}
             dl.dl-horizontal
               dt LinkedIn
               dd
-                a(ng-href='{{OneMentorData.linkedInUrl}}') {{OneMentorData.linkedInUrl}}
+                a(ng-href='{{mentor.linkedInUrl}}') {{mentor.linkedInUrl}}
             dl.dl-horizontal
               dt Twitter
-              dd {{OneMentorData.twitterHandle}}
+              dd {{mentor.twitterHandle}}
             dl.dl-horizontal
               dt Skype
-              dd {{OneMentorData.Skype}}
+              dd {{mentor.Skype}}
             dl.dl-horizontal
               dt Smarterer score
               dd 200

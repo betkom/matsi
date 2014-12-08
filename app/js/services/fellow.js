@@ -2,19 +2,16 @@ angular.module("matsi.services")
     .factory('FellowService', ['$firebase', '$cookies', '$stateParams', '$rootScope', function($firebase, $cookies, $stateParams, $rootScope) {
         var rootRef = new Firebase($cookies.rootRef);
         return {
-            update: function(fellowData) {
-                var fellowData1 = angular.copy(fellowData);
-                delete fellowData1.$$conf;
-                delete fellowData1.$priority;
-                delete fellowData1.$id;
-                delete fellowData1.__proto__;
-                rootRef.child('users').child(fellowData.uid).update(fellowData1);
+            update: function(fellow) {
+                var fellow = angular.copy(fellow);
+                delete fellow.$$conf;
+                delete fellow.$priority;
+                delete fellow.$id;
+                //delete fellow.__proto__;
+                rootRef.child('users').child(fellow.uid).update(fellow);
             },
-            find: function() {
+            all: function() {
                 return $firebase(rootRef.child('users').orderByChild('role').equalTo('-fellow-')).$asArray();
-            },
-            profile: function(currentUID) {
-                return $firebase(rootRef.child('users').child(currentUID)).$asObject();
             },
             findOne: function(uid) {
                 if (uid) {
@@ -43,7 +40,7 @@ angular.module("matsi.services")
                 });
                 return check;
             },
-            regRequest: function(fellow) {
+            request: function(fellow) {
                 rootRef.child('users').child($rootScope.currentUser.uid).child('sentRequests').child(fellow.uid).push({
                     timestamp: Firebase.ServerValue.TIMESTAMP,
                 });
@@ -51,7 +48,7 @@ angular.module("matsi.services")
                     timestamp: Firebase.ServerValue.TIMESTAMP,
                 });
             },
-            acceptRequest: function(mentor) {
+            accept: function(mentor) {
                 rootRef.child('users').child($rootScope.currentUser.uid).child('mentors').child(mentor.uid).set({
                     timestamp: Firebase.ServerValue.TIMESTAMP,
                     email: mentor.email
@@ -65,7 +62,7 @@ angular.module("matsi.services")
                 rootRef.child('users').child($rootScope.currentUser.uid).child('requests').child(mentor.uid).remove();
                 rootRef.child('users').child(mentor.uid).child('sentRequests').child($rootScope.currentUser.uid).remove();
             },
-            rejectRequest: function(mentor) {
+            reject: function(mentor) {
                 rootRef.child('users').child(mentor.uid).child('sentRequests').child($rootScope.currentUser.uid).update({
                     message: mentor.message
                 });

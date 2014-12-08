@@ -17,9 +17,9 @@ Matsi.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', funct
                 access: 'public'
             }
         })
-        .state('updateFellowProfile', {
-            url: '/updateFellowProfile',
-            templateUrl: 'pages/updateFellowProfile.html',
+        .state('edit/fellow', {
+            url: '/fellows/:uid/edit',
+            templateUrl: 'pages/edit-fellow.html',
             controller: 'FellowController',
 
             data: {
@@ -28,17 +28,17 @@ Matsi.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', funct
                 authenticate: true
             }
         })
-        .state('myProfile', {
-            url: '/myProfile',
-            templateUrl: 'pages/myProfile.html',
+        .state('profile', {
+            url: '/profile',
+            templateUrl: 'pages/my-profile.html',
             controller: '',
             data: {
                 access: 'private'
             }
         })
-        .state('fellowProfile', {
-            url: '/fellowProfile/:uid',
-            templateUrl: 'pages/fellowProfile.html',
+        .state('fellow', {
+            url: '/fellows/:uid',
+            templateUrl: 'pages/fellow.html',
             controller: 'FellowController',
             data: {
                 access: 'private'
@@ -52,25 +52,25 @@ Matsi.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', funct
                 access: 'private'
             }
         })
-        .state('editMentor', {
-            url: '/editMentor',
-            templateUrl: 'pages/editMentor.html',
+        .state('edit/mentor', {
+            url: '/mentors/:uid/edit',
+            templateUrl: 'pages/edit-mentor.html',
             controller: 'MentorController',
             data: {
                 access: 'private'
             }
         })
-        .state('findOneMentor', {
+        .state('mentor', {
             url: '/mentors/:uid',
-            templateUrl: 'pages/viewMentor.html',
+            templateUrl: 'pages/mentor.html',
             controller: 'MentorController',
             data: {
                 access: 'private'
             }
         })
-        .state('findAllMentors', {
+        .state('mentors', {
             url: '/mentors',
-            templateUrl: 'pages/viewAllMentors.html',
+            templateUrl: 'pages/mentors.html',
             controller: 'MentorController',
             data: {
                 access: 'private'

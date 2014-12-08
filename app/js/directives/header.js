@@ -1,9 +1,9 @@
-angular.module("matsi.directives", ['firebase', 'ngCookies'])
+angular.module("matsi.directives")
     .directive('header', function() {
         return {
             restrict: 'E',
-            controller: ['$rootScope', '$scope', '$firebase', '$cookies', 'FellowService', '$timeout',
-                function($rootScope, $scope, $firebase, $cookies, FellowService, $timeout) {
+            controller: ['$rootScope', '$scope', '$firebase', '$cookies', 'FellowService', '$timeout','$stateParams','$location',
+                function($rootScope, $scope, $firebase, $cookies, FellowService, $timeout, $stateParams, $location) {
                     var rootRef = new Firebase($cookies.rootRef);
                     // Start with no user logged in
                     $rootScope.currentUser = null;
@@ -19,7 +19,7 @@ angular.module("matsi.directives", ['firebase', 'ngCookies'])
                                     user.created = Firebase.ServerValue.TIMESTAMP;
                                     user.isAdmin = false;
                                     user.role = user.email.indexOf('@andela.co') > -1 ? '-fellow-' : '-mentor-';
-                                    user.disabled = !(user.role === "-fellow-");
+                                    user.disabled = user.role !== "-fellow-";
                                     if(!user.disabled)
                                       user.isMentored = false;
                                     else
@@ -57,6 +57,9 @@ angular.module("matsi.directives", ['firebase', 'ngCookies'])
                     $scope.logout = function() {
                         rootRef.unauth();
                         window.location.pathname = "/";
+                    };
+                    $scope.profile = function() {
+                        $location.path('fellows/' + $rootScope.currentUser.uid);
                     };
                 }
             ]
