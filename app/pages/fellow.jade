@@ -1,19 +1,22 @@
-section.content.fellows(ng-init="getCurrentFellow()")
-  .container(ng-if="fellowData.role==='-fellow-'" )
+section.content.fellows(ng-init="findOne()")
+  .container(ng-if="fellow.role==='-fellow-'" )
     .row
       .col-sm-3
         .user-wrap
           .profile-pic
             span.f-badge.purple F
-            img(ng-src="{{fellowData.picture}}")
+            img(ng-src="{{fellow.picture}}")
           .user-name
             h5
-              p.text-muted {{fellowData.fullName}}
+              p.text-muted {{fellow.fullName}}
             p.text-muted Lorem ipsum dolor sit amet
+        .user-wrap(ng-if="currentUser.uid === fellow.uid")
+          p You have mentor request(s) from :
+            mentor-request(ng-repeat="(mentor_uid,mentor) in fellow.requests")   
         .user-wrap(ng-if="currentUser.role === '-mentor-'")
-          input(type="button" value="Apply to Mentor" ng-click="showBox1()" ng-show="showMessageBox")
-          input(type="text" ng-hide="showMessageBox" ng-model="fellowData.message")
-          input(type="button" ng-hide="showMessageBox" value="Apply" ng-click="mentorConstraints()" ng-disabled="!fellowData.message.length")
+          input(type="button" value="Apply to Mentor" ng-click="showBox()" ng-show="showMessageBox")
+          input(type="text" ng-hide="showMessageBox" ng-model="fellow.message")
+          input(type="button" ng-hide="showMessageBox" value="Apply" ng-click="mentorConstraints()" ng-disabled="!fellow.message.length")
       .col-sm-9
         .user-wrap.bio
           .user-profile
@@ -27,13 +30,13 @@ section.content.fellows(ng-init="getCurrentFellow()")
             hr
             dl.dl-horizontal
               dt Full Name
-              dd {{fellowData.fullName}}
+              dd {{fellow.fullName}}
             dl.dl-horizontal
               dt Email
-              dd {{fellowData.email}}
+              dd {{fellow.email}}
             dl.dl-horizontal
               dt Date Joined
-              dd {{fellowData.created | date}}
+              dd {{fellow.created | date}}
             dl.dl-horizontal
               dt Github
               dd
@@ -53,5 +56,5 @@ section.content.fellows(ng-init="getCurrentFellow()")
             h4 Badges
             hr
             h5
-              p.text-muted {{fellowData.fullName}}
+              p.text-muted {{fellow.fullName}}
             p.text-muted Lorem ipsum dolor sit amet

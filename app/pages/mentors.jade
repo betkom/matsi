@@ -1,4 +1,4 @@
-.container
+.container(ng-init="all()")
   h2.blue.light Mentors at Andela
   hr
   .row
@@ -6,7 +6,7 @@
       .col-sm-3
         .user-wrap
           .profile-pic
-            span.f-badge F
+            span.f-badge M
             img(ng-src="{{mentor.picture}}")
           .user-name
             h5 {{mentor.fullName}}

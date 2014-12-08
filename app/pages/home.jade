@@ -14,8 +14,8 @@
       | Velit quia, maiores ipsum recusandae..
     hr
     br
-    .row(ng-controller="FellowController" ng-init="getAllFellows()")
-      a(data-ng-repeat='fellow in allFellows | limitTo:3' ng-href="fellowProfile/{{fellow.uid}}")
+    .row(ng-controller="FellowController" ng-init="all()")
+      a(data-ng-repeat='fellow in fellows | limitTo:3' ng-href="fellows/{{fellow.uid}}")
           .col-md-4
             .user-wrap
               .profile-pic

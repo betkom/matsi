@@ -1,8 +1,7 @@
-p {{mentorData.fullName}} {{mentorData.email}}
-p {{mentorData.message}}
-p
-  input(type="button" value="Accept Request" ng-click="sendMail1()")
-  input(type="button" value="Reject Request" ng-click="showBox()" ng-if="showMessageBox")
-  .messageBox(ng-hide="showMessageBox")
-  input(type="text" class="messageBox" ng-hide="showMessageBox" ng-model="mentor.message")
-  input(type="button" value="Submit" ng-hide="showMessageBox" ng-click="sendRejectMail()")
+p {{mentor.fullName}} {{mentor.email}}
+p(ng-show="mentor.uid")
+	input(type="button" value="Accept Request" ng-click="accept()")
+	input(type="button" value="Reject Request" ng-click="showBox()")
+div(ng-show="showMessageBox")
+	input(type="text" class="messageBox"  ng-model="mentor.message")
+	input(type="button" value="Submit" ng-click="reject()")

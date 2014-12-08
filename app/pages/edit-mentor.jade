@@ -1,0 +1,53 @@
+.content(ng-if="mentor.role === '-mentor-'")
+	form 
+		label(for="fullName") Full Name
+		br
+		input(type="text" name="fullName" ng-model="mentor.fullName")
+		br
+		br
+		label(for="Email") Email
+		br
+		input(type="text" name="Email" ng-model="mentor.email")
+		br
+		br
+		input(type="checkbox" name="Agree" id="Agree" ng-model="checked" ng-click="toggleCheck()")
+		label(for="Agree") I agree to the Mentor 
+			a(href="" data-toggle="modal" data-target="#myModal") Requirements
+		br
+		br
+		label(for="title") Title
+		br
+		input(type="text" name="title" ng-model="mentor.Title")
+		br
+		br
+		label(for="shortBio") Short Bio
+		br
+		input(type="text" name="shortBio" ng-model="mentor.shortBio")
+		br
+		br
+		label(for="linkedInUrl") LinkedIn URL
+		br
+		input(type="text" name="linkedInUrl" ng-model="mentor.linkedInUrl")
+		br
+		br
+		label(for="gitHubUrl") Github URL
+		br
+		input(type="text" name="gitHubUrl" ng-model="mentor.gitHubUrl")
+		br
+		br
+		label(for="mentorTwitterHandle") Twitter Handle
+		br
+		input(type="text" name="mentorTwitterHandle" ng-model="mentor.twitterHandle")
+		br
+		br
+		label(for="SkypeNumber") Skype Number
+		br
+		input(type="text" name="SkypeNumber" ng-model="mentor.skype")
+		br
+		br
+		label(for="location") Location
+		br
+		input(type="text" name="location" ng-model="mentor.location")
+		br
+		br
+		input(type="button" ng-click="submitMentor(mentor)" value="Update")
