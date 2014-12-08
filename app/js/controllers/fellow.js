@@ -13,8 +13,7 @@ angular.module("matsi.controllers")
         };
 
         $scope.update = function() {
-          if($rootScope.currentUser.uid === $scope.fellow.uid || $rootScope.currentUser.isAdmin)
-          {
+          if($rootScope.currentUser.uid === $scope.fellow.uid || $rootScope.currentUser.isAdmin){
 
           }
           FellowService.update($scope.fellow);
@@ -25,9 +24,9 @@ angular.module("matsi.controllers")
         };
 
         $scope.mentorConstraints = function() {
-          FellowService.mentorConstraint(function(responseData) {
+          FellowService.mentorConstraint($stateParams.uid, function(responseData) {
             if (responseData) {
-              if (responseData.length === 0) {
+              if (!_.any(responseData)) {
                   $scope.sendRequest();
               } else {
                 alert("The fellow is already being mentored, there are other fellows waiting");

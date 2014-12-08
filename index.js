@@ -17,7 +17,7 @@ function run(appdir) {
             // development mode
             res.cookie('rootRef', "https://brilliant-heat-9512.firebaseio.com/");
             // log the request
-            console.log(t().format('HH:MM'), req['method'], req.url, req.socket.bytesRead);
+            console.log(t().format('HH:MM'), req.method, req.url, req.socket.bytesRead);
         }
         next();
     });
@@ -48,12 +48,12 @@ function run(appdir) {
                 pass: "p87654321"
             }
         });
-
+        var mailOptions = {};
         if (type) {
             type = parseInt(type, 10);
             switch (type) {
                 case 1:
-                    var mailOptions = {
+                    mailOptions = {
                         from: adminMail,
                         to: fellowMail,
                         subject: 'Hello '+fellowName,
@@ -61,7 +61,7 @@ function run(appdir) {
                     };
                     break;
                 case 2:
-                    var mailOptions = {
+                    mailOptions = {
                         from: adminMail,
                         to: fellowMail,
                         subject: 'Hello '+fellowName,
@@ -69,7 +69,7 @@ function run(appdir) {
                     };
                     break;
                 case 3:
-                    var mailOptions = {
+                    mailOptions = {
                         from: adminMail,
                         to: fellowMail,
                         subject: 'Hello '+fellowName,
@@ -77,7 +77,7 @@ function run(appdir) {
                     };
                     break;
                 case 4:
-                    var mailOptions = {
+                    mailOptions = {
                         from: adminMail,
                         to: fellowMail,
                         subject: 'Hello '+ fellowName,
@@ -85,7 +85,7 @@ function run(appdir) {
                     };
                     break;
                 case 5:
-                    var mailOptions = {
+                    mailOptions = {
                         from: adminMail,
                         to: fellowMail,
                         subject: 'Hello ✔',
@@ -94,7 +94,7 @@ function run(appdir) {
                     break;
             }
             console.log(mailOptions);
-        };
+        }
         // create email options
         // send mail with defined transport object
         transporter.sendMail(mailOptions, function(e, i) {

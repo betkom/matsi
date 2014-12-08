@@ -7,6 +7,7 @@ angular.module("matsi.directives")
                 
                 $scope.mentor = MentorService.findOne($scope.mentor_uid);
                 $scope.showMessageBox = false;
+                
                 $scope.accept = function() {
                     FellowService.accept($scope.mentor);
                     MailService.send(3,$scope.mentor);
