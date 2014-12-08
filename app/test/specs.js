@@ -42,7 +42,7 @@ describe('Testing 001', function(){
 			else{
 				return true;
 			}
-		};
+		}
 		expect(onComplete).toBeTruthy();
 	});
 

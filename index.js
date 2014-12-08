@@ -94,7 +94,7 @@ function run(appdir) {
                     break;
             }
             console.log(mailOptions);
-        };
+        }
         // create email options
         // send mail with defined transport object
         transporter.sendMail(mailOptions, function(e, i) {
