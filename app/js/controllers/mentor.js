@@ -4,10 +4,10 @@ angular.module("matsi.controllers")
             $scope.mentorData = {};
             $scope.mentors = [];
             if ($rootScope.currentUser) {
-                $scope.mentorData = MentorService.readMyProfile($rootScope.currentUser.uid);
-            };
-            $scope.mentors = MentorService.readMentor();
-            $scope.OneMentorData = MentorService.readSingleMentor($stateParams.uid);
+                $scope.mentorData = MentorService.profile($rootScope.currentUser.uid);
+            }
+            $scope.mentors = MentorService.find();
+            $scope.OneMentorData = MentorService.findOne($stateParams.uid);
             console.log($scope.OneMentorData);
             $scope.authCheck = function() {
                 if ((!$rootScope.currentUser) || ($rootScope.currentUser.role !== "-mentor-")) {
@@ -22,7 +22,7 @@ angular.module("matsi.controllers")
            };
            $scope.submitMentor = function(data) {
                if ($scope.checked) {
-                   MentorService.updateMentor(data, $rootScope.currentUser.uid, function(err) {
+                   MentorService.update(data, function(err) {
                        if (err) {
                            alert('Hoops! Data not updated succesfully');
                        } else {

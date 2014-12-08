@@ -2,21 +2,21 @@ angular.module("matsi.services")
     .factory('FellowService', ['$firebase', '$cookies', '$stateParams', '$rootScope', function($firebase, $cookies, $stateParams, $rootScope) {
         var rootRef = new Firebase($cookies.rootRef);
         return {
-            updateFellow: function(fellowData, currentUID) {
+            update: function(fellowData) {
                 var fellowData1 = angular.copy(fellowData);
                 delete fellowData1.$$conf;
                 delete fellowData1.$priority;
                 delete fellowData1.$id;
                 delete fellowData1.__proto__;
-                rootRef.child('users').child(currentUID).update(fellowData1);
+                rootRef.child('users').child(fellowData.uid).update(fellowData1);
             },
-            readFellow: function() {
+            find: function() {
                 return $firebase(rootRef.child('users').orderByChild('role').equalTo('-fellow-')).$asArray();
             },
-            readMyProfile: function(currentUID) {
+            profile: function(currentUID) {
                 return $firebase(rootRef.child('users').child(currentUID)).$asObject();
             },
-            readSingleFellow: function(uid) {
+            findOne: function(uid) {
                 if (uid) {
                     return $firebase(rootRef.child('users').child(uid)).$asObject();
                 }
@@ -33,7 +33,7 @@ angular.module("matsi.services")
                             if (cb && typeof cb === typeof
                                     function() {}) {
                                 cb(responseData);
-                            };
+                            }
                         });
                     } else {
                         if (cb) {

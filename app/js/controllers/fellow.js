@@ -7,17 +7,16 @@ angular.module("matsi.controllers")
             var currentUserUid = $stateParams.uid;
         }
         $scope.getAllFellows = function() {
-            $scope.allFellows = FellowService.readFellow();
+            $scope.allFellows = FellowService.find();
         };
 
         $scope.getCurrentFellow = function() {
-            $scope.fellowData = FellowService.readSingleFellow(currentUserUid);
+            $scope.fellowData = FellowService.findOne(currentUserUid);
             this.showMessageBox = true;
-            //console.log($scope.fellowData.requests, "This is #Yeet");
         };
 
         $scope.submitFellow = function() {
-            FellowService.updateFellow($scope.fellowData);
+            FellowService.update($scope.fellowData);
         };
 
         $scope.showBox1 = function() {
@@ -30,7 +29,7 @@ angular.module("matsi.controllers")
                     if (responseData.length === 0) {
                         $scope.sendMail();
                     } else {
-                        alert("The fellow is already being mentored, there are other fellows waiting")
+                        alert("The fellow is already being mentored, there are other fellows waiting");
                     }
                 } else {
                     $scope.sendMail();
@@ -39,7 +38,7 @@ angular.module("matsi.controllers")
         };
 
         $scope.sendMail = function() {
-            $scope.fellowData.reason = $scope.requestMentorshipMsg
+            $scope.fellowData.reason = $scope.requestMentorshipMsg;
             MailService.send(1, $scope.fellowData);
             $scope.sendRequests();
         };
