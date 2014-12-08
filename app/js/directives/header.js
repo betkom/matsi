@@ -2,8 +2,8 @@ angular.module("matsi.directives")
     .directive('header', function() {
         return {
             restrict: 'E',
-            controller: ['$rootScope', '$scope', '$firebase', '$cookies', 'FellowService', '$timeout','$stateParams','$location',
-                function($rootScope, $scope, $firebase, $cookies, FellowService, $timeout, $stateParams, $location) {
+            controller: ['$rootScope', '$scope', '$firebase', '$cookies', 'FellowService', '$timeout','$stateParams','$location', 'MailService', 
+                function($rootScope, $scope, $firebase, $cookies, FellowService, $timeout, $stateParams, $location, MailService) {
                     var rootRef = new Firebase($cookies.rootRef);
                     // Start with no user logged in
                     $rootScope.currentUser = null;
@@ -20,10 +20,12 @@ angular.module("matsi.directives")
                                     user.isAdmin = false;
                                     user.role = user.email.indexOf('@andela.co') > -1 ? '-fellow-' : '-mentor-';
                                     user.disabled = user.role !== "-fellow-";
-                                    if(!user.disabled)
+                                    if(!user.disabled){
                                       user.isMentored = false;
-                                    else
+                                    }
+                                    else{
                                       MailService.send(2,user);
+                                    }
                                     userRef.set(user);
                                     $rootScope.allowUser = true;
                                 } else {
