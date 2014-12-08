@@ -59,7 +59,12 @@ angular.module("matsi.directives")
                         window.location.pathname = "/";
                     };
                     $scope.profile = function() {
-                        $location.path('fellows/' + $rootScope.currentUser.uid);
+                        if($rootScope.currentUser.role === '-fellow-'){
+                            $location.path('fellows/' + $rootScope.currentUser.uid);
+                        }
+                        else {
+                            $location.path('mentors/' + $rootScope.currentUser.uid)
+                        }
                     };
                 }
             ]
