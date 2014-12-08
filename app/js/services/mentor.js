@@ -1,5 +1,5 @@
 angular.module("matsi.services")
-  .factory('MentorService', ['$firebase', '$cookies', '$stateParams', '$rootScope', function($firebase, $cookies, $stateParams, $rootScope) {
+  .factory('MentorService', ['$firebase', '$cookies', '$rootScope', function($firebase, $cookies, $rootScope) {
       var rootRef = new Firebase($cookies.rootRef);
-      return require('./exports/mentor')(rootRef,$firebase);
+      return require('./exports/mentor')(rootRef,$rootScope,$firebase);
 }]);

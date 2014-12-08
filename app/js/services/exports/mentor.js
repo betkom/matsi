@@ -1,11 +1,11 @@
-module.exports = function(rootRef,$firebase) {
+module.exports = function(rootRef, $rootScope, $firebase) {
     return {
-        all: function(callback) {
-            console.log($stateParams);
-            var mentors = $firebase(rootRef.child('users').orderByChild('role').equalTo('-mentor-')).$asArray();
-            if (callback && typeof callback === typeof
-                function() {})
-                mentors.$loaded().then(callback);
+        all: function(cb) {
+            var mentors;
+            if(!cb)
+            	mentors = $firebase(rootRef.child('users').orderByChild('role').equalTo('-mentor-')).$asArray();
+         	else
+                mentors = rootRef.child('users').orderByChild('role').equalTo('-mentor-').once('value',cb);
             return mentors;
         },
         findOne: function(uid, cb) {
@@ -16,6 +16,8 @@ module.exports = function(rootRef,$firebase) {
         },
 
         update: function(mentor, cb) {
+    		if(!$rootScope.currentUser || ($rootScope.currentUser && $rootScope.currentUser.uid != mentor.uid && !$rootScope.currentUser.isAdmin))
+      			return;
             mentor = angular.copy(mentor);
             delete mentor.$$conf;
             delete mentor.$id;
