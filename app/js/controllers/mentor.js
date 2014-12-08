@@ -27,6 +27,7 @@ angular.module("matsi.controllers")
                            alert('Hoops! Data not updated succesfully');
                        } else {
                            alert('Data updated successfully');
+                           $location.path('/myProfile');
                        }
                    });
                } else {
