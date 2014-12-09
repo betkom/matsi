@@ -1,7 +1,13 @@
 p {{mentor.fullName}} {{mentor.email}}
 p(ng-show="mentor.uid")
-	input(type="button" value="Accept Request" ng-click="accept()")
-	input(type="button" value="Reject Request" ng-click="showBox()")
+    a.btn.btn-success.btn-block(ng-click="accept()")
+        span.glyphicon.glyphicon-check(aria-hidden='true')
+        | Accept Request
+    a.btn.btn-danger.btn-block(ng-click="showBox()" ng-hide="showMessageBox")
+        span.glyphicon.glyphicon-minus(aria-hidden='true')
+        | Reject Request
 div(ng-show="showMessageBox")
-	input(type="text" class="messageBox"  ng-model="mentor.message")
-	input(type="button" value="Submit" ng-click="reject()")
+    input(type="text" class="messageBox form-control input-lg" placeholder="Why are you rejecting this mentor?" ng-model="mentor.message")
+    a.btn.btn-danger.btn-block(ng-click="reject()")
+        span.glyphicon.glyphicon-minus(aria-hidden='true')
+        | Reject
