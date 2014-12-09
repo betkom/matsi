@@ -1,9 +1,9 @@
 .container(ng-init="all()")
-  h2.blue.light Mentors at Andela
+  h2.light Mentors at Andela
   hr
   .row
-    a(ng-repeat = "mentor in mentors" ng-href="mentors/{{mentor.uid}}")
-      .col-sm-3
+    .col-xs-6.col-sm-3(ng-repeat='mentor in mentors')
+      a(ng-href='mentors/{{mentor.uid}}')
         .user-wrap
           .profile-pic
             span.f-badge M
@@ -11,5 +11,3 @@
           .user-name
             h5 {{mentor.fullName}}
             p.text-muted {{mentor.email}}
-            br
-            br

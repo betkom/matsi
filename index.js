@@ -2,7 +2,7 @@ global._ = require('lodash');
 global.t = require('moment');
 global.bodyParser = require('body-parser');
 global.nodemailer = require('nodemailer');
-
+global.firebaseRef = require('./firebaseRef');
 function run(appdir) {
     var express = require('express');
     var app = express();
@@ -12,10 +12,10 @@ function run(appdir) {
     app.use(function(req, res, next) {
         // tell the client what firebase to use
         if (process.env.NODE_ENV === 'production') {
-            res.cookie('rootRef', "https://matsi1.firebaseio.com/");
+            res.cookie('rootRef', firebaseRef.prod);
         } else {
             // development mode
-            res.cookie('rootRef', "https://brilliant-heat-9512.firebaseio.com/");
+            res.cookie('rootRef', firebaseRef.dev);
             // log the request
             console.log(t().format('HH:MM'), req.method, req.url, req.socket.bytesRead);
         }
