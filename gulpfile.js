@@ -130,7 +130,7 @@ gulp.task('test:lib', function() {
         }));
 });
 
-gulp.task('test:ui', function() {
+gulp.task('test:ui',['watchify'], function() {
     // Be sure to return the stream
     return gulp.src(paths.unitTest)
         .pipe(karma({
