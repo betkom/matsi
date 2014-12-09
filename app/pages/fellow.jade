@@ -9,7 +9,7 @@ section.content.fellows(ng-init="findOne()")
           .user-name
             h5
               p.text-muted {{fellow.fullName}}
-            p.text-muted Lorem ipsum dolor sit amet
+            p.text-muted {{fellow.shortBio}}
         .user-wrap(ng-if="currentUser.uid === fellow.uid")
           p You have mentor request(s) from :
             mentor-request(ng-repeat="(mentor_uid,mentor) in fellow.requests")   
@@ -22,8 +22,7 @@ section.content.fellows(ng-init="findOne()")
           .user-profile
             h4 Bio
             hr
-            p
-              | Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptas aut eligendi fugit, dolores tempore modi consectetur asperiores quo fugiat alias porro delectus saepe unde explicabo omnis mollitia ducimus minima, perspiciatis!
+            p {{fellow.longBio}}
         .user-wrap.bio
           .user-profile
             h4 Profile Details
