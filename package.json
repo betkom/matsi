@@ -20,7 +20,6 @@
   "homepage": "http://andela.co",
   "devDependencies": {
     "assert": "^1.1.2",
-    "gulp-bower": "0.0.7",
     "gulp-karma": "0.0.4",
     "gulp-mocha": "^2.0.0",
     "karma": "^0.12.0",
@@ -48,6 +47,7 @@
     "gulp": "^3.8.7",
     "gulp-concat": "^2.4.1",
     "gulp-exit": "0.0.2",
+    "gulp-bower": "0.0.7",
     "gulp-jade": "^0.7.0",
     "gulp-jshint": "^1.8.4",
     "gulp-karma": "0.0.4",
