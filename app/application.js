@@ -5,6 +5,7 @@ angular.module("matsi.directives", ['firebase', 'ngCookies']);
 
 require("./js/config/config.js");
 
+require("./js/services/refs.js");
 require("./js/services/mentor.js");
 require("./js/services/fellow.js");
 require("./js/services/mail.js");
