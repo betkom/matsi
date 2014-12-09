@@ -12,7 +12,6 @@ angular.module("matsi.controllers")
             var uid = $rootScope.currentUser?($stateParams.uid || $rootScope.currentUser.uid):$stateParams.uid;
             $scope.mentor = MentorService.findOne(uid);
           };
-
           $scope.all = function(){
             $scope.mentors = MentorService.all();
           };
