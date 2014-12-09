@@ -28,14 +28,6 @@ Matsi.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', funct
                 authenticate: true
             }
         })
-        .state('profile', {
-            url: '/profile',
-            templateUrl: 'pages/my-profile.html',
-            controller: '',
-            data: {
-                access: 'private'
-            }
-        })
         .state('fellow', {
             url: '/fellows/:uid',
             templateUrl: 'pages/fellow.html',
