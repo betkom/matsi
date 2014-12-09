@@ -152,10 +152,11 @@ gulp.task('test:ui',['watchify'], function() {
             configFile: 'karma.conf.js',
             action: 'run'
         }))
-        .on('error', function(err) {
-            // Make sure failed tests cause gulp to exit non-zero
-            throw err;
-        });
+        .pipe(exit());
+        // .on('error', function(err) {
+        //     // Make sure failed tests cause gulp to exit non-zero
+        //     throw err;
+        // });
 });
 
 gulp.task('test',['test:ui','test:lib']);
