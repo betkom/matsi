@@ -143,7 +143,7 @@ gulp.task('test:ui', function() {
             //throw err;
         });
 });
-gulp.task('test',['test:lib','test:ui']);
+gulp.task('test',['test:ui','test:lib']);
 gulp.task('heroku:production', ['scripts', 'jade', 'less']);
 gulp.task('production', ['nodemon']);
 gulp.task('default', ['nodemon', 'jade', 'less', 'watch', 'watchify']);
