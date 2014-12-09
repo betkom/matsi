@@ -17,6 +17,7 @@ var browserify = require('browserify'),
     stringify = require('stringify'),
     uglify = require('gulp-uglify'),
     karma = require('gulp-karma'),
+    exit = require('gulp-exit'),
     watchify = require('watchify'),
     mocha = require('gulp-mocha');
 
@@ -24,28 +25,27 @@ var paths = {
     public: 'public/**',
     jade: 'app/**/*.jade',
     scripts: 'app/**/*.js',
-    libTests: ['mocha.js'],
+    libTest: ['lib/tests/service.spec.js'],
+    unitTest: [
+      'public/lib/angular/angular.js',
+      'public/lib/angular-mocks/angular-mocks.js',
+      'public/lib/moment/moment.js',
+      'public/lib/firebase/firebase.js',
+      'public/lib/angular-aria/angular-aria.js',
+      'public/lib/angular-ui-router/release/angular-ui-router.min.js',
+      'public/lib/hammerjs/hammer.min.js',
+      'public/lib/angular-material/angular-material.js',
+      'public/lib/angular-route/angular-route.js',
+      'public/lib/angular-cookies/angular-cookies.js',
+      'public/lib/angular-bootstrap/ui-bootstrap.js',
+      'public/lib/angular-animate/angular-animate.js',
+      'public/lib/angular-sanitize/angular-sanitize.js',
+      'public/lib/angularfire/dist/angularfire.js',
+      'public/js/index.js',
+      'app/test/specs.js'
+    ],
     styles: 'app/styles/*.+(less|css)'
-}
-
-var testFiles = [
-    'public/lib/angular/angular.js',
-    'public/lib/angular-mocks/angular-mocks.js',
-    'public/lib/moment/moment.js',
-    'public/lib/firebase/firebase.js',
-    'public/lib/angular-aria/angular-aria.js',
-    'public/lib/angular-ui-router/release/angular-ui-router.min.js',
-    'public/lib/hammerjs/hammer.min.js',
-    'public/lib/angular-material/angular-material.js',
-    'public/lib/angular-route/angular-route.js',
-    'public/lib/angular-cookies/angular-cookies.js',
-    'public/lib/angular-bootstrap/ui-bootstrap.js',
-    'public/lib/angular-animate/angular-animate.js',
-    'public/lib/angular-sanitize/angular-sanitize.js',
-    'public/lib/angularfire/dist/angularfire.js',
-    'public/js/index.js',
-    'app/test/specs.js'
-];
+};
 
 gulp.task('lint', function() {
   return gulp.src('./lib/*.js')
@@ -122,17 +122,18 @@ gulp.task('watchify', function() {
 //     .pipe(gulp.dest('public'));
 // });
 
-gulp.task('mocha', function() {
-    return gulp.src(paths.libTests)
+gulp.task('test:lib', function() {
+    return gulp.src(paths.libTest)
         .pipe(mocha({
-            reporter: 'dot'
+            reporter: 'dot',
+            timeout: 60000
         }))
         .pipe(exit());
 });
 
-gulp.task('test', function() {
+gulp.task('test:ui', function() {
     // Be sure to return the stream
-    return gulp.src(testFiles)
+    return gulp.src(paths.unitTest)
         .pipe(karma({
             configFile: 'karma.conf.js',
             action: 'run'
@@ -142,6 +143,7 @@ gulp.task('test', function() {
             //throw err;
         });
 });
+gulp.task('test',['test:lib','test:ui']);
 gulp.task('heroku:production', ['scripts', 'jade', 'less']);
 gulp.task('production', ['nodemon']);
 gulp.task('default', ['nodemon', 'jade', 'less', 'watch', 'watchify']);
