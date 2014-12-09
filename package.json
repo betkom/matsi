@@ -20,6 +20,7 @@
   "homepage": "http://andela.co",
   "devDependencies": {
     "assert": "^1.1.2",
+    "gulp-bower": "0.0.7",
     "gulp-karma": "0.0.4",
     "gulp-mocha": "^2.0.0",
     "karma": "^0.12.0",

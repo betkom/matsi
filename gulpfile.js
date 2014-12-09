@@ -2,6 +2,7 @@ var browserify = require('browserify'),
     concat = require('gulp-concat'),
     es6ify = require('es6ify'),
     gulp = require('gulp'),
+    bower = require('gulp-bower'),
     jshint = require('gulp-jshint'),
     gutil = require('gulp-util'),
     jade = require('gulp-jade'),
@@ -25,6 +26,10 @@ var paths = {
     public: 'public/**',
     jade: 'app/**/*.jade',
     scripts: 'app/**/*.js',
+    img:['app/**/*.jpg',
+        'app/**/*.png',
+        'app/**/*.jpeg',
+        'app/**/*.ico'],
     libTest: ['lib/tests/service.spec.js'],
     unitTest: [
       'public/lib/angular/angular.js',
@@ -46,6 +51,11 @@ var paths = {
     ],
     styles: 'app/styles/*.+(less|css)'
 };
+
+gulp.task('bower', function() {
+  return bower()
+    .pipe(gulp.dest('public/lib/'))
+});
 
 gulp.task('lint', function() {
   return gulp.src('./lib/*.js')
@@ -91,6 +101,11 @@ gulp.task('watch', function() {
     gulp.watch(paths.jade, ['jade']);
     gulp.watch(paths.styles, ['less']);
     // gulp.watch(paths.public).on('change', livereload.changed);
+});
+
+gulp.task('img', function() {
+   return gulp.src(paths.img)
+    .pipe(gulp.dest('public/'));
 });
 
 gulp.task('watchify', function() {
@@ -142,8 +157,9 @@ gulp.task('test:ui',['watchify'], function() {
             throw err;
         });
 });
+
 gulp.task('test',['test:ui','test:lib']);
-gulp.task('heroku:production', ['watchify', 'jade', 'less']);
-gulp.task('production', ['nodemon']);
-gulp.task('default', ['nodemon', 'jade', 'less', 'watch', 'watchify']);
-gulp.task('build', ['jade', 'less', 'watchify']);
+gulp.task('heroku:production', ['bower','watchify', 'jade', 'less','img']);
+gulp.task('production', ['nodemon','bower','jade', 'less','watchify','img']);
+gulp.task('default', ['nodemon', 'jade', 'less', 'watch', 'watchify','img']);
+gulp.task('build', ['jade', 'less', 'watchify','img']);
