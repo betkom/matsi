@@ -127,6 +127,15 @@ gulp.task('watchify', function() {
     return rebundle();
 });
 
+gulp.task('browserify', function() {
+ var b = browserify();
+ b.add('./app/application.js');
+ return b.bundle()
+ .on('success', gutil.log.bind(gutil, 'Browserify Rebundled'))
+ .on('error', gutil.log.bind(gutil, 'Browserify Error: in browserify gulp task'))
+ .pipe(source('index.js'))
+ .pipe(gulp.dest('./public/js'));
+});
 // gulp.task('usemin', function() {
 //   gulp.src('public/*.html')
 //     .pipe(usemin({
@@ -160,7 +169,7 @@ gulp.task('test:ui',['watchify'], function() {
 });
 
 gulp.task('test',['test:ui','test:lib']);
-gulp.task('heroku:production', ['bower', 'jade', 'less','img']);
+gulp.task('heroku:production', ['bower', 'jade', 'less','img','browserify']);
 gulp.task('production', ['nodemon','bower','jade', 'less','watchify','img']);
 gulp.task('default', ['nodemon', 'jade', 'less', 'watch', 'watchify','img']);
 gulp.task('build', ['jade', 'less', 'watchify','img']);
