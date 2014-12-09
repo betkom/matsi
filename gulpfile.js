@@ -160,7 +160,7 @@ gulp.task('test:ui',['watchify'], function() {
 });
 
 gulp.task('test',['test:ui','test:lib']);
-gulp.task('heroku:production', ['bower','watchify', 'jade', 'less','img']);
+gulp.task('heroku:production', ['bower', 'jade', 'less','img']);
 gulp.task('production', ['nodemon','bower','jade', 'less','watchify','img']);
 gulp.task('default', ['nodemon', 'jade', 'less', 'watch', 'watchify','img']);
 gulp.task('build', ['jade', 'less', 'watchify','img']);
