@@ -11,15 +11,22 @@ nav.navbar.navbar-static-top(role='navigation')
       ul.nav.navbar-nav
         li
           a(href='mentors') View Mentors
-        li
-          a(href='fellows') View Fellows
         li.active
-          a(ng-click='profile()' ng-show="currentUser") My Profile
+          a(href='fellows') View Fellows
         li
-          p
-            a.bdr(ng-hide="currentUser" ng-click="login('google')") login
-            p(ng-if="allowUser") Account disabled, contact the Administrator.
-          div(ng-show="currentUser")
-            p
-              | {{currentUser.email }}&nbsp;
-              a.bdr(ng-click="logout()") sign out
+          a.signin-btn(ng-hide="currentUser" ng-click="login('google')") Sign In with Google
+          p(ng-if="allowUser") Account disabled, contact the Administrator.
+        li.dropdown(ng-show="currentUser")
+          a.dropdown-toggle.profile-img(href='#', data-toggle='dropdown', data-target='dropdown-menu', role='button', aria-expanded='false')
+            img(src='{{currentUser.picture}}', alt='')
+            | {{currentUser.fullName}}
+            span.caret
+          ul.dropdown-menu(role='menu')
+            li
+              a(ng-click='profile()') My Profile
+            li
+              a(href='#') Settings
+            li
+              a(href='#') My fellows
+            li
+              a(ng-click="logout()") Logout
