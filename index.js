@@ -57,7 +57,7 @@ function run(appdir) {
                         from: adminMail,
                         to: fellowMail,
                         subject: 'Hello '+fellowName,
-                        html: 'You have a pending request to be mentored, you can <a href=\'http://'+ req.hostname+'/fellows/'+ uid +'\'>View them here</a> <br> We hope you have a great time! <br> Team Matsi' + reason
+                        html: 'You have a pending request to be mentored, the message says ' + reason + ', you can <a href=\'http://'+ req.hostname+'/fellows/'+ uid +'\'>View them here</a> <br> We hope you have a great time! <br> Team Matsi '
                     };
                     break;
                 case 2:

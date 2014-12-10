@@ -68,56 +68,49 @@ describe('Fellow Mentor Service Test', function() {
             });
         });
 
-        it('should get mockFellow by id', function(done) {
-            FellowService.findOne(mockFellow.uid, function(snap) {
-                var fellow = snap.val();
-                expect(fellow.uid).toBe(mockFellow.uid);
-                done();
-            });
-
-        });
-
-        it('Should have created the Mentor', function(done) {
-            MentorService.findOne(mockMentor.uid, function(snap) {
-                var mentor = snap.val();
-                expect(mentor.uid).toBe(mockMentor.uid);
-                done();
-            });
-        });
-
-        it('Should get mentors', function(done) {
-            MentorService.all(function(snap) {
-                var mentors = [];
-                var mentorsObject = snap.val();
-                for (var i in mentorsObject)
-                    mentors.push(mentorsObject[i]);
-                expect(mentors.length).toBeGreaterThan(1);
-                done();
-            });
-        });
-
-        it('should update mentor successfully', function(done) {
-            mockMentor.lastName = 'Happy';
-            rootScope.currentUser = mockMentor;
-            console.log('ohhhh', mockMentor);
-            MentorService.update(mockMentor, function(err) {
-                console.log("yessss", mockMentor);
-                expect(err).toBe(null);
-                done();
-            });
-
-        });
-
     });
 
-    afterEach(function(done) {
-        Refs.rootRef.child('users').child(mockMentor.uid).remove(function(err) {
+    it('Should have created the Mentor', function(done) {
+        MentorService.findOne(mockMentor.uid, function(snap) {
+            var mentor = snap.val();
+            expect(mentor.uid).toBe(mockMentor.uid);
+            done();
+        });
+    });
+
+    it('Should get mentors', function(done) {
+        MentorService.all(function(snap) {
+            var mentors = [];
+            var mentorsObject = snap.val();
+            for (var i in mentorsObject)
+                mentors.push(mentorsObject[i]);
+            expect(mentors.length).toBeGreaterThan(1);
+            done();
+        });
+    });
+
+    it('should update mentor successfully', function(done) {
+        mockMentor.lastName = 'Happy';
+        rootScope.currentUser = mockMentor;
+        console.log('ohhhh', mockMentor);
+        MentorService.update(mockMentor, function(err) {
+            console.log("yessss", mockMentor);
             expect(err).toBe(null);
-            Refs.rootRef.child('users').child(mockFellow.uid).remove(function(err) {
-                expect(err).toBe(null);
-                done();
-            });
+            done();
         });
+
     });
+
+});
+
+afterEach(function(done) {
+Refs.rootRef.child('users').child(mockMentor.uid).remove(function(err) {
+    expect(err).toBe(null);
+    Refs.rootRef.child('users').child(mockFellow.uid).remove(function(err) {
+        expect(err).toBe(null);
+        done();
+    });
+});
+});
 
 });
