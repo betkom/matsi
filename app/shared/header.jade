@@ -16,6 +16,26 @@ nav.navbar.navbar-static-top(role='navigation')
         li
           a.signin-btn(ng-hide="currentUser" ng-click="login('google')") Sign In with Google
           p(ng-if="allowUser") Account disabled, contact the Administrator.
+        li.dropdown.notif-icon(ng-show="currentUser")
+          a.dropdown-toggle(href='#', data-toggle='dropdown', role='button', aria-expanded='false', title='Notifications')
+            em 4
+          ul.dropdown-menu(role='menu')
+            li
+              a(href='#')
+                | Mohini requested to be your mentor
+                div.date 2 days ago
+            li
+              a(href='#')
+                | Brice sent you a message
+                div.date 2 days ago
+            li
+              a(href='#')
+                | Mohini requested to be your mentor
+                div.date 2 days ago
+            li
+              a(href='#')
+                | Mohini requested to be your mentor
+                div.date 2 days ago
         li.dropdown(ng-if="currentUser")
           a.dropdown-toggle.profile-img(href='#', data-toggle='dropdown', data-target='dropdown-menu', role='button', aria-expanded='false')
             img(src='{{currentUser.picture}}', alt='')
