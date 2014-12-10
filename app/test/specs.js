@@ -35,7 +35,6 @@ describe('Fellow Mentor Service Test',function(){
 				done();
 			});	
 		});
-		rootScope.currentUser = mockMentor;
 	});
 
 	describe('Mentors and Fellow Relationship',function(){
@@ -66,17 +65,11 @@ describe('Fellow Mentor Service Test',function(){
 				});
 			});
 			it('should update mentor successfully', function(done){
+				rootScope.currentUser = mockMentor;
 				mockMentor.lastName = 'Happy';
 				console.log('ohhhh', mockMentor);
 				MentorService.update(mockMentor, function(err){
 					console.log("yessss", mockMentor);
-					//console.log('ohhhh', mockMentor);
-						// MentorService.findOne(mockMentor.uid, function(snap){
-						// 	console.log('Snap',snap.val());
-						// 	var mentor = snap.val();
-						// expect(mentor).toBe(mockMentor);
-						// done();
-						// });
 				expect(err).toBe(null);
 				done();
 				});
