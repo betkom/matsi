@@ -24,14 +24,15 @@ angular.module("matsi.controllers")
         };
 
         $scope.mentorConstraints = function() {
-          FellowService.mentorConstraint($stateParams.uid, function(responseData) {
-            if (responseData) {
-              if (!_.any(responseData)) {
-                  $scope.sendRequest();
+          FellowService.mentorConstraint($stateParams.uid, function(res,hasUnmentored) {
+            if (res) {
+              if (!hasUnmentored){
+                $scope.sendRequest();
               } else {
-                alert("The fellow is already being mentored, there are other fellows waiting");
+                alert('No way Jose');
               }
-            } else {
+            } 
+            else {
               $scope.sendRequest();
             }
           });
