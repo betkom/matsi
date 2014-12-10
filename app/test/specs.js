@@ -39,6 +39,37 @@ describe('Fellow Mentor Service Test', function() {
 
     describe('Mentors and Fellow Relationship', function() {
 
+        it('Should have created the Mentor', function(done) {
+            MentorService.findOne(mockMentor.uid, function(snap) {
+                var mentor = snap.val();
+                expect(mentor.uid).toBe(mockMentor.uid);
+                done();
+            });
+        });
+
+        it('Should get mentors', function(done) {
+            MentorService.all(function(snap) {
+                var mentors = [];
+                var mentorsObject = snap.val();
+                for (var i in mentorsObject)
+                    mentors.push(mentorsObject[i]);
+                expect(mentors.length).toBeGreaterThan(1);
+                done();
+            });
+        });
+
+        // it('should update mentor successfully', function(done){
+        // 	mockMentor.lastName = 'Happy';
+        // 	MentorService.update(mockMentor, function(){
+        // 		done();
+        // 	});
+        // 	MentorService.findOne(mockMentor.uid, function(snap){
+        // 		var mentor = snap.val();
+        // 		expect(mentor).toBe(mockMentor);
+        // 		done();
+        // 	});
+        // });
+
         it('Should have created the Fellow', function(done) {
             FellowService.findOne(mockFellow.uid, function(snap) {
                 var fellow = snap.val();
@@ -47,19 +78,11 @@ describe('Fellow Mentor Service Test', function() {
             });
         });
 
-        // it('should update mockFellow', function(done) {
-        // 	mockFellow.name = 'This is a Mock Name';
-        //     FellowService.update(mockFellow,function(snap){
-        //     	var fellow = snap.val();
-        //     	expect(mockFellow.name).toBe(fellow.name);
-        //     	done();
-        //     });
-        // });
+        it('should update mockFellow', function(done) {
+            mockFellow.name = 'This is a Mock Name';
 
-        it('Should have created the Mentor', function(done) {
-            MentorService.findOne(mockMentor.uid, function(snap) {
-                var mentor = snap.val();
-                expect(mentor.uid).toBe(mockMentor.uid);
+            FellowService.update(mockFellow, function(err) {
+                expect(err).toBe(null);
                 done();
             });
         });

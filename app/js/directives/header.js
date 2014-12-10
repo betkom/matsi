@@ -65,7 +65,7 @@ angular.module("matsi.directives")
                             $location.path('fellows/' + $rootScope.currentUser.uid);
                         }
                         else {
-                            $location.path('mentors/' + $rootScope.currentUser.uid)
+                            $location.path('mentors/' + $rootScope.currentUser.uid);
                         }
                     };
                 }
