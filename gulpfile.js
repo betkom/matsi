@@ -152,8 +152,7 @@ gulp.task('test:lib', function() {
         .pipe(mocha({
             reporter: 'dot',
             timeout: 60000
-        }))
-        .pipe(exit());
+        }));
 });
 
 gulp.task('test:ui', function() {
@@ -163,13 +162,14 @@ gulp.task('test:ui', function() {
             configFile: 'karma.conf.js',
             action: 'run'
         }))
+        .pipe(exit());
                 // .on('error', function(err) {
         //     // Make sure failed tests cause gulp to exit non-zero
         //     throw err;
         // });
 });
 
-gulp.task('test',['test:ui','test:lib']);
+gulp.task('test',['test:ui']);
 gulp.task('heroku:production', ['bower', 'jade', 'less','img','browserify']);
 gulp.task('production', ['nodemon','bower','jade', 'less','watchify','img']);
 gulp.task('default', ['nodemon', 'jade', 'less', 'watch', 'watchify','img']);
