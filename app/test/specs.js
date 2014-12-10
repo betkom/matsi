@@ -101,8 +101,6 @@ describe('Fellow Mentor Service Test', function() {
 
     });
 
-});
-
 afterEach(function(done) {
 Refs.rootRef.child('users').child(mockMentor.uid).remove(function(err) {
     expect(err).toBe(null);
