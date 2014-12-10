@@ -160,7 +160,8 @@ gulp.task('test:ui',['browserify'], function() {
     return gulp.src(paths.unitTest)
         .pipe(karma({
             configFile: 'karma.conf.js',
-            action: 'run'
+            action: 'run',
+            timeout: 120000
         }))
         .pipe(exit());
                 // .on('error', function(err) {

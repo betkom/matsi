@@ -26,6 +26,7 @@ describe('Fellow Mentor Service Test',function(){
 		MentorService = $injector.get('MentorService');
 		MailService = $injector.get('MailService');
 		Refs = $injector.get('Refs');
+		rootScope = $injector.get('$rootScope');
 	}));
 
 	beforeEach(function(done){
@@ -34,6 +35,7 @@ describe('Fellow Mentor Service Test',function(){
 				done();
 			});	
 		});
+		rootScope.currentUser = mockMentor;
 	});
 
 	describe('Mentors and Fellow Relationship',function(){
@@ -63,17 +65,23 @@ describe('Fellow Mentor Service Test',function(){
 					done();
 				});
 			});
-			// it('should update mentor successfully', function(done){
-			// 	mockMentor.lastName = 'Happy';
-			// 	MentorService.update(mockMentor, function(){
-			// 		done();
-			// 	});
-			// 	MentorService.findOne(mockMentor.uid, function(snap){
-			// 		var mentor = snap.val();
-			// 		expect(mentor).toBe(mockMentor);
-			// 		done();
-			// 	});
-			// });
+			it('should update mentor successfully', function(done){
+				mockMentor.lastName = 'Happy';
+				console.log('ohhhh', mockMentor);
+				MentorService.update(mockMentor, function(err){
+					console.log("yessss", mockMentor);
+					//console.log('ohhhh', mockMentor);
+						// MentorService.findOne(mockMentor.uid, function(snap){
+						// 	console.log('Snap',snap.val());
+						// 	var mentor = snap.val();
+						// expect(mentor).toBe(mockMentor);
+						// done();
+						// });
+				expect(err).toBe(null);
+				done();
+				});
+				
+			});
 
 	});
 
