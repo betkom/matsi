@@ -155,12 +155,13 @@ gulp.task('test:lib', function() {
         }));
 });
 
-gulp.task('test:ui', function() {
+gulp.task('test:ui',['browserify'], function() {
     // Be sure to return the stream
     return gulp.src(paths.unitTest)
         .pipe(karma({
             configFile: 'karma.conf.js',
-            action: 'run'
+            action: 'run',
+            timeout: 120000
         }))
         .pipe(exit());
                 // .on('error', function(err) {
