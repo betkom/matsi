@@ -152,17 +152,16 @@ gulp.task('test:lib', function() {
         .pipe(mocha({
             reporter: 'dot',
             timeout: 60000
-        }))
+        }));
 });
 
-gulp.task('test:ui', function() {
+gulp.task('test:ui',['browserify'] function() {
     // Be sure to return the stream
     return gulp.src(paths.unitTest)
         .pipe(karma({
             configFile: 'karma.conf.js',
             action: 'run'
-        }))
-        .pipe(exit());
+        }));
                 // .on('error', function(err) {
         //     // Make sure failed tests cause gulp to exit non-zero
         //     throw err;
