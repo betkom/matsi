@@ -153,7 +153,6 @@ gulp.task('test:lib', function() {
             reporter: 'dot',
             timeout: 60000
         }))
-        .pipe(exit());
 });
 
 gulp.task('test:ui', function() {
@@ -163,6 +162,7 @@ gulp.task('test:ui', function() {
             configFile: 'karma.conf.js',
             action: 'run'
         }))
+        .pipe(exit());
                 // .on('error', function(err) {
         //     // Make sure failed tests cause gulp to exit non-zero
         //     throw err;
