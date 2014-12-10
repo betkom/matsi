@@ -180,3 +180,4 @@ gulp.task('heroku:production', ['bower', 'jade', 'less','img','fonts','browserif
 gulp.task('production', ['nodemon','bower','jade', 'less','watchify','img','fonts']);
 gulp.task('default', ['nodemon', 'jade', 'less', 'watch', 'watchify','img','fonts']);
 gulp.task('build', ['jade', 'less', 'watchify','img','fonts']);
+

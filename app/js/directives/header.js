@@ -2,7 +2,7 @@ angular.module("matsi.directives")
     .directive('header', function() {
         return {
             restrict: 'E',
-            controller: ['$rootScope', '$scope', '$firebase', '$cookies', 'FellowService', '$timeout','$stateParams','$location', 'MailService', 
+            controller: ['$rootScope', '$scope', '$firebase', '$cookies', 'FellowService', '$timeout', '$stateParams', '$location', 'MailService',
                 function($rootScope, $scope, $firebase, $cookies, FellowService, $timeout, $stateParams, $location, MailService) {
                     var rootRef = new Firebase($cookies.rootRef);
                     // Start with no user logged in
@@ -20,11 +20,10 @@ angular.module("matsi.directives")
                                     user.isAdmin = false;
                                     user.role = user.email.indexOf('@andela.co') > -1 ? '-fellow-' : '-mentor-';
                                     user.disabled = user.role !== "-fellow-";
-                                    if(!user.disabled){
-                                      user.isMentored = false;
-                                    }
-                                    else{
-                                      MailService.send(2,user);
+                                    if (!user.disabled) {
+                                        user.isMentored = false;
+                                    } else {
+                                        MailService.send(2, user);
                                     }
                                     userRef.set(user);
                                     $rootScope.allowUser = true;
@@ -35,9 +34,9 @@ angular.module("matsi.directives")
                                         rootRef.unauth();
                                     }
                                 }
-                                $timeout(function(){
-                                  $rootScope.currentUser = user;
-                                },1);
+                                $timeout(function() {
+                                    $rootScope.currentUser = user;
+                                }, 1);
                             });
                         } else {
                             $rootScope.currentUser = null;
@@ -60,11 +59,10 @@ angular.module("matsi.directives")
                         rootRef.unauth();
                         window.location.pathname = "/";
                     };
-                    $scope.profile = function() {
-                        if($rootScope.currentUser.role === '-fellow-'){
+                    $scope.profile = function(val) {
+                        if ($rootScope.currentUser.role === '-fellow-') {
                             $location.path('fellows/' + $rootScope.currentUser.uid);
-                        }
-                        else {
+                        } else {
                             $location.path('mentors/' + $rootScope.currentUser.uid);
                         }
                     };

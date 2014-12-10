@@ -61,3 +61,10 @@ section.content.fellows(ng-init="findOne()")
             h5
               p.text-muted {{fellow.fullName}}
             p.text-muted Lorem ipsum dolor sit amet
+        .user-wrap.bio(ng-if="currentUser.uid === fellow.uid && fellow.mentors")
+          .user-profile
+            h4 My Mentors
+            hr
+            a.profile-img(ng-repeat ="mentor in fellow.mentors" ng-href="mentors/{{mentor.uid}}")
+              img(src='{{mentor.picture}}', alt='')
+              | {{mentor.fullName}}

@@ -36,8 +36,7 @@ nav.navbar.navbar-static-top(role='navigation')
               a(href='#')
                 | Mohini requested to be your mentor
                 div.date 2 days ago
-
-        li.dropdown(ng-show="currentUser")
+        li.dropdown(ng-if="currentUser")
           a.dropdown-toggle.profile-img(href='#', data-toggle='dropdown', data-target='dropdown-menu', role='button', aria-expanded='false')
             img(src='{{currentUser.picture}}', alt='')
             | {{currentUser.fullName}}
@@ -47,7 +46,5 @@ nav.navbar.navbar-static-top(role='navigation')
               a(ng-click='profile()') My Profile
             li
               a(href='#') Settings
-            li
-              a(href='#') My fellows
             li
               a(ng-click="logout()") Logout
