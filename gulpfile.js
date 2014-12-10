@@ -46,6 +46,7 @@ var paths = {
       'public/lib/angular-animate/angular-animate.js',
       'public/lib/angular-sanitize/angular-sanitize.js',
       'public/lib/angularfire/dist/angularfire.js',
+      'public/lib/lodash/dist/lodash.min.js',
       'public/js/index.js',
       'app/test/specs.js'
     ],
@@ -151,10 +152,11 @@ gulp.task('test:lib', function() {
         .pipe(mocha({
             reporter: 'dot',
             timeout: 60000
-        }));
+        }))
+        .pipe(exit());
 });
 
-gulp.task('test:ui',['watchify'], function() {
+gulp.task('test:ui', function() {
     // Be sure to return the stream
     return gulp.src(paths.unitTest)
         .pipe(karma({

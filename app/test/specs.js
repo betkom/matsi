@@ -53,11 +53,32 @@ describe('Fellow Mentor Service Test',function(){
 					done();
 				});
 			});
+			it('Should get mentors',function(done){
+				MentorService.all(function(snap){
+					var mentors = [];
+					var mentorsObject = snap.val();
+					for(var i in mentorsObject)
+          mentors.push(mentorsObject[i]);
+       	 	expect(mentors.length).toBeGreaterThan(1);
+					done();
+				});
+			});
+			it('should update mentor successfully', function(done){
+				mockMentor.lastName = 'Happy';
+				MentorService.update(mockMentor, function(){
+					done();
+				});
+				MentorService.findOne(mockMentor.uid, function(snap){
+					var mentor = snap.val();
+					expect(mentor).toBe(mockMentor);
+					done();
+				});
+			});
 
 	});
 
 	afterEach(function(done){
-		Refs.rootRef.child('users').child(mockMentor.uid).remove(function (err) {
+		Refs.rootRef.child('users').child(mockMentor.uid).remove(function(err) {
 				expect(err).toBe(null);
 				Refs.rootRef.child('users').child(mockFellow.uid).remove(function(err){	
 					expect(err).toBe(null);
