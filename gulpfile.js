@@ -30,6 +30,7 @@ var paths = {
         'app/**/*.png',
         'app/**/*.jpeg',
         'app/**/*.ico'],
+    fonts:'app/fonts/**',    
     libTest: ['lib/tests/service.spec.js'],
     unitTest: [
       'public/lib/angular/angular.js',
@@ -108,6 +109,10 @@ gulp.task('img', function() {
    return gulp.src(paths.img)
     .pipe(gulp.dest('public/'));
 });
+gulp.task('fonts', function(){
+    return gulp.src(paths.fonts)
+    .pipe(gulp.dest('public/fonts'));
+});
 
 gulp.task('watchify', function() {
     var bundler = watchify(browserify('./app/application.js', watchify.args));
@@ -171,7 +176,7 @@ gulp.task('test:ui',['browserify'], function() {
 });
 
 gulp.task('test',['test:ui','test:lib']);
-gulp.task('heroku:production', ['bower', 'jade', 'less','img','browserify']);
-gulp.task('production', ['nodemon','bower','jade', 'less','watchify','img']);
-gulp.task('default', ['nodemon', 'jade', 'less', 'watch', 'watchify','img']);
-gulp.task('build', ['jade', 'less', 'watchify','img']);
+gulp.task('heroku:production', ['bower', 'jade', 'less','img','fonts','browserify']);
+gulp.task('production', ['nodemon','bower','jade', 'less','watchify','img','fonts']);
+gulp.task('default', ['nodemon', 'jade', 'less', 'watch', 'watchify','img','fonts']);
+gulp.task('build', ['jade', 'less', 'watchify','img','fonts']);
