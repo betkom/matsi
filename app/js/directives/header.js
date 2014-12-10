@@ -66,6 +66,13 @@ angular.module("matsi.directives")
                             $location.path('mentors/' + $rootScope.currentUser.uid);
                         }
                     };
+                    $scope.editProfile = function(val) {
+                        if ($rootScope.currentUser.role === '-fellow-') {
+                            $location.path('fellows/' + $rootScope.currentUser.uid + '/edit');
+                        } else {
+                            $location.path('mentors/' + $rootScope.currentUser.uid + '/edit');
+                        }
+                    };
                 }
             ]
         };
