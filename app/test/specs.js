@@ -1,6 +1,6 @@
 describe('Fellow Mentor Service Test', function() {
 
-    var FellowService,
+    var Fellow,
         MentorService,
         MailService,
         Refs,
