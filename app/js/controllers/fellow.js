@@ -1,4 +1,4 @@
-angular.module("matsi.controllers", ['ngMaterial'])
+angular.module("matsi.controllers")
     .controller("FellowController", ['$rootScope', '$scope', '$cookies', 'FellowService', '$http', '$stateParams', 'MentorService', 'MailService', '$mdDialog',
     function($rootScope, $scope, $cookies, FellowService, $http, $stateParams, MentorService, MailService, $mdDialog) {
   

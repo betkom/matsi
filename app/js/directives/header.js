@@ -36,7 +36,10 @@ angular.module("matsi.directives")
                                 }
                                 $timeout(function() {
                                     $rootScope.currentUser = user;
-                                    $scope.notifications = Object.keys($rootScope.currentUser.requests).length;
+                                    if ($rootScope.currentUser.requests) {
+                                        $scope.notifications = Object.keys($rootScope.currentUser.requests).length;
+                                    };
+
                                 }, 1);
                             });
                         } else {
