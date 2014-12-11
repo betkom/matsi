@@ -34,7 +34,7 @@ section.content.fellows(ng-init="findOne()")
                     label Date Joined
                     .row.date-input
                       .col-md-12
-                        input.form-control(type='date', ng-model = 'fellow.created', min='2014-01-01')
+                        input.form-control(type='date', ng-model = 'fellow.joinDate', min='2014-01-01')
               .form-group
                 label Github Profile
                 .input-group
@@ -62,11 +62,10 @@ section.content.fellows(ng-init="findOne()")
                   button.btn.btn-primary.btn-block(ng-click="update()") Save
         .unit-wrap.bio
           .user-profile
-            h4 Badges
+            h4 Plum Profile
             hr
-            h5
-              a(href='') {{fellow.fullName}}
-            p.text-muted Lorem ipsum dolor sit amet
+            h5 Plum link
+            input.form-control(type='text', placeholder='Plum profile link', ng-model="fellow.linkToPlum")
 
 
 
