@@ -29,7 +29,7 @@ angular.module("matsi.controllers")
                 .title('')
                 .content('This fellow is already being mentored, please select a fellow that isn\'t currently being mentored')
                 .ariaLabel('Password notification')
-                .ok('Got it!')
+                .ok('Oka!')
                 .targetEvent(ev)
             );
         };
@@ -47,8 +47,6 @@ angular.module("matsi.controllers")
                 $scope.sendRequest();
               } else {
                 $scope.showAlert();
-                console.log('************');
-                console.log('Else Condition');
               }
             } 
             else {
