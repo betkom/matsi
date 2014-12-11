@@ -1,55 +1,74 @@
-.content(ng-init="findOne()")
-.content(ng-if="fellow.role === '-fellow-'")
-	br
-	h1 Fellow Profile Page
-	form
-		label(for="fullName") Full Name 
-		br
-		input(type="text" name="fullName" data-ng-model="fellow.fullName")
-		br
-		br
-		label(for="joinDate") Join Date
-		br
-		input(type="text" name="joinDate" ng-model="fellow.joinDate")
-		br
-		br
-		label(for="shortBio") Short Bio
-		br
-		input(type="text" name="shortBio" ng-model="fellow.shortBio")
-		br
-		br
-		label(for="gitHubUrl") Github URL
-		br
-		input(type="text" name="gitHubUrl" ng-model="fellow.gitHubUrl")
-		br
-		br
-		label(for="longBio") Long Bio (life story and experience so far at Andela at least 700 words)
-		br
-		input(type="text" name="longBio" ng-model="fellow.longBio")
-		br
-		br
-		label(for="location") Location
-		br
-		input(type="text" name="location" ng-model="fellow.location")
-		br
-		br
-		label(for="andelaDeveloperRank") Andela Developer Rank
-		br
-		input(type="text" name="andelaDeveloperRank" ng-model="fellow.andelaDeveloperRank")
-		br
-		br
-		label(for="smartererScores") Smarterer Scores
-		br
-		input(type="text" name="smartererScores" ng-model="fellow.smartererScores")
-		br
-		br
-		r
-		label(for="linkToPlum") Link to Plum public profile and badges
-		br
-		input(type="text" name="linkToPlum" ng-model="fellow.linkToPlum")
-		br
-		br
-		input(type="submit" name="submit" ng-click="update()")
+section.content.fellows(ng-init="findOne()")
+  .container(ng-if="fellow.role === '-fellow-'")
+    h2.light Edit Profile
+    hr
+    .row
+      .col-xs-8.col-xs-offset-2.col-sm-3.col-sm-offset-0
+        .unit-wrap
+          .profile-pic
+            img(src='{{fellow.picture}}')
+          .user-name
+            h5
+              a(href='') {{fellow.fullName}}
+            p.text-muted Lorem ipsum dolor sit amet
+      .col-xs-12.col-sm-9
+        .unit-wrap.bio
+          .user-profile
+            h4 Bio
+            hr
+            p
+              | Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptas aut eligendi fugit, dolores tempore modi consectetur asperiores quo fugiat alias porro delectus saepe unde explicabo omnis mollitia ducimus minima, perspiciatis!
+        .unit-wrap.bio
+          .user-profile
+            h4 Profile Details
+            hr
+            form(role='form')
+              .form-group
+                input.form-control(type='text', placeholder='Full Name', ng-model="fellow.fullName")
+              .form-group
+                .row
+                  .col-md-7
+                    label Email
+                    input.form-control(type='text', placeholder='Your email address', ng-model="fellow.email")
+                  .col-md-5.col-xs-12
+                    br.visible-sm.visible-xs
+                    label Date Joined
+                    .row.date-input
+                      .col-md-12
+                        input.form-control(type='date', ng-model = 'fellow.created', min='2014-01-01')
+              .form-group
+                label Github Profile
+                .input-group
+                  .input-group-addon http://
+                  input.form-control(type='text', placeholder='Github URL', ng-model="fellow.gitHubUrl")
+              .row
+                .col-md-4
+                  .form-group
+                    label Location
+                    select.form-control(ng-model="fellow.location", placeholder='Select location')
+                      option Lagos
+                      option New York
+                .col-md-4
+                  label Rank
+                  .form-group
+                    input.form-control(type='text', placeholder='Rank', ng-model="fellow.andelaDeveloperRank")
+                .col-md-4
+                  label Smarterer Score
+                  .form-group
+                    input.form-control(type='text', placeholder='Score card link', ng-model="fellow.smartererScores")
+              .row
+                .col-md-12
+                  hr
+                .col-md-4.col-md-offset-8
+                  button.btn.btn-primary.btn-block(ng-click="update()") Save
+        .unit-wrap.bio
+          .user-profile
+            h4 Badges
+            hr
+            h5
+              a(href='') {{fellow.fullName}}
+            p.text-muted Lorem ipsum dolor sit amet
+
 
 
 
