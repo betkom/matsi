@@ -63,7 +63,7 @@ section.content.fellows(ng-init="findOne()")
             h5
               p.text-muted {{fellow.fullName}}
             p.text-muted Lorem ipsum dolor sit amet
-        .user-wrap.bio(ng-if="currentUser.uid === fellow.uid && fellow.mentors")
+        .unit-wrap.bio(ng-if="currentUser.uid === fellow.uid && fellow.mentors")
           .user-profile
             h4 My Mentors
             hr
