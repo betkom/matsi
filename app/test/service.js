@@ -37,10 +37,10 @@ describe('matsi.services test', function() {
                 expect(1).toBe(1);
             });
 
-            it('MentorService should create get mentors', function() {
+            it('Mentor should create get mentors', function() {
                 MentorService.readMentor();
-                it('FellowService should update/create a fellow', function() {
-                    console.log('Running FellowService Update');
+                it('Fellow should update/create a fellow', function() {
+                    console.log('Running Fellow Update');
                     FellowService.updateFellow(mockFellow, mockFellow.uid, function(err) {
                         console.log(err, 'isError2');
                         expect(err).toBeUndefined();

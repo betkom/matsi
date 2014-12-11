@@ -2,8 +2,8 @@ angular.module("matsi.directives")
     .directive('header', function() {
         return {
             restrict: 'E',
-            controller: ['$rootScope', '$scope', '$firebase', '$cookies', 'FellowService', '$timeout', '$stateParams', '$location', 'MailService',
-                function($rootScope, $scope, $firebase, $cookies, FellowService, $timeout, $stateParams, $location, MailService) {
+            controller: ['$rootScope', '$scope', '$firebase', '$cookies', 'Fellow', '$timeout', '$stateParams', '$location', 'MailService',
+                function($rootScope, $scope, $firebase, $cookies, Fellow, $timeout, $stateParams, $location, MailService) {
                     var rootRef = new Firebase($cookies.rootRef);
                     // Start with no user logged in
                     $rootScope.currentUser = null;
@@ -36,7 +36,10 @@ angular.module("matsi.directives")
                                 }
                                 $timeout(function() {
                                     $rootScope.currentUser = user;
-                                    $scope.notifications = Object.keys($rootScope.currentUser.requests).length;
+                                    if ($rootScope.currentUser.requests) {
+                                        $scope.notifications = Object.keys($rootScope.currentUser.requests).length;
+                                    };
+
                                 }, 1);
                             });
                         } else {

@@ -1,6 +1,6 @@
 describe('Fellow Mentor Service Test', function() {
 
-    var FellowService,
+    var Fellow,
         MentorService,
         MailService,
         Refs,
@@ -9,13 +9,17 @@ describe('Fellow Mentor Service Test', function() {
             fullName: 'Happy Fellow',
             role: '-fellow-',
             email: 'happy-fellow-id@andela.co',
-            isMentored: true
+            isMentored: true,
+            picture: 'this is pic url',
+            firstName: 'happy'
         },
         mockMentor = {
             uid: 'happy-mentor-id',
             role: '-mentor-',
             fullName: 'Happy Mentor',
-            email: 'happy-mentor-id@andela.co'
+            email: 'happy-mentor-id@andela.co',
+            picture: 'this is pic url',
+            firstName: 'happy'
         };
 
     beforeEach(function() {
@@ -23,8 +27,8 @@ describe('Fellow Mentor Service Test', function() {
     });
 
     beforeEach(inject(function($injector) {
-        FellowService = $injector.get('FellowService');
-        MentorService = $injector.get('MentorService');
+        Fellow = $injector.get('Fellow');
+        MentorService = $injector.get('Mentor');
         MailService = $injector.get('MailService');
         Refs = $injector.get('Refs');
         rootScope = $injector.get('$rootScope');
@@ -42,7 +46,7 @@ describe('Fellow Mentor Service Test', function() {
     describe('Mentors and Fellow Relationship', function() {
 
         it('Should have created the Fellow', function(done) {
-            FellowService.findOne(mockFellow.uid, function(snap) {
+            Fellow.findOne(mockFellow.uid, function(snap) {
                 var fellow = snap.val();
                 expect(fellow.uid).toBe(mockFellow.uid);
                 done();
@@ -52,25 +56,23 @@ describe('Fellow Mentor Service Test', function() {
         it('should update mockFellow', function(done) {
             mockFellow.name = 'This is a Mock Name';
             rootScope.currentUser = mockFellow;
-            FellowService.update(mockFellow, function(err) {
+            Fellow.update(mockFellow, function(err) {
                 expect(err).toBe(null);
                 done();
             });
         });
 
         it('Should get fellows', function(done) {
-            FellowService.all(function(snap) {
+            Fellow.all(function(snap) {
                 var fellowsObject = snap.val();
-                var fellows = Object.keys(fellowsObject).map(function(k) {
-                    return fellowsObject[k];
-                });
-                expect(fellows.length).toBeGreaterThan(1);
+                var fellows = Object.keys(fellowsObject).length;
+                expect(fellows).toBeGreaterThan(1);
                 done();
             });
         });
 
         it('should get mockFellow by id', function(done) {
-            FellowService.findOne(mockFellow.uid, function(snap) {
+            Fellow.findOne(mockFellow.uid, function(snap) {
                 var fellow = snap.val();
                 expect(fellow.uid).toBe(mockFellow.uid);
                 done();
@@ -78,6 +80,35 @@ describe('Fellow Mentor Service Test', function() {
 
         });
 
+        describe('make request and accept or reject request', function() {
+
+            it('should send request to mockFellow', function(done) {
+                rootScope.currentUser = mockMentor;
+                Fellow.request(mockFellow, function(err) {
+                    expect(err).toBe(null);
+                    done();
+                });
+            });
+
+            it('should accept request', function(done) {
+                rootScope.currentUser = mockFellow;
+                Fellow.accept(mockMentor, function(err) {
+                    expect(err).toBe(null);
+                    done();
+                });
+            });
+
+            it('should reject request', function(done) {
+                rootScope.currentUser = mockFellow;
+                mockMentor.message = 'i hate you';
+                Fellow.reject(mockMentor, function(err) {
+                    expect(err).toBe(null);
+                    done();
+                })
+            });
+
+        });
+        /*********************************************************************************************/
 
         it('Should have created the Mentor', function(done) {
             MentorService.findOne(mockMentor.uid, function(snap) {
