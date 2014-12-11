@@ -8,7 +8,8 @@ describe('Fellow Mentor Service Test', function() {
             uid: 'happy-fellow-id',
             fullName: 'Happy Fellow',
             role: '-fellow-',
-            email: 'happy-fellow-id@andela.co'
+            email: 'happy-fellow-id@andela.co',
+            isMentored: true
         },
         mockMentor = {
             uid: 'happy-mentor-id',
@@ -108,16 +109,14 @@ describe('Fellow Mentor Service Test', function() {
             });
 
         });
-        // it('should check if a fellow is mentored', function(done){
-        //     mockFellow.isMentored = true;
-        //     rootScope.currentUser = mockMentor;
-        //     FellowService.mentorConstraint(mockFellow.uid, function(_snap_, hasUnmentored){
-        //         console.log(_snap_, 'lekekkkkk')
-        //         expect(_snap_).toBe(!null);
-        //         done();
-        //     });
-        // });
-
+        it('should check if a fellow is mentored', function(done){
+            rootScope.currentUser = mockMentor;
+            FellowService.mentorConstraint(mockFellow.uid, function(res){
+                console.log(res, 'lekekkkkk');
+                expect(mockFellow.uid).not.toBe(null);
+                done();
+            });
+        });
     });
 
     afterEach(function(done) {
