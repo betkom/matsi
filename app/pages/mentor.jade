@@ -1,22 +1,21 @@
-section.content.fellows(ng-init="findOne()")
+section.content.mentors(ng-init="findOne()")
   .container
     .row
-      .col-sm-3
-        .user-wrap
-          .profile-pic
-            span.f-badge.purple M
-            img(ng-src='{{mentor.picture}}')
-          .user-name
-            h5
-              a(href='') {{mentor.fullName}}
-            p.text-muted Lorem ipsum dolor sit amet
-      .col-sm-9
-        .user-wrap.bio
+      .col-sm-2.mentor-img
+        img(ng-src="{{mentor.picture}}")
+      .col-md-6
+        .mentor-info
+          h3 {{mentor.fullName}}
+section.content.fellows
+  .container
+    .row
+      col-sm-12              
+        .unit-wrap.bio
           .user-profile
             h4 Bio
             hr
             p {{mentor.shortBio}}
-        .user-wrap.bio
+        .unit-wrap.bio
           .user-profile
             h4 Profile Details
             hr
