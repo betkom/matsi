@@ -1,8 +1,6 @@
 angular.module("matsi.controllers")
-    .controller("MentorController", ['$rootScope', '$scope', '$cookies', 'MentorService', '$stateParams', '$location',
-        function($rootScope, $scope, $cookies, MentorService, $stateParams, $location) {
-                      
-        
+    .controller("MentorCtrl", ['$rootScope', '$scope', '$cookies', 'Mentor', '$stateParams', '$location',
+        function($rootScope, $scope, $cookies, Mentor, $stateParams, $location) {
           $scope.checked = false;
           $scope.toggleCheck = function(){
               $scope.checked = !$scope.checked;
@@ -10,16 +8,16 @@ angular.module("matsi.controllers")
 
            $scope.findOne = function() {
             var uid = $rootScope.currentUser?($stateParams.uid || $rootScope.currentUser.uid):$stateParams.uid;
-            $scope.mentor = MentorService.findOne(uid);
+            $scope.mentor = Mentor.findOne(uid);
           };
           $scope.all = function(){
-            $scope.mentors = MentorService.all();
+            $scope.mentors = Mentor.all();
           };
 
           $scope.update = function() {
             if($rootScope.currentUser.uid === $scope.fellow.uid || $rootScope.currentUser.isAdmin){ 
               if ($scope.checked) {
-                MentorService.update(data, function(err) {
+                Mentor.update(data, function(err) {
                   if (err){
                     alert('Hoops! Data not updated succesfully');
                   }
