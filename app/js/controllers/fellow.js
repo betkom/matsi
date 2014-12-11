@@ -1,14 +1,14 @@
 angular.module("matsi.controllers")
-    .controller("FellowController", ['$rootScope', '$scope', '$cookies', 'FellowService', '$http', '$stateParams', 'MentorService', 'MailService', '$mdDialog',
-    function($rootScope, $scope, $cookies, FellowService, $http, $stateParams, MentorService, MailService, $mdDialog) {
+    .controller("FellowController", ['$rootScope', '$scope', '$cookies', 'Fellow', '$http', '$stateParams', 'Mentor', 'MailService', '$mdDialog',
+    function($rootScope, $scope, $cookies, Fellow, $http, $stateParams, Mentor, MailService, $mdDialog) {
   
         $scope.all = function() {
-            $scope.fellows = FellowService.all();
+            $scope.fellows = Fellow.all();
         };
 
         $scope.findOne = function() {
             var uid = $rootScope.currentUser?($stateParams.uid || $rootScope.currentUser.uid):$stateParams.uid;
-            $scope.fellow = FellowService.findOne(uid);
+            $scope.fellow = Fellow.findOne(uid);
             this.showMessageBox = true;
         };
 
@@ -16,7 +16,7 @@ angular.module("matsi.controllers")
           if($rootScope.currentUser.uid === $scope.fellow.uid || $rootScope.currentUser.isAdmin){
 
           }
-          FellowService.update($scope.fellow);
+          Fellow.update($scope.fellow);
         };
 
         $scope.showBox = function() {
@@ -41,7 +41,7 @@ angular.module("matsi.controllers")
         }
 
         $scope.mentorConstraints = function() {
-          FellowService.mentorConstraint($stateParams.uid, function(res,hasUnmentored) {
+          Fellow.mentorConstraint($stateParams.uid, function(res,hasUnmentored) {
             if (res) {
               if (hasUnmentored){
                 $scope.sendRequest();
@@ -58,7 +58,7 @@ angular.module("matsi.controllers")
         $scope.sendRequest = function() {
           $scope.fellow.reason = $scope.fellow.message;
           MailService.send(1, $scope.fellow);
-          FellowService.request($scope.fellow);
+          Fellow.request($scope.fellow);
         };
     }
 ]);
