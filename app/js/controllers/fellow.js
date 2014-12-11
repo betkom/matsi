@@ -1,6 +1,6 @@
-angular.module("matsi.controllers")
-    .controller("FellowController", ['$rootScope', '$scope', '$cookies', 'FellowService', '$http', '$stateParams', 'MentorService', 'MailService',
-    function($rootScope, $scope, $cookies, FellowService, $http, $stateParams, MentorService, MailService) {
+angular.module("matsi.controllers", ['ngMaterial'])
+    .controller("FellowController", ['$rootScope', '$scope', '$cookies', 'FellowService', '$http', '$stateParams', 'MentorService', 'MailService', '$mdDialog',
+    function($rootScope, $scope, $cookies, FellowService, $http, $stateParams, MentorService, MailService, $mdDialog) {
   
         $scope.all = function() {
             $scope.fellows = FellowService.all();
@@ -23,13 +23,32 @@ angular.module("matsi.controllers")
             $scope.showMessageBox = false;
         };
 
+        $scope.showAlert = function(ev) {
+            $mdDialog.show(
+                $mdDialog.alert()
+                .title('')
+                .content('This fellow is already being mentored, please select a fellow that isn\'t currently being mentored')
+                .ariaLabel('Password notification')
+                .ok('Got it!')
+                .targetEvent(ev)
+            );
+        };
+
+        function DialogController($scope, $mdDialog) {
+            $scope.hide = function() {
+                $mdDialog.hide();
+            };
+        }
+
         $scope.mentorConstraints = function() {
           FellowService.mentorConstraint($stateParams.uid, function(res,hasUnmentored) {
             if (res) {
-              if (!hasUnmentored){
+              if (hasUnmentored){
                 $scope.sendRequest();
               } else {
-                alert('No way Jose');
+                $scope.showAlert();
+                console.log('************');
+                console.log('Else Condition');
               }
             } 
             else {
