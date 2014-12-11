@@ -13,7 +13,7 @@ section.features
       | Velit quia, maiores ipsum recusandae..
     hr
     br
-    .row(ng-controller="FellowController" ng-init="all()")
+    .row(ng-controller="FellowCtrl" ng-init="all()")
       .col-xs-6.col-sm-3(ng-repeat='fellow in fellows | limitTo:4')
         a(ng-href='fellows/{{fellow.uid}}')
           .user-wrap

@@ -1,8 +1,6 @@
 angular.module("matsi.controllers")
-    .controller("MentorController", ['$rootScope', '$scope', '$cookies', 'Mentor', '$stateParams', '$location',
+    .controller("MentorCtrl", ['$rootScope', '$scope', '$cookies', 'Mentor', '$stateParams', '$location',
         function($rootScope, $scope, $cookies, Mentor, $stateParams, $location) {
-                      
-        
           $scope.checked = false;
           $scope.toggleCheck = function(){
               $scope.checked = !$scope.checked;
