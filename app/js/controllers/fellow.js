@@ -1,4 +1,4 @@
-angular.module("matsi.controllers", ['ngMaterial'])
+angular.module("matsi.controllers")
     .controller("FellowController", ['$rootScope', '$scope', '$cookies', 'FellowService', '$http', '$stateParams', 'MentorService', 'MailService', '$mdDialog',
     function($rootScope, $scope, $cookies, FellowService, $http, $stateParams, MentorService, MailService, $mdDialog) {
   
@@ -29,7 +29,7 @@ angular.module("matsi.controllers", ['ngMaterial'])
                 .title('')
                 .content('This fellow is already being mentored, please select a fellow that isn\'t currently being mentored')
                 .ariaLabel('Password notification')
-                .ok('Got it!')
+                .ok('Oka!')
                 .targetEvent(ev)
             );
         };
@@ -47,8 +47,6 @@ angular.module("matsi.controllers", ['ngMaterial'])
                 $scope.sendRequest();
               } else {
                 $scope.showAlert();
-                console.log('************');
-                console.log('Else Condition');
               }
             } 
             else {
