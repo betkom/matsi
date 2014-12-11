@@ -29,7 +29,7 @@ angular.module("matsi.controllers")
                 .title('')
                 .content('This fellow is already being mentored, please select a fellow that isn\'t currently being mentored')
                 .ariaLabel('Password notification')
-                .ok('Oka!')
+                .ok('Okay!')
                 .targetEvent(ev)
             );
         };
