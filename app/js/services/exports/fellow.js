@@ -43,6 +43,8 @@ module.exports = function(rootRef, $rootScope, $firebase) {
                 if (!err) {
                     rootRef.child('users').child(fellow.uid).child('requests').child($rootScope.currentUser.uid).set({
                         timestamp: Firebase.ServerValue.TIMESTAMP,
+                        picture: $rootScope.currentUser.picture,
+                        firstName: $rootScope.currentUser.firstName
                     }, cb);
                 }
             });
@@ -63,7 +65,7 @@ module.exports = function(rootRef, $rootScope, $firebase) {
                     rootRef.child('users').child(mentor.uid).child('fellows').child($rootScope.currentUser.uid).set({
                         timestamp: Firebase.ServerValue.TIMESTAMP,
                         picture: $rootScope.currentUser.picture,
-                        fullName:$rootScope.currentUser.fullName,
+                        fullName: $rootScope.currentUser.fullName,
                         email: $rootScope.currentUser.email,
                         uid: $rootScope.currentUser.uid
                     }, cb);
