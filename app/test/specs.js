@@ -142,7 +142,7 @@ describe('Fellow Mentor Service Test', function() {
         });
         it('should check if a fellow is mentored', function(done){
             rootScope.currentUser = mockMentor;
-            FellowService.mentorConstraint(mockFellow.uid, function(res){
+            Fellow.mentorConstraint(mockFellow.uid, function(res){
                 console.log(res, 'lekekkkkk');
                 expect(mockFellow.uid).not.toBe(null);
                 done();
