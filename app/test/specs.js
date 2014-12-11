@@ -132,9 +132,7 @@ describe('Fellow Mentor Service Test', function() {
         it('should update mentor successfully', function(done) {
             mockMentor.lastName = 'Happy';
             rootScope.currentUser = mockMentor;
-            console.log('ohhhh', mockMentor);
             MentorService.update(mockMentor, function(err) {
-                console.log("yessss", mockMentor);
                 expect(err).toBe(null);
                 done();
             });
@@ -143,7 +141,6 @@ describe('Fellow Mentor Service Test', function() {
         it('should check if a fellow is mentored', function(done){
             rootScope.currentUser = mockMentor;
             Fellow.mentorConstraint(mockFellow.uid, function(res){
-                console.log(res, 'lekekkkkk');
                 expect(mockFellow.uid).not.toBe(null);
                 done();
             });
