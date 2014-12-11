@@ -26,8 +26,8 @@ describe('Fellow Mentor Service Test', function() {
     });
 
     beforeEach(inject(function($injector) {
-        FellowService = $injector.get('FellowService');
-        MentorService = $injector.get('MentorService');
+        Fellow = $injector.get('Fellow');
+        MentorService = $injector.get('Mentor');
         MailService = $injector.get('MailService');
         Refs = $injector.get('Refs');
         rootScope = $injector.get('$rootScope');
@@ -45,7 +45,7 @@ describe('Fellow Mentor Service Test', function() {
     describe('Mentors and Fellow Relationship', function() {
 
         it('Should have created the Fellow', function(done) {
-            FellowService.findOne(mockFellow.uid, function(snap) {
+            Fellow.findOne(mockFellow.uid, function(snap) {
                 var fellow = snap.val();
                 expect(fellow.uid).toBe(mockFellow.uid);
                 done();
@@ -55,14 +55,14 @@ describe('Fellow Mentor Service Test', function() {
         it('should update mockFellow', function(done) {
             mockFellow.name = 'This is a Mock Name';
             rootScope.currentUser = mockFellow;
-            FellowService.update(mockFellow, function(err) {
+            Fellow.update(mockFellow, function(err) {
                 expect(err).toBe(null);
                 done();
             });
         });
 
         it('Should get fellows', function(done) {
-            FellowService.all(function(snap) {
+            Fellow.all(function(snap) {
                 var fellowsObject = snap.val();
                 var fellows = Object.keys(fellowsObject).length;
                 expect(fellows).toBeGreaterThan(1);
@@ -71,7 +71,7 @@ describe('Fellow Mentor Service Test', function() {
         });
 
         it('should get mockFellow by id', function(done) {
-            FellowService.findOne(mockFellow.uid, function(snap) {
+            Fellow.findOne(mockFellow.uid, function(snap) {
                 var fellow = snap.val();
                 expect(fellow.uid).toBe(mockFellow.uid);
                 done();
@@ -83,7 +83,7 @@ describe('Fellow Mentor Service Test', function() {
 
             it('should send request to mockFellow', function(done) {
                 rootScope.currentUser = mockMentor;
-                FellowService.request(mockFellow, function(err) {
+                Fellow.request(mockFellow, function(err) {
                     expect(err).toBe(null);
                     done();
                 });
@@ -91,7 +91,7 @@ describe('Fellow Mentor Service Test', function() {
 
             it('should accept request', function(done) {
                 rootScope.currentUser = mockFellow;
-                FellowService.accept(mockMentor, function(err) {
+                Fellow.accept(mockMentor, function(err) {
                     expect(err).toBe(null);
                     done();
                 });
@@ -100,7 +100,7 @@ describe('Fellow Mentor Service Test', function() {
             it('should reject request', function(done) {
                 rootScope.currentUser = mockFellow;
                 mockMentor.message = 'i hate you';
-                FellowService.reject(mockMentor, function(err) {
+                Fellow.reject(mockMentor, function(err) {
                     expect(err).toBe(null);
                     done();
                 })
