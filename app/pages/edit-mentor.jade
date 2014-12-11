@@ -1,54 +1,64 @@
-.content(ng-init="findOne()")
-.content(ng-if="mentor.role === '-mentor-'")
-	form 
-		label(for="fullName") Full Name
-		br
-		input(type="text" name="fullName" ng-model="mentor.fullName")
-		br
-		br
-		label(for="Email") Email
-		br
-		input(type="text" name="Email" ng-model="mentor.email")
-		br
-		br
-		input(type="checkbox" name="Agree" id="Agree" ng-model="checked" ng-click="toggleCheck()")
-		label(for="Agree") I agree to the Mentor 
-			a(href="" data-toggle="modal" data-target="#myModal") Requirements
-		br
-		br
-		label(for="title") Title
-		br
-		input(type="text" name="title" ng-model="mentor.Title")
-		br
-		br
-		label(for="shortBio") Short Bio
-		br
-		input(type="text" name="shortBio" ng-model="mentor.shortBio")
-		br
-		br
-		label(for="linkedInUrl") LinkedIn URL
-		br
-		input(type="text" name="linkedInUrl" ng-model="mentor.linkedInUrl")
-		br
-		br
-		label(for="gitHubUrl") Github URL
-		br
-		input(type="text" name="gitHubUrl" ng-model="mentor.gitHubUrl")
-		br
-		br
-		label(for="mentorTwitterHandle") Twitter Handle
-		br
-		input(type="text" name="mentorTwitterHandle" ng-model="mentor.twitterHandle")
-		br
-		br
-		label(for="SkypeNumber") Skype Number
-		br
-		input(type="text" name="SkypeNumber" ng-model="mentor.skype")
-		br
-		br
-		label(for="location") Location
-		br
-		input(type="text" name="location" ng-model="mentor.location")
-		br
-		br
-		input(type="button" ng-click="submitMentor(mentor)" value="Update")
+section.content.fellows(ng-init="findOne()")
+  .container(ng-if="mentor.role === '-mentor-'")
+    h2.light Edit Profile
+    hr
+    .row
+      .col-xs-8.col-xs-offset-2.col-sm-3.col-sm-offset-0
+        .unit-wrap
+          .profile-pic
+            img(src='{{mentor.picture}}')
+          .user-name
+            h5
+              a(href='') {{mentor.fullName}}
+            p.text-muted Lorem ipsum dolor sit amet
+      .col-xs-12.col-sm-9
+        .unit-wrap.bio
+          .user-profile
+            h4 Bio
+            hr
+            textarea.form-control(ng-model='mentor.longBio',placeholder='enter full bio here', rows ='5')
+        .unit-wrap.bio
+          .user-profile
+            h4 Profile Details
+            hr
+            form(role='form')
+              .form-group
+                input.form-control(type='text', placeholder='Full Name', ng-model="mentor.fullName")
+              .form-group
+                .row
+                  .col-md-7
+                    label Email
+                    input.form-control(type='text', placeholder='Your email address', ng-model="mentor.email")
+                  .col-md-5.col-xs-12
+                    br.visible-sm.visible-xs
+                    label Date Joined
+                    .row.date-input
+                      .col-md-12
+                        input.form-control(type='date', ng-model = 'mentor.created', min='2014-01-01')
+              .form-group
+                label Github Profile
+                .input-group
+                  .input-group-addon https://
+                  input.form-control(type='text', placeholder='Github URL', ng-model="mentor.gitHubUrl")
+                label LinkedIn
+                .input-group
+                  .input-group-addon https://
+                  input.form-control(type='text', placeholder='LinkedIn URL', ng-model="mentor.linkedInUrl")
+                label Twitter
+                .input-group
+                  .input-group-addon @
+                  input.form-control(type='text', placeholder='Twitter Handle', ng-model="mentor.twitterHandle")
+                label Skype
+                .input-group
+                  .input-group-addon #
+                  input.form-control(type='text', placeholder='Skype Username', ng-model="mentor.Skype")
+              .row
+                .col-md-4
+                  .form-group
+                    label Location
+                    input.form-control(type='text', ng-model="mentor.location", placeholder='Select location')
+              .row
+                .col-md-12
+                  hr
+                .col-md-4.col-md-offset-8
+                  button.btn.btn-primary.btn-block(ng-click="submitMentor(mentor)") Save

@@ -16,8 +16,7 @@ section.content.fellows(ng-init="findOne()")
           .user-profile
             h4 Bio
             hr
-            p
-              | Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptas aut eligendi fugit, dolores tempore modi consectetur asperiores quo fugiat alias porro delectus saepe unde explicabo omnis mollitia ducimus minima, perspiciatis!
+            textarea.form-control(ng-model='fellow.longBio',placeholder='enter full bio here', rows ='5')
         .unit-wrap.bio
           .user-profile
             h4 Profile Details

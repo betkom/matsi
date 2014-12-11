@@ -26,7 +26,8 @@ section.content.fellows(ng-init="findOne()")
           .user-profile
             h4 Bio
             hr
-            p {{fellow.longBio}}
+            p.text-muted 
+            | {{fellow.longBio}}
         .user-wrap.bio
           .user-profile
             h4 Profile Details
@@ -65,6 +66,7 @@ section.content.fellows(ng-init="findOne()")
           .user-profile
             h4 My Mentors
             hr
-            a.profile-img(ng-repeat ="mentor in fellow.mentors" ng-href="mentors/{{mentor.uid}}")
-              img(src='{{mentor.picture}}', alt='')
-              | {{mentor.fullName}}
+            .row
+              a.profile-img.col-md-6(ng-repeat ="mentor in fellow.mentors" ng-href="mentors/{{mentor.uid}}")
+                  img(src='{{mentor.picture}}', alt='')
+                  | {{mentor.fullName}}
