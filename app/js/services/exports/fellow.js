@@ -7,11 +7,8 @@ module.exports = function(rootRef, $rootScope, $firebase) {
             delete fellow.$$conf;
             delete fellow.$priority;
             delete fellow.$id;
-            // cb = cb || function(){};
-            rootRef.child('users').child(fellow.uid).update(fellow, function(err) {
-                if (cb)
-                    cb(err);
-            });
+            cb = cb || function(){};
+            rootRef.child('users').child(fellow.uid).update(fellow, cb);
         },
         all: function(cb) {
             if (!cb)
