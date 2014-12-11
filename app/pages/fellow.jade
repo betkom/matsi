@@ -1,5 +1,10 @@
 section.content.fellows(ng-init="findOne()")
   .container(ng-if="fellow.role==='-fellow-'" )
+    div.alert.alert-warning.clearfix(role='alert' ng-if="currentUser.uid === fellow.uid")
+      span.request-text
+        strong Hey!
+        |  You have mentor request(s) from ..
+      mentor-request(ng-repeat="(mentor_uid,mentor) in fellow.requests")  
     .row
       .col-sm-3
         .user-wrap
@@ -10,24 +15,21 @@ section.content.fellows(ng-init="findOne()")
             h5
               p.text-muted {{fellow.fullName}}
             p.text-muted {{fellow.shortBio}}
-        .user-wrap.col-lg-12(ng-if="currentUser.uid === fellow.uid")
-          p You have mentor request(s) from :
-            mentor-request(ng-repeat="(mentor_uid,mentor) in fellow.requests")
         .user-wrap.col-lg-12.messageBox(ng-if="currentUser.role === '-mentor-'")
           a.btn.btn-success.btn-block.messageBox.smallTopMargin(ng-click="showBox()" ng-show="showMessageBox")
             span.glyphicon.glyphicon-plus(aria-hidden='true')
-            | Apply to Mentor
+            | Send Request
           input(type="text" class="form-control input-lg messageBox smallTopMargin" ng-hide="showMessageBox" ng-model="fellow.message")
           a.btn.btn-success.btn-block.messageBox(ng-hide="showMessageBox" ng-click="mentorConstraints()" ng-disabled="!fellow.message.length")
             span.glyphicon.glyphicon-check(aria-hidden='true')
-            | Apply
-      .col-sm-9
-        .user-wrap.bio
+            | Send Request
+      .col-sm-9.col-xs-12
+        .unit-wrap.bio
           .user-profile
             h4 Bio
             hr
             p {{fellow.longBio}}
-        .user-wrap.bio
+        .unit-wrap.bio
           .user-profile
             h4 Profile Details
             hr
@@ -54,7 +56,7 @@ section.content.fellows(ng-init="findOne()")
             dl.dl-horizontal
               dt Smarterer score
               dd 200
-        .user-wrap.bio
+        .unit-wrap.bio
           .user-profile
             h4 Badges
             hr
