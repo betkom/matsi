@@ -41,28 +41,28 @@ section.content.fellows(ng-init="findOne()")
               dd {{fellow.email}}
             dl.dl-horizontal
               dt Date Joined
-              dd {{fellow.created | date}}
+              dd {{fellow.joinDate}}
             dl.dl-horizontal
               dt Github
               dd
-                a(href='') http://github.com/sam
+                a(href='{{fellow.gitHubUrl}}') {{fellow.gitHubUrl}}
             dl.dl-horizontal
               dt Location
-              dd Lagos, Nigeria
+              dd {{fellow.location}}
             dl.dl-horizontal
               dt Rank
               dd
-                span.label.label-success Ninja
+                span.label.label-success {{fellow.andelaDeveloperRank}}
             dl.dl-horizontal
-              dt Smarterer score
-              dd 200
+              dt Smarterer Scorecard Link
+              dd
+                 a(href='{{fellow.smartererScores}}') {{fellow.smartererScores}}
         .unit-wrap.bio
           .user-profile
-            h4 Badges
+            h4 Plum Profile
             hr
             h5
-              p.text-muted {{fellow.fullName}}
-            p.text-muted Lorem ipsum dolor sit amet
+              a(href='{{fellow.linkToPlum}}') {{fellow.linkToPlum}}
         .unit-wrap.bio(ng-if="currentUser.uid === fellow.uid && fellow.mentors")
           .user-profile
             h4 My Mentors
