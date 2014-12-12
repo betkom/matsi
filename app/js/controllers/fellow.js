@@ -29,18 +29,16 @@ angular.module("matsi.controllers")
                     });
                 }
             };
-
             $scope.showBox = function() {
                 $scope.showMessageBox = false;
             };
-
             $scope.showAlert = function(ev) {
                 $mdDialog.show(
                     $mdDialog.alert()
                     .title('')
                     .content('This fellow is already being mentored, please select a fellow that isn\'t currently being mentored')
                     .ariaLabel('Password notification')
-                    .ok('Oka!')
+                    .ok('Okay!')
                     .targetEvent(ev)
                 );
             };

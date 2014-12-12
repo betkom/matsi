@@ -25,10 +25,7 @@ module.exports = function(rootRef, $rootScope, $firebase) {
         mentorConstraint: function(uid, cb) {
             rootRef.child('users').child(uid).once('value', function(snap) {
                 if (snap.val() && snap.val().isMentored === true) {
-                    rootRef.child('users').orderByChild('isMentored').equalTo(false).once('value', function(_snap_) {
-
-                        cb(_snap_.val());
-                    });
+                    rootRef.child('users').orderByChild('isMentored').equalTo(false).once('value',cb);
                 } else
                     cb(null);
             });

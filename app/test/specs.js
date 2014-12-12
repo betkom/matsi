@@ -9,6 +9,7 @@ describe('Fellow Mentor Service Test', function() {
             fullName: 'Happy Fellow',
             role: '-fellow-',
             email: 'happy-fellow-id@andela.co',
+            isMentored: true,
             picture: 'this is pic url',
             firstName: 'happy'
         },
@@ -44,20 +45,20 @@ describe('Fellow Mentor Service Test', function() {
 
     describe('Mentors and Fellow Relationship', function() {
 
-        it('Should have created the Fellow', function(done) {
-            Fellow.findOne(mockFellow.uid, function(snap) {
-                var fellow = snap.val();
-                expect(fellow.uid).toBe(mockFellow.uid);
-                done();
-            });
-        });
-
         it('should update mockFellow', function(done) {
-            mockFellow.name = 'This is a Mock Name';
-            rootScope.currentUser = mockFellow;
-            Fellow.update(mockFellow, function(err) {
+            var newName = 'This is a Mock Name';
+            var updateMockFellow = angular.copy(mockFellow);
+            updateMockFellow.name = newName;
+            rootScope.currentUser = updateMockFellow;
+            Fellow.update(updateMockFellow, function(err) {
                 expect(err).toBe(null);
-                done();
+                Fellow.findOne(mockFellow.uid, function(snap) {
+                    var fellow = snap.val();
+                    expect(fellow).not.toBe(null);
+                    expect(fellow.name).not.toBe(mockFellow.name);
+                    expect(fellow.name).toBe(updateMockFellow.name);
+                    done();
+                });
             });
         });
 
@@ -136,6 +137,13 @@ describe('Fellow Mentor Service Test', function() {
                 done();
             });
 
+        });
+        it('should check if a fellow is mentored', function(done){
+            rootScope.currentUser = mockMentor;
+            Fellow.mentorConstraint(mockFellow.uid, function(res){
+                expect(mockFellow.uid).not.toBe(null);
+                done();
+            });
         });
     });
 
