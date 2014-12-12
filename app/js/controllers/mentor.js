@@ -15,7 +15,6 @@ angular.module("matsi.controllers")
             };
             $scope.disabled = function() {
                 $scope.mentors = Mentor.disabled();
-                console.log($scope.mentors);
             };
             $scope.enable = function(mentor) {
                 Mentor.enable(mentor);

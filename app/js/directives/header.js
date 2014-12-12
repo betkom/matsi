@@ -10,7 +10,6 @@ angular.module("matsi.directives")
                     $rootScope.allowUser = false;
                     rootRef.onAuth(function(authData) {
                         if (authData) {
-                            console.log("auth: user is logged in");
                             var user = buildUserObjectFromGoogle(authData);
                             var userRef = rootRef.child('users').child(user.uid);
                             $rootScope.currentUser = user;

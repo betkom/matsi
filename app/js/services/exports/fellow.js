@@ -14,7 +14,6 @@ module.exports = function(rootRef, $rootScope, $firebase) {
             rootRef.child('users').child(fellowId).update({
                 removed: true
             });
-            console.log('removed');
             rootRef.child('users').child(fellowId).remove();
         },
         all: function(cb) {
