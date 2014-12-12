@@ -1,5 +1,10 @@
 section.content.fellows(ng-init="findOne()")
-  .container(ng-if="fellow.role === '-fellow-'")
+  .container(ng-show="currentUser.uid !== fellow.uid && currentUser")
+    h3 please edit your profile 
+      a(href="fellows/{{currentUser.uid}}/edit") here
+  .container(ng-hide="currentUser.uid")
+    h3 Please login  
+  .container(ng-if="fellow.role === '-fellow-'", ng-show="currentUser.uid === fellow.uid")
     h2.light Edit Profile
     hr
     .row
