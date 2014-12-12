@@ -11,7 +11,7 @@ section.content.fellows
               img(ng-src="{{fellow.picture}}")
             .user-name
               h5
-                p.text-muted {{fellow.fullName}}
-              p.text-muted {{fellow.joinedDate | date }}
+                p.text-muted.text-wrap {{fellow.fullName}}
+              p.text-muted.text-wrap {{fellow.joinedDate | date }}
         .btn.btn-danger(ng-click="delete(fellow.uid)" ng-if="currentUser.isAdmin") Delete
 
