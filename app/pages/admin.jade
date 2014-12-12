@@ -1,0 +1,14 @@
+.container(ng-init="disabled()")
+  h2.light Mentors at Andela
+  hr
+  .row
+    .col-xs-6.col-sm-3(ng-repeat='mentor in mentors')
+      a(ng-href='mentors/{{mentor.uid}}')
+        .user-wrap
+          .profile-pic
+            span.f-badge M
+            img(ng-src="{{mentor.picture}}")
+          .user-name
+            h5 {{mentor.fullName}}
+            p.text-muted {{mentor.email}}
+      .btn.btn-success(ng-click="enable(mentor)") Enable

@@ -132,7 +132,6 @@ describe('Fellow Mentor Service Test', function() {
         it('should update mentor successfully', function(done) {
             mockMentor.lastName = 'Happy';
             rootScope.currentUser = mockMentor;
-            console.log('ohhhh', mockMentor);
             MentorService.update(mockMentor, function(err) {
                 expect(err).toBe(null);
                 done();

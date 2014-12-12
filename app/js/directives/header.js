@@ -19,14 +19,17 @@ angular.module("matsi.directives")
                                     user.created = Firebase.ServerValue.TIMESTAMP;
                                     user.isAdmin = false;
                                     user.role = user.email.indexOf('@andela.co') > -1 ? '-fellow-' : '-mentor-';
-                                    user.disabled = user.role !== "-fellow-";
+                                    if (user.role === '-mentor-') {
+                                        $rootScope.allowUser = true;
+                                        user.disabled = user.role !== "-fellow-";
+                                    }
                                     if (!user.disabled) {
                                         user.isMentored = false;
                                     } else {
                                         MailService.send(2, user);
                                     }
                                     userRef.set(user);
-                                    $rootScope.allowUser = true;
+
                                 } else {
                                     user = snap.val();
                                     if (user.disabled) {

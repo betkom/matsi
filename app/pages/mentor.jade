@@ -14,7 +14,7 @@ section.content.fellows
           .user-profile
             h4 Bio
             hr
-            p {{mentor.shortBio}}
+            p {{mentor.longBio}}
         .unit-wrap.bio
           .user-profile
             h4 Profile Details
@@ -27,7 +27,7 @@ section.content.fellows
               dd {{mentor.email}}
             dl.dl-horizontal
               dt Date Joined
-              dd {{mentor.created}}
+              dd {{mentor.created | date}}
             dl.dl-horizontal
               dt Github
               dd
