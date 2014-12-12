@@ -1,6 +1,6 @@
 h5 {{mentor.fullName}}
 p(ng-show="mentor.uid")
-    a.btn.btn-success(ng-click="accept()")
+    a.btn.btn-success(ng-click="openToast(ev)")
         span.glyphicon.glyphicon-check(aria-hidden='true')
         | Accept Request
     a.btn.btn-danger(ng-click="showBox()" ng-hide="showMessageBox")

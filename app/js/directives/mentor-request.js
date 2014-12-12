@@ -1,5 +1,5 @@
 angular.module("matsi.directives")
-    .directive('mentorRequest', function() {
+    .directive('mentorRequest', function($mdToast) {
         return {
             restrict: 'E',
             templateUrl: '/pages/mentor-request.html',
@@ -9,10 +9,16 @@ angular.module("matsi.directives")
                 $scope.showMessageBox = false;
                 
                 $scope.accept = function() {
+                    console.log('blue ribbon');
                     FellowService.accept($scope.mentor);
                     MailService.send(3,$scope.mentor);
                 };
-                
+
+                $scope.openToast = function($event) {
+                    console.log('*********** red ribbon');
+                    $mdToast.show($mdToast.simple().content('Request Accepted'));
+                };
+
                 $scope.reject = function() {
                     FellowService.reject($scope.mentor);
                     MailService.send(4,$scope.mentor);
