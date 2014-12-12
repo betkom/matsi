@@ -25,6 +25,7 @@ angular.module("matsi.directives")
                                     }
                                     if (!user.disabled) {
                                         user.isMentored = false;
+                                        user.removed = false;
                                     } else {
                                         MailService.send(2, user);
                                     }
@@ -32,7 +33,7 @@ angular.module("matsi.directives")
 
                                 } else {
                                     user = snap.val();
-                                    if (user.disabled) {
+                                    if (user.disabled || user.removed) {
                                         user = null;
                                         rootRef.unauth();
                                     }

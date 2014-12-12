@@ -1,7 +1,7 @@
 angular.module("matsi.controllers")
-    .controller("FellowCtrl", ['$rootScope', '$scope', '$cookies', 'Fellow', '$http', '$stateParams', 'Mentor', 'MailService', '$mdDialog', '$location',
-        function($rootScope, $scope, $cookies, Fellow, $http, $stateParams, Mentor, MailService, $mdDialog, $location) {
-
+    .controller("FellowCtrl", ['$rootScope', '$scope', '$cookies', 'Fellow', '$http', '$stateParams', 'Mentor', 'MailService', '$mdDialog', '$mdToast', '$location',
+    function($rootScope, $scope, $cookies, Fellow, $http, $stateParams, Mentor, MailService, $mdDialog, $mdToast, $location) {
+  
             $scope.all = function() {
                 $scope.fellows = Fellow.all();
             };
@@ -11,7 +11,9 @@ angular.module("matsi.controllers")
                 $scope.fellow = Fellow.findOne(uid);
                 this.showMessageBox = true;
             };
-
+            $scope.delete = function(fellowId){
+                Fellow.delete(fellowId);
+            };
             $scope.update = function() {
                 if ($rootScope.currentUser.uid === $scope.fellow.uid || $rootScope.currentUser.isAdmin) {
                     Fellow.update($scope.fellow, function(err) {
