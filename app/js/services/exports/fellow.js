@@ -51,6 +51,7 @@ module.exports = function(rootRef, $rootScope, $firebase) {
                 }
             });
         },
+
         accept: function(mentor, cb) {
             cb = cb || function() {};
             rootRef.child('users').child($rootScope.currentUser.uid).child('mentors').child(mentor.uid).set({
