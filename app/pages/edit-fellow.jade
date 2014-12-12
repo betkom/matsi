@@ -34,7 +34,7 @@ section.content.fellows(ng-init="findOne()")
                     label Date Joined
                     .row.date-input
                       .col-md-12
-                        input.form-control(type='date', ng-model = 'fellow.joinDate', min='2014-01-01')
+                        input.form-control(type='date', ng-model = 'fellow.created', min='2014-01-01')
               .form-group
                 label Github Profile
                 .input-group
@@ -55,17 +55,17 @@ section.content.fellows(ng-init="findOne()")
                   label Smarterer Score
                   .form-group
                     input.form-control(type='text', placeholder='Score card link', ng-model="fellow.smartererScores")
-              .row
-                .col-md-12
-                  hr
-                .col-md-4.col-md-offset-8
-                  button.btn.btn-primary.btn-block(ng-click="update()") Save
         .unit-wrap.bio
           .user-profile
             h4 Plum Profile
             hr
             h5 Plum link
             input.form-control(type='text', placeholder='Plum profile link', ng-model="fellow.linkToPlum")
+            .row
+              .col-md-12
+                hr
+              .col-md-4.col-md-offset-8
+                button.btn.btn-primary.btn-block(ng-click="update()") Save
 
 
 

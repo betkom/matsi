@@ -13,6 +13,8 @@ nav.navbar.navbar-static-top(role='navigation')
           a(href='mentors') View Mentors
         li.active
           a(href='fellows') View Fellows
+        li(ng-if="currentUser.isAdmin === true")
+          a(href='admin') Admin page
         li
           a.signin-btn(ng-hide="currentUser" ng-click="login('google')") Sign In with Google
           p(ng-if="allowUser") Account disabled, contact the Administrator.
