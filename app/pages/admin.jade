@@ -1,4 +1,6 @@
-.container(ng-init="disabled()")
+.container(ng-if="currentUser.isAdmin === false " ng-cloak)
+  h3 You are not an Administrator.
+.container(ng-init="disabled()", ng-if="currentUser.isAdmin === true ")
   h2.light Administrator
   hr
   .row

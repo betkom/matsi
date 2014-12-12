@@ -46,9 +46,8 @@ section.content.fellows
               dt Skype
               dd {{mentor.Skype}}
         .user-wrap.bio(ng-if="currentUser.uid === mentor.uid && mentor.fellows")
-          .user-profile(ng-if='toggle')
-            h4 My Fellows
-            hr
-            a.profile-img(ng-repeat ="fellow in mentor.fellows" ng-href="fellows/{{fellow.uid}}")
-              img(src='{{fellow.picture}}', alt='')
-              | {{fellow.fullName}}
+          h4 My Fellows
+          hr
+          a.profile-img(ng-repeat ="fellow in mentor.fellows" ng-href="fellows/{{fellow.uid}}")
+            img(src='{{fellow.picture}}', alt='')
+            | {{fellow.fullName}}
