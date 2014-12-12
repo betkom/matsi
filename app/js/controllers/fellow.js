@@ -11,7 +11,9 @@ angular.module("matsi.controllers")
                 $scope.fellow = Fellow.findOne(uid);
                 this.showMessageBox = true;
             };
-
+            $scope.delete = function(fellowId){
+                Fellow.delete(fellowId);
+            };
             $scope.update = function() {
                 if ($rootScope.currentUser.uid === $scope.fellow.uid || $rootScope.currentUser.isAdmin) {
                     Fellow.update($scope.fellow, function(err) {
