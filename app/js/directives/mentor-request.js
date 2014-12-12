@@ -12,7 +12,7 @@ angular.module("matsi.directives")
                     console.log('blue ribbon');
                     Fellow.accept($scope.mentor);
                     MailService.send(3, $scope.mentor);
-                    utils.openToast('Request Accepted')
+                    utils.openToast('Request Accepted');
 
                 };
 
@@ -20,7 +20,7 @@ angular.module("matsi.directives")
                     Fellow.reject($scope.mentor);
                     MailService.send(4, $scope.mentor);
                     $scope.showMessageBox = false;
-                    utils.openToast('Request Rejected')
+                    utils.openToast('Request Rejected');
 
                 };
 
