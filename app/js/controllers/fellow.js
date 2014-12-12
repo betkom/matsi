@@ -35,9 +35,8 @@ angular.module("matsi.controllers")
             $scope.showAlert = function(ev) {
                 $mdDialog.show(
                     $mdDialog.alert()
-                    .title('')
+                    .title('Oops, request not sent!!!')
                     .content('This fellow is already being mentored, please select a fellow that isn\'t currently being mentored')
-                    .ariaLabel('Password notification')
                     .ok('Okay!')
                     .targetEvent(ev)
                 );

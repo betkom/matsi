@@ -3,6 +3,9 @@ module.exports = function($rootScope, $mdToast){
         openToast: function(message) {
             console.log('*********** red ribbon');
             $mdToast.show($mdToast.simple().content(message));
+        },
+        showAlert: function(){
+
         }
-	}
-}
+	};
+};
