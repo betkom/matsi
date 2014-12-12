@@ -134,7 +134,6 @@ describe('Fellow Mentor Service Test', function() {
 
         });
         /*********************************************************************************************/
-
         it('Should get mentors', function(done) {
             Mentor.all(function(snap) {
                 var mentors = [];
