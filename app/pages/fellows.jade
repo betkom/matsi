@@ -12,6 +12,6 @@ section.content.fellows
             .user-name
               h5
                 p.text-muted {{fellow.fullName}}
-              p.text-muted {{fellow.created | date }}
+              p.text-muted {{fellow.joinedDate | date }}
         .btn.btn-danger(ng-click="delete(fellow.uid)" ng-if="currentUser.isAdmin") Delete
 

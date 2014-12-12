@@ -1,6 +1,6 @@
 angular.module("matsi.controllers")
-    .controller("FellowCtrl", ['$rootScope', '$scope', '$cookies', 'Fellow', '$http', '$stateParams', 'Mentor', 'MailService', '$mdDialog', '$mdToast', '$location',
-    function($rootScope, $scope, $cookies, Fellow, $http, $stateParams, Mentor, MailService, $mdDialog, $mdToast, $location) {
+    .controller("FellowCtrl", ['$rootScope', '$scope', '$cookies', 'Fellow', '$http', '$stateParams', 'Mentor', 'MailService', '$mdDialog', '$mdToast', '$location', '$mdDialog', 'utils',
+    function($rootScope, $scope, $cookies, Fellow, $http, $stateParams, Mentor, MailService, $mdDialog, $mdToast, $location, $mdDialog, utils) {
   
             $scope.all = function() {
                 $scope.fellows = Fellow.all();
@@ -34,30 +34,14 @@ angular.module("matsi.controllers")
             $scope.showBox = function() {
                 $scope.showMessageBox = false;
             };
-            $scope.showAlert = function(ev) {
-                $mdDialog.show(
-                    $mdDialog.alert()
-                    .title('')
-                    .content('This fellow is already being mentored, please select a fellow that isn\'t currently being mentored')
-                    .ariaLabel('Password notification')
-                    .ok('Okay!')
-                    .targetEvent(ev)
-                );
-            };
 
-            function DialogController($scope, $mdDialog) {
-                $scope.hide = function() {
-                    $mdDialog.hide();
-                };
-            }
-
-            $scope.mentorConstraints = function() {
+            $scope.mentorConstraints = function(ev) {
                 Fellow.mentorConstraint($stateParams.uid, function(res, hasUnmentored) {
                     if (res) {
                         if (hasUnmentored) {
                             $scope.sendRequest();
                         } else {
-                            $scope.showAlert();
+                            utils.showAlert(ev,'This fellow is already being mentored, please select a fellow that is not currently being mentored');
                         }
                     } else {
                         $scope.sendRequest();

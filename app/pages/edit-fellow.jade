@@ -1,8 +1,8 @@
 section.content.fellows(ng-init="findOne()")
-  .container(ng-show="currentUser.uid !== fellow.uid && currentUser")
+  .container(ng-if="currentUser.uid && currentUser.uid !== fellow.uid" ng-cloak)
     h3 please edit your profile 
       a(href="fellows/{{currentUser.uid}}/edit") here
-  .container(ng-hide="currentUser.uid")
+  .container(ng-if="!currentUser.uid" ng-cloak)
     h3 Please login  
   .container(ng-if="fellow.role === '-fellow-'", ng-show="currentUser.uid === fellow.uid")
     h2.light Edit Profile
@@ -39,7 +39,7 @@ section.content.fellows(ng-init="findOne()")
                     label Date Joined
                     .row.date-input
                       .col-md-12
-                        input.form-control(type='date', ng-model = 'fellow.created', min='2014-01-01')
+                        input.form-control(type='date', ng-model = 'fellow.joinedDate', min='2014-01-01')
               .form-group
                 label Github Profile
                 .input-group
