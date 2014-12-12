@@ -14,7 +14,7 @@ section.content.fellows(ng-init="findOne()")
           .user-name
             h5
               p.text-muted {{fellow.fullName}}
-            p.text-muted {{fellow.shortBio}}
+            p.text-muted.text-wrap {{fellow.shortBio}}
         .user-wrap.col-lg-12.messageBox(ng-if="currentUser.role === '-mentor-'")
           a.btn.btn-success.btn-block.messageBox.smallTopMargin(ng-click="showBox()" ng-show="showMessageBox")
             span.glyphicon.glyphicon-plus(aria-hidden='true')
@@ -25,7 +25,7 @@ section.content.fellows(ng-init="findOne()")
             | Send Request
       .col-sm-9.col-xs-12
         .unit-wrap.bio
-          .user-profile
+          .user-profile.text-wrap
             h4 Bio
             hr
             p {{fellow.longBio}}
@@ -41,7 +41,7 @@ section.content.fellows(ng-init="findOne()")
               dd {{fellow.email}}
             dl.dl-horizontal
               dt Date Joined
-              dd {{fellow.joinDate | date}}
+              dd {{fellow.created | date}}
             dl.dl-horizontal
               dt Github
               dd

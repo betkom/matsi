@@ -83,6 +83,14 @@ Matsi.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', funct
             data: {
                 access: 'private'
             }
+        })
+        .state('admin-view', {
+            url: '/admin',
+            templateUrl: 'pages/admin.html',
+            controller: 'MentorCtrl',
+            data: {
+                access: 'private'
+            }
         });
     $urlRouterProvider.otherwise("/");
 }]);
