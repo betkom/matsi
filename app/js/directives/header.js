@@ -41,7 +41,7 @@ angular.module("matsi.directives")
                                     $rootScope.currentUser = user;
                                     if ($rootScope.currentUser.requests) {
                                         $scope.notifications = Object.keys($rootScope.currentUser.requests).length;
-                                    };
+                                    }
 
                                 }, 1);
                             });

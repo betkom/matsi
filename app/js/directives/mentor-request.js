@@ -9,12 +9,12 @@ angular.module("matsi.directives")
                 $scope.showMessageBox = false;
                 
                 $scope.accept = function() {
-                    FellowService.accept($scope.mentor);
+                    Fellow.accept($scope.mentor);
                     MailService.send(3,$scope.mentor);
                 };
                 
                 $scope.reject = function() {
-                    FellowService.reject($scope.mentor);
+                    Fellow.reject($scope.mentor);
                     MailService.send(4,$scope.mentor);
                     $scope.showMessageBox = false;
                 };

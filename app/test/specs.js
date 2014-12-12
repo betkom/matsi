@@ -104,14 +104,14 @@ describe('Fellow Mentor Service Test', function() {
                 Fellow.reject(mockMentor, function(err) {
                     expect(err).toBe(null);
                     done();
-                })
+                });
             });
 
         });
         /*********************************************************************************************/
 
         it('Should have created the Mentor', function(done) {
-            MentorService.findOne(mockMentor.uid, function(snap) {
+            Mentor.findOne(mockMentor.uid, function(snap) {
                 var mentor = snap.val();
                 expect(mentor.uid).toBe(mockMentor.uid);
                 done();
@@ -119,7 +119,7 @@ describe('Fellow Mentor Service Test', function() {
         });
 
         it('Should get mentors', function(done) {
-            MentorService.all(function(snap) {
+            Mentor.all(function(snap) {
                 var mentors = [];
                 var mentorsObject = snap.val();
                 for (var i in mentorsObject)
@@ -132,7 +132,7 @@ describe('Fellow Mentor Service Test', function() {
         it('should update mentor successfully', function(done) {
             mockMentor.lastName = 'Happy';
             rootScope.currentUser = mockMentor;
-            MentorService.update(mockMentor, function(err) {
+            Mentor.update(mockMentor, function(err) {
                 expect(err).toBe(null);
                 done();
             });
