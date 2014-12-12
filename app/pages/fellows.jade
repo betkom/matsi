@@ -3,8 +3,8 @@ section.content.fellows
     h2.blue.light Fellows at Andela
     hr
     .row
-      a(ng-repeat="fellow in fellows" ng-href="fellows/{{fellow.uid}}")
-        .col-sm-3
+      .col-xs-6.col-sm-3(ng-repeat="fellow in fellows")
+        a( ng-href="fellows/{{fellow.uid}}")
           .user-wrap
             .profile-pic
               span.f-badge F
@@ -13,4 +13,5 @@ section.content.fellows
               h5
                 p.text-muted {{fellow.fullName}}
               p.text-muted {{fellow.created | date }}
+        .btn.btn-danger(ng-click="delete(fellow.uid)" ng-if="currentUser.isAdmin") Delete
 

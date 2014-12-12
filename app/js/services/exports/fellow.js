@@ -7,8 +7,15 @@ module.exports = function(rootRef, $rootScope, $firebase) {
             delete fellow.$$conf;
             delete fellow.$priority;
             delete fellow.$id;
-            cb = cb || function(){};
+            cb = cb || function() {};
             rootRef.child('users').child(fellow.uid).update(fellow, cb);
+        },
+        delete: function(fellowId) {
+            rootRef.child('users').child(fellowId).update({
+                removed: true
+            });
+            console.log('removed');
+            rootRef.child('users').child(fellowId).remove();
         },
         all: function(cb) {
             if (!cb)
@@ -25,7 +32,7 @@ module.exports = function(rootRef, $rootScope, $firebase) {
         mentorConstraint: function(uid, cb) {
             rootRef.child('users').child(uid).once('value', function(snap) {
                 if (snap.val() && snap.val().isMentored === true) {
-                    rootRef.child('users').orderByChild('isMentored').equalTo(false).once('value',cb);
+                    rootRef.child('users').orderByChild('isMentored').equalTo(false).once('value', cb);
                 } else
                     cb(null);
             });
@@ -69,14 +76,9 @@ module.exports = function(rootRef, $rootScope, $firebase) {
                 }
             });
         },
-        reject: function(mentor, cb) {
-            cb = cb || function() {};
-            rootRef.child('users').child(mentor.uid).child('sentRequests').child($rootScope.currentUser.uid).update({
-                message: mentor.message
-            }, function(err) {
-                if (!err)
-                    rootRef.child('users').child($rootScope.currentUser.uid).child('requests').child(mentor.uid).remove(cb);
-            });
+        reject: function(mentor) {
+            rootRef.child('users').child(mentor.uid).child('sentRequests').child($rootScope.currentUser.uid).remove();
+            rootRef.child('users').child($rootScope.currentUser.uid).child('requests').child(mentor.uid).remove();
         }
     };
 };
