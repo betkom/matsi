@@ -37,9 +37,13 @@ section.content.fellows(ng-init="findOne()")
                   .col-md-5.col-xs-12
                     br.visible-sm.visible-xs
                     label Date Joined
-                    .row.date-input
-                      .col-md-12
-                        input.form-control(type='date', ng-model = 'fellow.joinedDate', min='2014-01-01')
+                    .row
+                      .col-md-8
+                        .input-group
+                          input.form-control.ui-datepicker(type='text', data-ng-model="fellow.joinedDate", datepicker-popup='{{format}}', is-open='opened', min-date='"2014-03-01"', max-date='minDate', datepicker-options='dateOptions', date-disabled='disabled(date, mode)', close-text='Close')
+                          span.input-group-btn
+                            button.btn.btn-default(type='button', ng-click='open($event)')
+                              i.glyphicon.glyphicon-calendar
               .form-group
                 label Github Profile
                 .input-group

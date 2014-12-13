@@ -4,7 +4,8 @@ window.Matsi = angular.module("Matsi", [
     'matsi.directives',
     'ngAnimate',
     'ngMaterial',
-    'ui.router'
+    'ui.router',
+    'ui.bootstrap'
 ]);
 Matsi.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', function($stateProvider, $urlRouterProvider, $locationProvider, $rootScope) {
     $locationProvider.html5Mode(true);
