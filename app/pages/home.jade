@@ -14,15 +14,13 @@ section.features
     hr
     br
     .row(ng-controller="FellowCtrl" ng-init="all()")
-      .col-xs-6.col-sm-3(ng-repeat='fellow in fellows | limitTo:4')
-        a(ng-href='fellows/{{fellow.uid}}')
-          .user-wrap
-            a(ng-href='fellows/{{fellow.uid}}')
+        .col-xs-6.col-sm-3(ng-repeat='fellow in fellows | limitTo:4')
+          a(ng-href='fellows/{{fellow.uid}}')
+            .user-wrap
               .profile-pic
-                img(ng-src="{{fellow.picture}}")
-            .user-name
-              a(ng-href='fellows/{{fellow.uid}}')
-              h5 {{fellow.fullName}}
+                  img(ng-src="{{fellow.picture}}")
+                  .user-name
+                    h5 {{fellow.fullName}}
     a(class="viewMore" ng-href="fellows") View more Fellows >>
 section.features.alt
   .container
