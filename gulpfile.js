@@ -26,11 +26,10 @@ var paths = {
     public: 'public/**',
     jade: 'app/**/*.jade',
     scripts: 'app/**/*.js',
-    img:['app/**/*.jpg',
-        'app/**/*.png',
-        'app/**/*.jpeg',
-        'app/**/*.ico'],
-    fonts:'app/fonts/**',    
+    staticFiles: [ 
+      '!app/**/*.+(less|css|jade|js)',
+      'app/**/*.*'
+    ],
     libTest: ['lib/tests/service.spec.js'],
     unitTest: [
       'public/lib/angular/angular.js',
@@ -102,16 +101,13 @@ gulp.task('watch', function() {
     // livereload.listen({ port: 35729 });
     gulp.watch(paths.jade, ['jade']);
     gulp.watch(paths.styles, ['less']);
+    gulp.watch(paths.scripts, ['browserify']);
     // gulp.watch(paths.public).on('change', livereload.changed);
 });
 
-gulp.task('img', function() {
-   return gulp.src(paths.img)
+gulp.task('static-files', function() {
+   return gulp.src(paths.staticFiles)
     .pipe(gulp.dest('public/'));
-});
-gulp.task('fonts', function(){
-    return gulp.src(paths.fonts)
-    .pipe(gulp.dest('public/fonts'));
 });
 
 gulp.task('watchify', function() {
@@ -165,8 +161,7 @@ gulp.task('test:ui',['browserify'], function() {
     return gulp.src(paths.unitTest)
         .pipe(karma({
             configFile: 'karma.conf.js',
-            action: 'run',
-            timeout: 120000
+            action: 'run'
         }))
         .pipe(exit());
                 // .on('error', function(err) {
@@ -176,8 +171,9 @@ gulp.task('test:ui',['browserify'], function() {
 });
 
 gulp.task('test',['test:ui','test:lib']);
-gulp.task('heroku:production', ['bower', 'jade', 'less','img','fonts','browserify']);
-gulp.task('production', ['nodemon','bower','jade', 'less','watchify','img','fonts']);
-gulp.task('default', ['nodemon', 'jade', 'less', 'watch', 'watchify','img','fonts']);
-gulp.task('build', ['jade', 'less', 'watchify','img','fonts']);
+gulp.task('build', ['jade', 'less', 'browserify','static-files','bower']);
+gulp.task('production', ['nodemon','build']);
+
+gulp.task('heroku:production', ['build']);
+gulp.task('default', ['nodemon', 'watch', 'build']);
 
