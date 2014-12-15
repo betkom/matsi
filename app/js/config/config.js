@@ -85,6 +85,14 @@ Matsi.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', funct
                 access: 'private'
             }
         })
+        .state('smarterer',{
+          url: '/smarterer/code/:code',
+          templateUrl: 'pages/smarterer.html',
+          controller: 'FellowCtrl',
+          data: {
+            access: 'private'
+          }   
+        })
         .state('admin-view', {
             url: '/admin',
             templateUrl: 'pages/admin.html',
