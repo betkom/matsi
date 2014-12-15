@@ -63,7 +63,8 @@ section.content.fellows(ng-init="findOne()")
                 .col-md-4
                   label Smarterer Score
                   .form-group
-                    input.form-control(type='text', placeholder='Score card link', ng-model="fellow.smartererScores")
+                    input.form-control(type='checkbox' checked = check ng-click = "toggleCheck()") 
+                    | Update Smarterer Scores
         .unit-wrap.bio
           .user-profile
             h4 Plum Profile

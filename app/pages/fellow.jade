@@ -67,11 +67,18 @@ section.content.fellows(ng-init="findOne()")
             hr
             h5
               a(href='{{fellow.linkToPlum}}' target="_blank") {{fellow.linkToPlum}}
+        .unit-wrap.bio
+          .user-profile
+            h4 Smarterer Badges
+            hr
+            .row
+              .col-md-3(ng-repeat="badge in fellow.badges")
+                img(ng-src="{{badge.badge.image}}")
         .unit-wrap.bio(ng-if="currentUser.uid === fellow.uid && fellow.mentors")
           .user-profile
             h4 My Mentors
             hr
             .row
               a.profile-img.col-md-6(ng-repeat ="mentor in fellow.mentors" ng-href="mentors/{{mentor.uid}}")
-                  img(src='{{mentor.picture}}', alt='')
+                  img(ng-src='{{mentor.picture}}', alt='')
                   | {{mentor.fullName}}
