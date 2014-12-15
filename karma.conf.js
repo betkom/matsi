@@ -35,7 +35,7 @@ module.exports = function(config) {
         },
 
         preprocessors: {
-            'app/test/*.js': 'coverage'
+            'public/js/index.js': 'coverage'
         },
 
         // test results reporter to use
