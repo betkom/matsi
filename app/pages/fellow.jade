@@ -15,7 +15,7 @@ section.content.fellows(ng-init="findOne()")
             h5
               p.text-muted {{fellow.fullName}}
             p.text-muted.text-wrap {{fellow.shortBio}}
-        .user-wrap.col-lg-12.messageBox(ng-if="currentUser.role === '-mentor-'")
+        .user-wrap.col-lg-12.messageBox(ng-if="currentUser.role === '-mentor-' && !(fellow.requests[currentUser.uid]) && !(fellow.mentors[currentUser.uid])")
           a.btn.btn-success.btn-block.messageBox.smallTopMargin(ng-click="showBox()" ng-show="showMessageBox")
             span.glyphicon.glyphicon-plus(aria-hidden='true')
             | Send Request
@@ -23,6 +23,10 @@ section.content.fellows(ng-init="findOne()")
           a.btn.btn-success.btn-block.messageBox(ng-hide="showMessageBox" ng-click="mentorConstraints()" ng-disabled="!fellow.message.length")
             span.glyphicon.glyphicon-check(aria-hidden='true')
             | Send Request
+        .alert.alert-warning(ng-if="(fellow.requests[currentUser.uid])")
+          | You already have a pending request with this fellow!
+        .alert.alert-success(ng-if="(fellow.mentors[currentUser.uid])")
+          | You are already mentoring this fellow!
       .col-sm-9.col-xs-12
         .unit-wrap.bio
           .user-profile.text-wrap
