@@ -11,18 +11,46 @@ angular.module("matsi.controllers")
                 var param = {
                     code: code
                 };
-                
+
                 $http.post('/smarterer/code/', param).success(function(res) {
                     $scope.fellow.badges = res.badges;
                     Fellow.update($scope.fellow);
                 });
             };
-            //Smarterer Checkbox
+            //Smarterer & plum Checkbox
             $scope.check = false;
-            $scope.toggleCheck = function() {
-                $scope.check = !$scope.check;
-                console.log($scope.check);
+            $scope.plumCheck = false;
+            $scope.toggleCheck = function(val) {
+                if (val === "smarterer") {
+                    $scope.check = !$scope.check;
+                    console.log('s1', $scope.check);
+                    console.log('p1', $scope.plumCheck);
+                } else {
+                    $scope.plumCheck = !$scope.plumCheck;
+                    console.log('s', $scope.check);
+                    console.log('p', $scope.plumCheck);
+                }
+
             };
+            // plum api
+            $scope.plumEmail;
+            $scope.plum = function() {
+                console.log('plum function called');
+                console.log($scope.fellow.plumEmail);
+                var param = {
+                    email: $scope.fellow.plumEmail
+                };
+                $http.post('/plum/api/', param).success(function(res) {
+                    console.log('plum from ctrl', res);
+                    console.log(res.candidates[0].badges);
+                    var data = {
+                        uid: $scope.fellow.uid,
+                        plumBadges: res.candidates[0].badges
+                    };
+                    Fellow.update(data);
+                });
+            };
+
             //Date picker
             $scope.today = function() {
                 $scope.dt = new Date();
@@ -80,18 +108,23 @@ angular.module("matsi.controllers")
 
                             );
                         }
+
+                        if ($scope.plumCheck) {
+                            console.log('plum is checked');
+                            $scope.plum();
+                        }
                         if ($scope.check) {
                             window.location.assign('https://smarterer.com/oauth/authorize?client_id=b30a2803ffe34bc68a6fe7757b039468&callback_url=http%3A%2F%2Flocalhost%3A5555%2Ffellows%2F');
                         } else {
                             $location.path('fellows/' + $rootScope.currentUser.uid);
                         }
+
                     });
                 }
             };
             $scope.showBox = function() {
                 $scope.showMessageBox = false;
             };
-
             $scope.mentorConstraints = function(ev) {
                 Fellow.mentorConstraint($stateParams.uid, function(res, hasUnmentored) {
                     if (res) {
@@ -105,7 +138,6 @@ angular.module("matsi.controllers")
                     }
                 });
             };
-
             $scope.sendRequest = function() {
                 $scope.fellow.reason = $scope.fellow.message;
                 MailService.send(1, $scope.fellow);
