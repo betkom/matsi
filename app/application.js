@@ -9,7 +9,7 @@ require("./js/services/refs.js");
 require("./js/services/mentor.js");
 require("./js/services/fellow.js");
 require("./js/services/mail.js");
-require("./js/services/utils.js")
+require("./js/services/utils.js");
 
 require("./js/controllers/mentor.js");
 require("./js/controllers/fellow.js");
