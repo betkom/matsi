@@ -14,8 +14,12 @@ angular.module("matsi.controllers")
 
                 $http.post('/smarterer/code/', param).success(function(res) {
                     console.log(res);
-                    $scope.fellow.badges = res.badges;
-                    Fellow.update($scope.fellow);
+                    var data = {
+                        uid: $scope.fellow.uid,
+                        badges: res.badges
+                    };
+                    console.log(data);
+                    Fellow.update(data);
                 });
             };
             //Smarterer & plum Checkbox
