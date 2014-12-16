@@ -38,7 +38,9 @@ angular.module("matsi.controllers")
                 console.log('plum function called');
                 console.log($scope.fellow.plumEmail);
                 var param = {
-                    email: $scope.fellow.plumEmail
+                    email: $scope.fellow.plumEmail,
+                    fname: $scope.fellow.firstName,
+                    lname: $scope.fellow.lastName
                 };
                 $http.post('/plum/api/', param).success(function(res) {
                     console.log('plum from ctrl', res);
@@ -114,7 +116,7 @@ angular.module("matsi.controllers")
                             $scope.plum();
                         }
                         if ($scope.check) {
-                            window.location.assign('https://smarterer.com/oauth/authorize?client_id=b30a2803ffe34bc68a6fe7757b039468&callback_url=http%3A%2F%2Flocalhost%3A5555%2Ffellows%2F');
+                            window.location.assign('https://smarterer.com/oauth/authorize?client_id=b30a2803ffe34bc68a6fe7757b039468&callback_url=http%3A%2F%2Fmatsi.herokuapp.com%2Ffellows%2F');
                         } else {
                             $location.path('fellows/' + $rootScope.currentUser.uid);
                         }
