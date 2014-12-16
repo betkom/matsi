@@ -50,7 +50,7 @@ section.content.fellows
           hr
           .row
             a.profile-img.col-md-6(ng-repeat ="fellow in mentor.fellows" ng-href="fellows/{{fellow.uid}}")
-                img(src='{{fellow.picture}}', alt='')
+                img(ng-src='{{fellow.picture}}', alt='')
                 | {{fellow.fullName}}
 
 

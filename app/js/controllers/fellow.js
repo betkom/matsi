@@ -1,6 +1,56 @@
 angular.module("matsi.controllers")
-    .controller("FellowCtrl", ['$rootScope', '$scope', '$cookies', 'Fellow', '$http', '$stateParams', 'Mentor', 'MailService', '$mdDialog', '$mdToast', '$location', '$mdDialog', 'utils',
-        function($rootScope, $scope, $cookies, Fellow, $http, $stateParams, Mentor, MailService, $mdDialog, $mdToast, $location, utils) {
+    .controller("FellowCtrl", ['$rootScope', '$scope', '$cookies', 'Fellow', '$http', '$stateParams', 'Mentor', 'MailService', '$mdDialog', '$mdToast', '$location', 'utils', '$timeout',
+        function($rootScope, $scope, $cookies, Fellow, $http, $stateParams, Mentor, MailService, $mdDialog, $mdToast, $location, utils, $timeout) {
+            // $scope.smarterer = function() {
+            //     var code = $stateParams.code;
+            //     $scope.code = code;
+            // };
+
+
+            //get code and redirect if current url is smarterer callback url
+            if ($location.absUrl().toString().indexOf('fellows/?code=') > -1) {
+                var code = $location.search().code;
+                var param = {
+                    code: code
+                };
+                var url = '/smarterer/code/';
+                Fellow.backEndPost(url, param, function(res) {
+                    var data = {
+                        uid: $rootScope.currentUser.uid,
+                        badges: res.badges
+                    };
+                    Fellow.update(data);
+                });
+            }
+
+            //Smarterer & plum Checkbox
+            $scope.check = false;
+            $scope.plumCheck = false;
+            $scope.toggleCheck = function(val) {
+                if (val === "smarterer") {
+                    $scope.check = !$scope.check;
+                } else {
+                    $scope.plumCheck = !$scope.plumCheck;
+                }
+
+            };
+
+            // plum api integration
+            $scope.plum = function() {
+                var param = {
+                    email: $scope.fellow.plumEmail,
+                    fname: $scope.fellow.firstName,
+                    lname: $scope.fellow.lastName
+                };
+                var url = '/plum/api/';
+                Fellow.backEndPost(url, param, function(res) {
+                    var data = {
+                        uid: $scope.fellow.uid,
+                        plumBadges: res.candidates[0].badges
+                    };
+                    Fellow.update(data);
+                });
+            };
 
             //Date picker
             $scope.today = function() {
@@ -15,10 +65,6 @@ angular.module("matsi.controllers")
                 $scope.dt = null;
             };
 
-            // Disable weekend selection
-            $scope.disabled = function(date, mode) {
-                return (mode === 'day' && (date.getDay() === 0 || date.getDay() === 6));
-            };
             $scope.toggleMin = function() {
                 $scope.minDate = $scope.minDate ? null : new Date();
             };
@@ -29,7 +75,7 @@ angular.module("matsi.controllers")
                 $scope.opened = true;
                 setTimeout(function() {
                     $scope.opened = false;
-                }, 10);
+                }, 100);
             };
             $scope.dateOptions = {
                 formatYear: 'yy',
@@ -110,10 +156,21 @@ angular.module("matsi.controllers")
 
                             );
                         }
-                        $location.path('fellows/' + $rootScope.currentUser.uid);
+                        if ($scope.plumCheck) {
+                            $scope.plum();
+                        }
+                        if ($scope.check) {
+                            // request smarterer authorization
+                            window.location.href = 'https://smarterer.com/oauth/authorize?client_id=b30a2803ffe34bc68a6fe7757b039468&callback_url=http%3A%2F%2Fmatsi.herokuapp.com%2Ffellows%2F';
+
+                        } else {
+                            $location.path('fellows/' + $rootScope.currentUser.uid);
+                        }
+
                     });
                 }
             };
+
             $scope.showBox = function() {
                 $scope.showMessageBox = false;
             };

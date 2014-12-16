@@ -3,9 +3,13 @@ global.t = require('moment');
 global.bodyParser = require('body-parser');
 global.nodemailer = require('nodemailer');
 global.firebaseRef = require('./firebaseRef');
+
+
+
 function run(appdir) {
     var express = require('express');
     var app = express();
+    var needle = require('needle');
 
     app.dir = process.cwd();
     // things to do on each request
@@ -27,6 +31,55 @@ function run(appdir) {
         extended: true
     }));
     app.use(bodyParser.json());
+
+    app.post('/smarterer/code', function(req, res) {
+        var code = req.body.code;
+        needle.get('https://smarterer.com/oauth/access_token?client_id=b30a2803ffe34bc68a6fe7757b039468&client_secret=d3cdb9f2dd7e58f6a7d102be76cfff4d&grant_type=authorization_code&code=' + code, function(err, resp) {
+            if (err) {
+                res.send({
+                    err: err
+                });
+            } else {
+                // res.redirect('');
+                console.log(resp.body);
+                needle.get('https://smarterer.com/api/badges?access_token=' + resp.body.access_token, function(error, response) {
+                    if (error) {
+                        res.send({
+                            err: error
+                        });
+                    } else {
+                        console.log(response.body);
+                        res.send(response.body);
+                    }
+                });
+            }
+        });
+    });
+
+    app.post('/plum/api', function(req, res) {
+        var data = JSON.stringify({
+            "candidates": [{
+                "firstname": req.body.fname,
+                "lastname": req.body.lname,
+                "email": req.body.email
+            }]
+        });
+        var options = {
+            headers: {
+                'apikey': 'a6b2743e-h1ec-4aTd-a4T0-fd61b4411456'
+            }
+        };
+        needle.post('http://app.plum.io/api/v1/assessment', data, options, function(err, resp) {
+            if (!err) {
+                res.send(resp.body);
+            } else {
+                console.log('error', err);
+            }
+
+        });
+
+    });
+
     app.post('/mail/user/:type', function(req, res) {
         var fellowName = req.body.firstName;
         var fellowMail = req.body.email;
@@ -55,15 +108,15 @@ function run(appdir) {
                     mailOptions = {
                         from: adminMail,
                         to: fellowMail,
-                        subject: 'Hello '+fellowName,
-                        html: 'You have a pending request to be mentored, the message says ' + reason + ', you can <a href=\'http://'+ req.hostname+'/fellows/'+ uid +'\'>View them here</a> <br> We hope you have a great time! <br> Team Matsi '
+                        subject: 'Hello ' + fellowName,
+                        html: 'You have a pending request to be mentored, the message says ' + reason + ', you can <a href=\'http://' + req.hostname + '/fellows/' + uid + '\'>View them here</a> <br> We hope you have a great time! <br> Team Matsi '
                     };
                     break;
                 case 2:
                     mailOptions = {
                         from: adminMail,
                         to: fellowMail,
-                        subject: 'Hello '+fellowName,
+                        subject: 'Hello ' + fellowName,
                         html: "Your signup request has been recieved and is being processed, until approved<br>you won't be able to login, please be patient as approvals are done by real humans <br>Thank you for your offer of service <br> Team Matsi"
                     };
                     break;
@@ -71,7 +124,7 @@ function run(appdir) {
                     mailOptions = {
                         from: adminMail,
                         to: fellowMail,
-                        subject: 'Hello '+fellowName,
+                        subject: 'Hello ' + fellowName,
                         html: 'Your mentor request has been accepted'
                     };
                     break;
@@ -79,8 +132,8 @@ function run(appdir) {
                     mailOptions = {
                         from: adminMail,
                         to: fellowMail,
-                        subject: 'Hello '+ fellowName,
-                        html: 'Your mentor request has been rejected because '+ mailMessage
+                        subject: 'Hello ' + fellowName,
+                        html: 'Your mentor request has been rejected because ' + mailMessage
                     };
                     break;
                 case 5:
@@ -96,9 +149,7 @@ function run(appdir) {
         // create email options
         // send mail with defined transport object
         transporter.sendMail(mailOptions, function(e, i) {
-            if (e) {
-            } else {
-            }
+            if (e) {} else {}
         });
         res.status(200).send(_res);
     });
