@@ -43,10 +43,10 @@ function run(appdir) {
             } else {
                 // res.redirect('');
                 console.log(resp.body);
-                needle.get('https://smarterer.com/api/badges?access_token=' + resp.body.access_token, function(err, response) {
-                    if (err) {
+                needle.get('https://smarterer.com/api/badges?access_token=' + resp.body.access_token, function(error, response) {
+                    if (error) {
                         res.send({
-                            err: err
+                            err: error
                         });
                     } else {
                         console.log(response.body);
