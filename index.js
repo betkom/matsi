@@ -60,6 +60,8 @@ function run(appdir) {
     app.post('/plum/api', function(req, res) {
         var data = JSON.stringify({
             "candidates": [{
+                "firstname": req.body.fname,
+                "lastname": req.body.lname,
                 "email": req.body.email
             }]
         });
