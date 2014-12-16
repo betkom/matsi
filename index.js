@@ -57,6 +57,27 @@ function run(appdir) {
         });
     });
 
+    app.post('/plum/api', function(req, res) {
+        var data = JSON.stringify({
+            "candidates": [{
+                "email": req.body.email
+            }]
+        });
+        var options = {
+            headers: {
+                'apikey': 'a6b2743e-h1ec-4aTd-a4T0-fd61b4411456'
+            }
+        };
+        needle.post('http://app.plum.io/api/v1/assessment', data, options, function(err, resp) {
+            if (!err) {
+                res.send(resp.body);
+            } else {
+                console.log('error', err);
+            }
+
+        });
+
+    });
 
     app.post('/mail/user/:type', function(req, res) {
         var fellowName = req.body.firstName;
