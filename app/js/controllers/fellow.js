@@ -1,55 +1,49 @@
 angular.module("matsi.controllers")
     .controller("FellowCtrl", ['$rootScope', '$scope', '$cookies', 'Fellow', '$http', '$stateParams', 'Mentor', 'MailService', '$mdDialog', '$mdToast', '$location', 'utils', '$timeout',
         function($rootScope, $scope, $cookies, Fellow, $http, $stateParams, Mentor, MailService, $mdDialog, $mdToast, $location, utils, $timeout) {
-            $scope.smarterer = function() {
-                var code = $stateParams.code;
-                $scope.code = code;
-            };
-            if (window.location.toString().indexOf('fellows/?code=') > -1) {
-                var code = window.location.search;
-                code = code.substring(1, code.length);
+            // $scope.smarterer = function() {
+            //     var code = $stateParams.code;
+            //     $scope.code = code;
+            // };
+
+
+            //get code and redirect if current url is smarterer callback url
+            if ($location.absUrl().toString().indexOf('fellows/?code=') > -1) {
+                var code = $location.search().code;
                 var param = {
                     code: code
                 };
-
-                $http.post('/smarterer/code/', param).success(function(res) {
-                    console.log(res);
+                var url = '/smarterer/code/';
+                Fellow.backEndPost(url, param, function(res) {
                     var data = {
                         uid: $rootScope.currentUser.uid,
                         badges: res.badges
                     };
-                    console.log(data);
                     Fellow.update(data);
                 });
-            };
+            }
+
             //Smarterer & plum Checkbox
             $scope.check = false;
             $scope.plumCheck = false;
             $scope.toggleCheck = function(val) {
                 if (val === "smarterer") {
                     $scope.check = !$scope.check;
-                    console.log('s1', $scope.check);
-                    console.log('p1', $scope.plumCheck);
                 } else {
                     $scope.plumCheck = !$scope.plumCheck;
-                    console.log('s', $scope.check);
-                    console.log('p', $scope.plumCheck);
                 }
 
             };
-            // plum api
-            $scope.plumEmail;
+
+            // plum api integration
             $scope.plum = function() {
-                console.log('plum function called');
-                console.log($scope.fellow.plumEmail);
                 var param = {
                     email: $scope.fellow.plumEmail,
                     fname: $scope.fellow.firstName,
                     lname: $scope.fellow.lastName
                 };
-                $http.post('/plum/api/', param).success(function(res) {
-                    console.log('plum from ctrl', res);
-                    console.log(res.candidates[0].badges);
+                var url = '/plum/api/';
+                Fellow.backEndPost(url, param, function(res) {
                     var data = {
                         uid: $scope.fellow.uid,
                         plumBadges: res.candidates[0].badges
@@ -90,6 +84,7 @@ angular.module("matsi.controllers")
             $scope.format = $scope.formats[2];
 
 
+
             $scope.all = function() {
                 $scope.fellows = Fellow.all();
             };
@@ -99,9 +94,11 @@ angular.module("matsi.controllers")
                 $scope.fellow = Fellow.findOne(uid);
                 this.showMessageBox = true;
             };
+
             $scope.delete = function(fellowId) {
                 Fellow.delete(fellowId);
             };
+
             $scope.update = function() {
                 if ($rootScope.currentUser.uid === $scope.fellow.uid || $rootScope.currentUser.isAdmin) {
                     Fellow.update($scope.fellow, function(err) {
@@ -115,13 +112,13 @@ angular.module("matsi.controllers")
 
                             );
                         }
-
                         if ($scope.plumCheck) {
-                            console.log('plum is checked');
                             $scope.plum();
                         }
                         if ($scope.check) {
-                            window.location.assign('https://smarterer.com/oauth/authorize?client_id=b30a2803ffe34bc68a6fe7757b039468&callback_url=http%3A%2F%2Fmatsi.herokuapp.com%2Ffellows%2F');
+                            // request smarterer authorization
+                            window.location.href = 'https://smarterer.com/oauth/authorize?client_id=b30a2803ffe34bc68a6fe7757b039468&callback_url=http%3A%2F%2Fmatsi.herokuapp.com%2Ffellows%2F';
+
                         } else {
                             $location.path('fellows/' + $rootScope.currentUser.uid);
                         }
@@ -129,9 +126,11 @@ angular.module("matsi.controllers")
                     });
                 }
             };
+
             $scope.showBox = function() {
                 $scope.showMessageBox = false;
             };
+
             $scope.mentorConstraints = function(ev) {
                 Fellow.mentorConstraint($stateParams.uid, function(res, hasUnmentored) {
                     if (res) {
@@ -145,6 +144,7 @@ angular.module("matsi.controllers")
                     }
                 });
             };
+
             $scope.sendRequest = function() {
                 $scope.fellow.reason = $scope.fellow.message;
                 MailService.send(1, $scope.fellow);

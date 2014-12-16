@@ -1,13 +1,14 @@
-module.exports = function(rootRef, $rootScope, $firebase) {
+module.exports = function(rootRef, $rootScope, $firebase, $http) {
     return {
         update: function(fellow, cb) {
             if (!$rootScope.currentUser || ($rootScope.currentUser && $rootScope.currentUser.uid != fellow.uid && !$rootScope.currentUser.isAdmin))
                 return;
-            fellow = angular.copy(fellow);
+            var fellow = angular.copy(fellow);
             delete fellow.$$conf;
             delete fellow.$priority;
             delete fellow.$id;
             cb = cb || function() {};
+            console.log('from service', fellow);
             rootRef.child('users').child(fellow.uid).update(fellow, cb);
         },
         delete: function(fellowId) {
@@ -79,6 +80,15 @@ module.exports = function(rootRef, $rootScope, $firebase) {
         reject: function(mentor) {
             rootRef.child('users').child(mentor.uid).child('sentRequests').child($rootScope.currentUser.uid).remove();
             rootRef.child('users').child($rootScope.currentUser.uid).child('requests').child(mentor.uid).remove();
+        },
+        backEndPost: function(url, params, cb) {
+            $http.post(url, params).success(function(res) {
+                if (cb) {
+                    cb(res);
+                } else {
+                    alert('error');
+                }
+            });
         }
     };
 };

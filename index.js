@@ -32,10 +32,9 @@ function run(appdir) {
     }));
     app.use(bodyParser.json());
 
-
     app.post('/smarterer/code', function(req, res) {
         var code = req.body.code;
-        needle.get('https://smarterer.com/oauth/access_token?client_id=b30a2803ffe34bc68a6fe7757b039468&client_secret=d3cdb9f2dd7e58f6a7d102be76cfff4d&grant_type=authorization_code&' + code, function(err, resp) {
+        needle.get('https://smarterer.com/oauth/access_token?client_id=b30a2803ffe34bc68a6fe7757b039468&client_secret=d3cdb9f2dd7e58f6a7d102be76cfff4d&grant_type=authorization_code&code=' + code, function(err, resp) {
             if (err) {
                 res.send({
                     err: err
