@@ -71,7 +71,7 @@ section.content.fellows(ng-init="findOne()")
             hr
             .row
               .col-md-3(ng-repeat="badge in fellow.badges")
-                img(ng-src="{{badge.badge.image}}")
+                img(class="smarterer" ng-src="{{badge.badge.image}}")
         .unit-wrap.bio(ng-if="currentUser.uid === fellow.uid && fellow.mentors")
           .user-profile
             h4 My Mentors

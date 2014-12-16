@@ -80,7 +80,7 @@ angular.module("matsi.controllers")
                 $scope.opened = true;
                 setTimeout(function() {
                     $scope.opened = false;
-                }, 10);
+                }, 100);
             };
             $scope.dateOptions = {
                 formatYear: 'yy',
