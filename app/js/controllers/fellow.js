@@ -15,6 +15,8 @@ angular.module("matsi.controllers")
                 $http.post('/smarterer/code/', param).success(function(res) {
                     console.log(res);
                     $scope.fellow.badges = res.badges;
+                    console.log($scope.fellow);
+                    console.log($scope.fellow.badges);
                     Fellow.update($scope.fellow);
                 });
             };
