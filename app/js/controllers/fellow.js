@@ -15,7 +15,7 @@ angular.module("matsi.controllers")
                 $http.post('/smarterer/code/', param).success(function(res) {
                     console.log(res);
                     var data = {
-                        uid: $scope.fellow.uid,
+                        uid: $rootScope.currentUser.uid,
                         badges: res.badges
                     };
                     console.log(data);
