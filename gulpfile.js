@@ -20,8 +20,10 @@ var browserify = require('browserify'),
     karma = require('gulp-karma'),
     exit = require('gulp-exit'),
     watchify = require('watchify'),
+    protractor = require('gulp-protractor').protractor,
     mocha = require('gulp-mocha');
-
+  
+ 
 var paths = {
     public: 'public/**',
     jade: 'app/**/*.jade',
@@ -169,11 +171,27 @@ gulp.task('test:ui',['browserify'], function() {
         //     throw err;
         // });
 });
+//gulp.task('webdriver_update', webdriver_update);
+// seleniumServerJar in your protractor.conf.js
+
+gulp.task('protractor',function(cb){
+//app.listen(8000);
+  gulp.src(["./e2e/*_spec.js"])
+  .pipe(protractor({
+      configFile: "e2e/protractor.conf.js",
+      args: ['--baseUrl', 'http://127.0.0.1:8000']
+  }))    
+  .on('error', function(e) {
+        console.log(e)
+  })
+  .on('end', cb);    
+});
+
 
 gulp.task('test',['test:ui','test:lib']);
 gulp.task('build', ['jade', 'less', 'browserify','static-files','bower']);
 gulp.task('production', ['nodemon','build']);
-
+gulp.task('e2e',['protractor']);
 gulp.task('heroku:production', ['build']);
 gulp.task('default', ['nodemon', 'watch', 'build']);
 

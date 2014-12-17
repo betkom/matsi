@@ -14,4 +14,21 @@ section.content.fellows
                 p.text-muted.text-wrap {{fellow.fullName}}
               p.text-muted.text-wrap {{fellow.joinedDate | date }}
         .btn.btn-danger(ng-click="delete(fellow.uid)" ng-if="currentUser.isAdmin") Delete
+    nav
+      ul.pagination
+        li
+          a(ng-click="shuffle()")
+            span(aria-hidden='true') «
+            span.sr-only Previous
+        li(ng-repeat="page in pageCount track by $index")
+          a(ng-click="navigate($index)" ng-bind="$index + 1")
+        li
+          a(ng-click="shuffle(true)")
+            span(aria-hidden='true') »
+            span.sr-only Next
+
+    //- .row
+    //-   blockquote 
+    //-     span Pages
+    //-     md-button.md-raised.md-primary(ng-repeat="page in pageCount track by $index" ng-click="navigate($index)" ng-bind="$index + 1" style="margin:2px 5px;") 
 
