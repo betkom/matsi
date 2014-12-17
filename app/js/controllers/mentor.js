@@ -9,7 +9,7 @@ angular.module("matsi.controllers")
             var start = 0,
             end = 0,
             currentPage = 0,
-            numPerPage = 2,
+            numPerPage = 16,
             mentors = [],
             lastIndexOfMentors = 0;
             $scope.pageCount = [];
