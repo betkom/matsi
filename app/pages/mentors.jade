@@ -11,3 +11,15 @@
           .user-name
             h5.text-wrap {{mentor.fullName}}
             p.text-muted.text-wrap {{mentor.email}}
+  nav
+    ul.pagination
+      li
+        a(ng-click="shuffle()")
+          span(aria-hidden='true') «
+          span.sr-only Previous
+      li(ng-repeat="page in pageCount track by $index")
+        a(ng-click="navigate($index)" ng-bind="$index + 1")
+      li
+        a(ng-click="shuffle(true)")
+          span(aria-hidden='true') »
+          span.sr-only Next
