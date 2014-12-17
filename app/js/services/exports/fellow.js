@@ -3,7 +3,7 @@ module.exports = function(rootRef, $rootScope, $firebase, $http) {
         update: function(fellow, cb) {
             if (!$rootScope.currentUser || ($rootScope.currentUser && $rootScope.currentUser.uid != fellow.uid && !$rootScope.currentUser.isAdmin))
                 return;
-            var fellow = angular.copy(fellow);
+            fellow = angular.copy(fellow);
             delete fellow.$$conf;
             delete fellow.$priority;
             delete fellow.$id;

@@ -21,6 +21,9 @@ var browserify = require('browserify'),
     exit = require('gulp-exit'),
     watchify = require('watchify'),
     mocha = require('gulp-mocha');
+    protractor = require("gulp-protractor").protractor;
+    // webdriver_standalone = require("selenium-webdriver");
+ 
 
 var paths = {
     public: 'public/**',
@@ -169,11 +172,25 @@ gulp.task('test:ui',['browserify'], function() {
         //     throw err;
         // });
 });
+//gulp.task('webdriver_update', webdriver_update);
+// seleniumServerJar in your protractor.conf.js
+gulp.task('protractor',function(cb){
 
-gulp.task('test',['test:ui','test:lib']);
-gulp.task('build', ['jade', 'less', 'browserify','static-files','bower']);
+  //app.listen(8000);
+  gulp.src(["./lib/protractor/tests/**/*.js"])
+  .pipe(protractor({
+      configFile: "protractor.conf.js",
+      args: ['--baseUrl', 'http://127.0.0.1:8000']
+  }))    
+  .on('error', function(e) {
+        console.log(e)
+  })
+  .on('end', cb);    
+});
+
+gulp.task('test',['test:ui','test:lib','protractor']);
+gulp.task('build', ['jade', 'less', 'browserify','static-files','bower','protractor']);
 gulp.task('production', ['nodemon','build']);
-
 gulp.task('heroku:production', ['build']);
 gulp.task('default', ['nodemon', 'watch', 'build']);
 
