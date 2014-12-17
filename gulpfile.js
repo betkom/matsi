@@ -22,10 +22,8 @@ var browserify = require('browserify'),
     watchify = require('watchify'),
     protractor = require('gulp-protractor').protractor,
     mocha = require('gulp-mocha');
-    protractor = require("gulp-protractor").protractor;
-    // webdriver_standalone = require("selenium-webdriver");
+  
  
-
 var paths = {
     public: 'public/**',
     jade: 'app/**/*.jade',
@@ -175,19 +173,6 @@ gulp.task('test:ui',['browserify'], function() {
 });
 //gulp.task('webdriver_update', webdriver_update);
 // seleniumServerJar in your protractor.conf.js
-gulp.task('protractor',function(cb){
-
-  //app.listen(8000);
-  gulp.src(["./lib/protractor/tests/**/*.js"])
-  .pipe(protractor({
-      configFile: "protractor.conf.js",
-      args: ['--baseUrl', 'http://127.0.0.1:8000']
-  }))    
-  .on('error', function(e) {
-        console.log(e)
-  })
-  .on('end', cb);    
-});
 
 gulp.task('protractor',function(cb){
 //app.listen(8000);
