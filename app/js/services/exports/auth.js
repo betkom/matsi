@@ -12,6 +12,7 @@ module.exports = function(Refs, $firebase, $rootScope, $state, $timeout, MailSer
     }
     return {
         onAuth: function() {
+            console.log("yesssss");
             $rootScope.currentUser = null;
             $rootScope.allowUser = false;
             Refs.rootRef.onAuth(function(authData) {
@@ -19,6 +20,7 @@ module.exports = function(Refs, $firebase, $rootScope, $state, $timeout, MailSer
                     var user = buildUserObjectFromGoogle(authData);
                     //var userRef = rootRef.child('users').child(user.uid);
                     $rootScope.currentUser = user;
+                    console.log($rootScope.currentUser, 'Tolu');
                     Refs.userRef.child(user.uid).on('value', function(snap) {
                         if (!snap.val()) {
                             user.created = Firebase.ServerValue.TIMESTAMP;

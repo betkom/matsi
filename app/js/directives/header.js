@@ -7,6 +7,7 @@ angular.module("matsi.directives")
                     var rootRef = new Firebase($cookies.rootRef);
                     // Start with no user logged in
                     $scope.login = function(){
+                        console.log('login from directive');
                         Auth.login();
                     };
                     $scope.profile = function(val) {
