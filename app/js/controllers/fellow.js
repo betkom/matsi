@@ -1,11 +1,6 @@
 angular.module("matsi.controllers")
     .controller("FellowCtrl", ['$rootScope', '$scope', '$cookies', 'Fellow', '$http', '$stateParams', 'Mentor', 'MailService', '$mdDialog', '$mdToast', '$location', 'utils', '$timeout',
         function($rootScope, $scope, $cookies, Fellow, $http, $stateParams, Mentor, MailService, $mdDialog, $mdToast, $location, utils, $timeout) {
-            // $scope.smarterer = function() {
-            //     var code = $stateParams.code;
-            //     $scope.code = code;
-            // };
-
 
             //get code and redirect if current url is smarterer callback url
             if ($location.absUrl().toString().indexOf('fellows/?code=') > -1) {
@@ -22,7 +17,7 @@ angular.module("matsi.controllers")
                     Fellow.update(data);
                 });
             }
-
+            
             //Smarterer & plum Checkbox
             $scope.check = false;
             $scope.plumCheck = false;
