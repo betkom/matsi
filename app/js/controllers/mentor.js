@@ -6,13 +6,60 @@ angular.module("matsi.controllers")
                 $scope.checked = !$scope.checked;
             };
 
+            var start = 0,
+            end = 0,
+            currentPage = 0,
+            numPerPage = 16,
+            mentors = [],
+            lastIndexOfMentors = 0;
+            $scope.pageCount = [];
+
+            $scope.shuffle = function(next) {
+                if (!next) {
+                    if (currentPage > 0) {
+                        currentPage--;
+                        mentorsFilter();
+                    }
+                } else {
+                    if (currentPage < lastPage() - 1) {
+                        currentPage++;
+                        mentorsFilter();
+                    }
+                }
+            };
+
+            $scope.navigate = function(page) {
+                currentPage = page;
+                $scope.currentPage = currentPage;
+                mentorsFilter();
+            };
+
+            var lastPage = function() {
+                return Math.ceil(mentors.length / numPerPage);
+            };
+
+            var mentorsFilter = function() {
+                start = numPerPage * currentPage;
+                end = numPerPage + start;
+                $scope.mentors = mentors.slice(start, end);
+            };
+
             $scope.findOne = function() {
                 var uid = $rootScope.currentUser ? ($stateParams.uid || $rootScope.currentUser.uid) : $stateParams.uid;
                 $scope.mentor = Mentor.findOne(uid);
             };
+
             $scope.all = function() {
-                $scope.mentors = Mentor.all();
+                start = 0;
+                end = numPerPage;
+                Mentor.all().$loaded(function(data) {
+                    mentors = data;
+                    $scope.pageCount = new Array(lastPage());
+                    lastIndexOfMentors = mentors.length - 1;
+                    mentorsFilter();
+                });
             };
+
             $scope.disabled = function() {
                 $scope.mentors = Mentor.disabled();
             };

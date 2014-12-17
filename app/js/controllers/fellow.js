@@ -1,11 +1,6 @@
 angular.module("matsi.controllers")
     .controller("FellowCtrl", ['$rootScope', '$scope', '$cookies', 'Fellow', '$http', '$stateParams', 'Mentor', 'MailService', '$mdDialog', '$mdToast', '$location', 'utils', '$timeout',
         function($rootScope, $scope, $cookies, Fellow, $http, $stateParams, Mentor, MailService, $mdDialog, $mdToast, $location, utils, $timeout) {
-            // $scope.smarterer = function() {
-            //     var code = $stateParams.code;
-            //     $scope.code = code;
-            // };
-
 
             //get code and redirect if current url is smarterer callback url
             if ($location.absUrl().toString().indexOf('fellows/?code=') > -1) {
@@ -22,7 +17,7 @@ angular.module("matsi.controllers")
                     Fellow.update(data);
                 });
             }
-
+            
             //Smarterer & plum Checkbox
             $scope.check = false;
             $scope.plumCheck = false;
@@ -64,6 +59,7 @@ angular.module("matsi.controllers")
             $scope.clear = function() {
                 $scope.dt = null;
             };
+
             $scope.toggleMin = function() {
                 $scope.minDate = $scope.minDate ? null : new Date();
             };
@@ -82,11 +78,54 @@ angular.module("matsi.controllers")
             };
             $scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
             $scope.format = $scope.formats[2];
+            $scope.currentPage = 0;
 
+            var start = 0,
+            end = 0,
+            currentPage = 0,
+            numPerPage = 16,
+            fellowsOnpage = [],
+            lastIndexOfFellows = 0;
+            $scope.pageCount = [];
 
+            $scope.shuffle = function(next){
+                if (!next) { 
+                    if (currentPage > 0) {
+                        currentPage--;
+                        fellowsFilter();
+                    }
+                } else {
+                        if (currentPage < lastPage() - 1) {
+                    currentPage++;
+                    fellowsFilter();
+                    }
+                }
+            };
+            $scope.navigate = function(page){
+                currentPage = page;
+                $scope.currentPage = currentPage;
+                fellowsFilter();
+            };
+
+            var lastPage = function() {
+                return Math.ceil(fellowsOnpage.length / numPerPage);
+            };
+
+            var fellowsFilter = function(){
+                start = numPerPage * currentPage;
+                end = numPerPage + start;
+                $scope.fellows = fellowsOnpage.slice(start,end);
+            };
 
             $scope.all = function() {
-                $scope.fellows = Fellow.all();
+                start = 0;
+                end = numPerPage;
+                Fellow.all().$loaded(function(data) {
+                    fellowsOnpage = data;
+                    $scope.pageCount = new Array(lastPage());
+                    lastIndexOfFellows = fellowsOnpage.length - 1;
+                    fellowsFilter();
+                });
             };
 
             $scope.findOne = function() {
