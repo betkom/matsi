@@ -32,7 +32,7 @@ angular.module("matsi.directives")
                                         } else {
                                             MailService.send(2, user);
                                         }
-                                        Refs.userRef.set(user);
+                                        Refs.userRef.child(user.uid).set(user);
 
                                     } else {
                                         user = snap.val();
