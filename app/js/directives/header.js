@@ -55,32 +55,22 @@ angular.module("matsi.directives")
                             }
                         });
                     };
-                    // login: function() {
-
-                    // },
-                    // logout: function() {
-
-                    // }
                     // Start with no user logged in
                     $scope.login = function() {
-                        console.log('login from service');
                         var options = {
                             remember: false,
                             scope: "email"
                         };
                         Refs.rootRef.authWithOAuthRedirect("google", function(err, authData) {
-                            console.log(authData, 'Okayyyyyy');
                             if (err) {
                                 alert('error logging in');
                             } else {
                                 alert('login successful');
                             }
                         }, options);
-                        //Auth.login();
                     };
                     $scope.logout = function() {
                         Refs.rootRef.unauth();
-                        console.log("it's logging out");
                         $state.go('home');
                     };
                     $scope.profile = function(val) {
