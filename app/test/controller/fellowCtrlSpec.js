@@ -1,4 +1,5 @@
 describe('matsi.controller test', function(){
+	
 	var scope,
 		ctrl;
 	beforeEach(module('Matsi'));
@@ -9,12 +10,21 @@ describe('matsi.controller test', function(){
 	      });
 	      $cookies.rootRef = 'https://brilliant-heat-9512.firebaseio.com/';
 	  }));
+	  
 
 	it('should expect end to be 4', function(){
 		scope.showMessageBox = true;
 		scope.showBox();
 		expect(scope.showMessageBox).toBeFalsy();
-		// expect(scope).toBeDefined()
-		// expect(end).toEqual(4);
 	});
+
+	// it('should post data to backeend', function(){
+	// 	var param = {
+ //                    email: $scope.fellow.plumEmail,
+ //                    fname: $scope.fellow.firstName,
+ //                    lname: $scope.fellow.lastName
+ //                };
+	// 	scope.plum();
+	// 	expect(Fellow.update).toHaveBeenCalled();
+	//});
 });
