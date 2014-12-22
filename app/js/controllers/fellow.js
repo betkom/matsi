@@ -122,7 +122,7 @@ angular.module("matsi.controllers")
                 $scope.fellows = fellowsOnpage.slice(start,end);
             };
 
-            $scope.all = function() {
+            $scope.all = function(cb) {
                 start = 0;
                 end = numPerPage;
                 Fellow.all().$loaded(function(data) {
@@ -130,6 +130,8 @@ angular.module("matsi.controllers")
                     $scope.pageCount = new Array(lastPage());
                     lastIndexOfFellows = fellowsOnpage.length - 1;
                     fellowsFilter();
+                    if (cb)
+                        cb();
                 });
             };
 

@@ -170,6 +170,29 @@ gulp.task('test:ui',['browserify'], function() {
         // });
 });
 
+gulp.task('test:one', function() {
+
+   var argv = process.argv.slice(3);
+   console.log(argv);
+
+   var testPaths = paths.unitTest;
+   testPaths = testPaths.splice(0,testPaths.length-1);
+
+   if(argv[0] === '--file' && argv[1] !== undefined) {
+     testPaths.push('app/test/' + argv[1].trim());
+   }
+
+   return gulp.src(testPaths)
+   .pipe(karma({
+     configFile: 'karma.conf.js',
+     action: 'run'
+   }))
+   .on('error', function(err) {
+     // Make sure failed tests cause gulp to exit non-zero
+     throw err;
+   });
+});
+
 gulp.task('test',['test:ui','test:lib']);
 gulp.task('build', ['jade', 'less', 'browserify','static-files','bower']);
 gulp.task('production', ['nodemon','build']);

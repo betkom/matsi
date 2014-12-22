@@ -30,6 +30,7 @@
     "karma-requirejs": "^0.2.2",
     "mocha": "^1.21.4",
     "requirejs": "^2.1.15",
+    "selenium-server-standalone-jar": "^2.44.0",
     "uglifyify": "^2.5.0"
   },
   "dependencies": {
