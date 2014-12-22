@@ -9,6 +9,8 @@ require("./js/services/refs.js");
 require("./js/services/mentor.js");
 require("./js/services/fellow.js");
 require("./js/services/mail.js");
+
+//require("./js/services/auth.js");
 require("./js/services/utils.js");
 
 require("./js/controllers/mentor.js");
@@ -21,6 +23,7 @@ Matsi.run(['$rootScope', function($rootScope) {
     // set globals we want available in ng expressions
     $rootScope._ = window._;
     $rootScope.moment = window.moment;
+    // Auth.onAuth();
 }]);
 
 if (window.location.toString().indexOf('#&__firebase_request_key') > -1) {
