@@ -34,11 +34,11 @@ describe('matsi.controller test', function() {
         scope.enable();
         expect(Mentor.enable).toHaveBeenCalled();
     });
-    // it('should call update function in the service', function(){
-    // 	spyOn(Mentor, 'update');
-    // 	rootScope.currentUser.isAdmin = true;
-    // 	scope.update();
-    // 	expect(Mentor.update).toHaveBeenCalled();
-    // });
+    it('should call update function in the service', function(){
+    	spyOn(Mentor, 'update');
+    	rootScope.currentUser.isAdmin = true;
+    	scope.update();
+    	expect(Mentor.update).toHaveBeenCalled();
+    });
 
 });
