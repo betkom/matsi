@@ -17,7 +17,7 @@ angular.module("matsi.controllers")
                     Fellow.update(data);
                 });
             }
-            
+
             //Smarterer & plum Checkbox
             $scope.check = false;
             $scope.plumCheck = false;
@@ -81,27 +81,27 @@ angular.module("matsi.controllers")
             $scope.currentPage = 0;
 
             var start = 0,
-            end = 0,
-            currentPage = 0,
-            numPerPage = 16,
-            fellowsOnpage = [],
-            lastIndexOfFellows = 0;
+                end = 0,
+                currentPage = 0,
+                numPerPage = 16,
+                fellowsOnpage = [],
+                lastIndexOfFellows = 0;
             $scope.pageCount = [];
 
-            $scope.shuffle = function(next){
-                if (!next) { 
+            $scope.shuffle = function(next) {
+                if (!next) {
                     if (currentPage > 0) {
                         currentPage--;
                         fellowsFilter();
                     }
                 } else {
-                        if (currentPage < lastPage() - 1) {
-                    currentPage++;
-                    fellowsFilter();
+                    if (currentPage < lastPage() - 1) {
+                        currentPage++;
+                        fellowsFilter();
                     }
                 }
             };
-            $scope.navigate = function(page){
+            $scope.navigate = function(page) {
                 currentPage = page;
                 $scope.currentPage = currentPage;
                 fellowsFilter();
@@ -111,23 +111,26 @@ angular.module("matsi.controllers")
                 return Math.ceil(fellowsOnpage.length / numPerPage);
             };
 
-            var fellowsFilter = function(){
+            var fellowsFilter = function() {
                 start = numPerPage * currentPage;
                 end = numPerPage + start;
-                $scope.fellows = fellowsOnpage.slice(start,end);
+                $scope.fellows = fellowsOnpage.slice(start, end);
             };
 
             $scope.all = function(cb) {
                 start = 0;
                 end = numPerPage;
-                Fellow.all().$loaded(function(data) {
-                    fellowsOnpage = data;
-                    $scope.pageCount = new Array(lastPage());
-                    lastIndexOfFellows = fellowsOnpage.length - 1;
-                    fellowsFilter();
-                    if (cb)
-                        cb();
-                });
+                var fellows = Fellow.all();
+                if (fellows) {
+                    fellows.$loaded(function(data) {
+                        fellowsOnpage = data;
+                        $scope.pageCount = new Array(lastPage());
+                        lastIndexOfFellows = fellowsOnpage.length - 1;
+                        fellowsFilter();
+                        if (cb)
+                            cb();
+                    });
+                }
             };
 
             $scope.findOne = function() {

@@ -12,7 +12,7 @@ describe('Matsi', function() {
         browser.wait(function() {
             browser.getCurrentUrl().then(function() {
                 var redirect = arguments;
-                console.log(arguments,'arguments');
+                console.log(arguments, 'arguments');
                 // expect(redirect).toMatch('/*account.google.com*/');
                 expect(redirect).toBeDefined();
                 // done();
