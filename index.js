@@ -140,8 +140,8 @@ function run(appdir) {
                     mailOptions = {
                         from: adminMail,
                         to: fellowMail,
-                        subject: 'Hello ✔',
-                        html: 'This is a mail from Case 2'
+                        subject: 'Hello ✔' + fellowName,
+                        html: 'Your account has been activated, You can now <a href=\'http://' + req.hostname + '\'>Login</a>'
                     };
                     break;
             }
