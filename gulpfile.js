@@ -50,7 +50,7 @@ var paths = {
       'public/lib/angularfire/dist/angularfire.js',
       'public/lib/lodash/dist/lodash.min.js',
       'public/js/index.js',
-      'app/test/specs.js'
+      'app/test/**/*.js'
     ],
     styles: 'app/styles/*.+(less|css)'
 };
