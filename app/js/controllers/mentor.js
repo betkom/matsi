@@ -72,7 +72,7 @@ angular.module("matsi.controllers")
                 Mentor.enable(mentor);
                 $scope.sendMessage(mentor);
             };
-            $scope.sendMessage =  function(mentor){
+             $scope.sendMessage =  function(mentor){
               console.log(mentor, 'ttttttt');
               MailService.send(5, mentor);
             };

@@ -42,11 +42,14 @@ describe('matsi.controller test', function() {
         scope.disabled();
         expect(Mentor.disabled).toHaveBeenCalled();
     });
-    // it('should call Mentor service enable function', function() {
-    //     spyOn(Mentor, 'enable');
-    //     scope.enable();
-    //     expect(Mentor.enable).toHaveBeenCalled();
-    // });
+    it('should call Mentor service enable function', function() {
+    	scope.mentor = {
+            uid: 'uid'
+        };
+        spyOn(Mentor, 'enable');
+        scope.enable(scope.mentor);
+        expect(Mentor.enable).toHaveBeenCalled();
+    });
     it('should call Mentor service update function', function() {
     		scope.mentor = {
             uid: 'uid'
