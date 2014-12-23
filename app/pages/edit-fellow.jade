@@ -60,11 +60,10 @@ section.content.fellows(ng-init="findOne()")
                   label Rank
                   .form-group
                     input.form-control(type='text', placeholder='Rank', ng-model="fellow.andelaDeveloperRank")
-                .col-md-4
+                .col-md-3
                   label Smarterer Score
-                  .form-group
-                    input.form-control(type='checkbox' checked = check ng-click = "toggleCheck('smarterer')") 
-                    | Update Smarterer Scores
+                    input.form-control(type='checkbox' checked = check ng-click = "toggleCheck('smarterer')")
+                    | Update
         .unit-wrap.bio
           .user-profile
             h4 Plum Profile
