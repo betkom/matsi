@@ -22,7 +22,6 @@ var browserify = require('browserify'),
     watchify = require('watchify'),
     protractor = require('gulp-protractor').protractor,
     mocha = require('gulp-mocha');
-  
  
 var paths = {
     public: 'public/**',
@@ -140,15 +139,6 @@ gulp.task('browserify', function() {
  .pipe(source('index.js'))
  .pipe(gulp.dest('./public/js'));
 });
-// gulp.task('usemin', function() {
-//   gulp.src('public/*.html')
-//     .pipe(usemin({
-//       css: [minifyCss(), 'concat'],
-//       html: [minifyHtml({empty: true})],
-//       js: [uglify(), rev()]
-//     }))
-//     .pipe(gulp.dest('public'));
-// });
 
 gulp.task('test:lib', function() {
     return gulp.src(paths.libTest)
@@ -166,16 +156,10 @@ gulp.task('test:ui',['browserify'], function() {
             action: 'run'
         }))
         .pipe(exit());
-                // .on('error', function(err) {
-        //     // Make sure failed tests cause gulp to exit non-zero
-        //     throw err;
-        // });
 });
-//gulp.task('webdriver_update', webdriver_update);
-// seleniumServerJar in your protractor.conf.js
+
 
 gulp.task('protractor',function(cb){
-//app.listen(8000);
   gulp.src(["./e2e/*_spec.js"])
   .pipe(protractor({
       configFile: "e2e/protractor.conf.js",
