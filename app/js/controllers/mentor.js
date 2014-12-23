@@ -48,15 +48,21 @@ angular.module("matsi.controllers")
                 $scope.mentor = Mentor.findOne(uid);
             };
 
-            $scope.all = function() {
+            $scope.all = function(cb) {
                 start = 0;
                 end = numPerPage;
-                Mentor.all().$loaded(function(data) {
-                    mentors = data;
-                    $scope.pageCount = new Array(lastPage());
-                    lastIndexOfMentors = mentors.length - 1;
-                    mentorsFilter();
+
+                var mentor = Mentor.all();
+                if (mentor) {
+                mentor.$loaded(function(data) {
+                mentors = data;
+                $scope.pageCount = new Array(lastPage());
+                lastIndexOfMentors = mentors.length - 1;
+                mentorsFilter();
+                if (cb)
+                cb();
                 });
+                }
             };
 
             $scope.disabled = function() {

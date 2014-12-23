@@ -8,7 +8,6 @@ module.exports = function(rootRef, $rootScope, $firebase, $http) {
             delete fellow.$priority;
             delete fellow.$id;
             cb = cb || function() {};
-            console.log('from service', fellow);
             rootRef.child('users').child(fellow.uid).update(fellow, cb);
         },
         delete: function(fellowId) {
