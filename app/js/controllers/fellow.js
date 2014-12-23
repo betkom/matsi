@@ -130,7 +130,7 @@ angular.module("matsi.controllers")
                         if (cb)
                             cb();
                     });
-                };
+                }
             };
 
             $scope.findOne = function() {
