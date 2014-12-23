@@ -1,4 +1,4 @@
-describe('Fellow Mentor Service Test', function() {
+describe('Fellow Mentor Services Test', function() {
 
     var Fellow,
         Mentor,
