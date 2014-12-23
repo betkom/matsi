@@ -27,7 +27,6 @@ angular.module("matsi.controllers")
                     }
                 }
             };
-
             $scope.navigate = function(page) {
                 currentPage = page;
                 $scope.currentPage = currentPage;
