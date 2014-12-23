@@ -1,7 +1,17 @@
 describe('matsi.controller test', function() {
     var scope,
-        ctrl;
-        beforeEach(module('Matsi'));
+        ctrl,
+        Mentor,
+        mockMentor = {
+           uid: 'happy-mentor-id',
+           role: '-mentor-',
+           fullName: 'Happy Mentor',
+           email: 'happy-mentor-id@andela.co',
+           picture: 'this is pic url',
+           firstName: 'happy'
+        };
+
+    beforeEach(module('Matsi'));
     beforeEach(inject(function($controller, $rootScope, $cookies, $injector) {
         scope = $rootScope;
         ctrl = $controller('MentorCtrl', {
@@ -34,11 +44,15 @@ describe('matsi.controller test', function() {
         scope.enable();
         expect(Mentor.enable).toHaveBeenCalled();
     });
-    // it('should call update function in the service', function(){
-    // 	spyOn(Mentor, 'update');
-    // 	rootScope.currentUser.isAdmin = true;
-    // 	scope.update();
-    // 	expect(Mentor.update).toHaveBeenCalled();
-    // });
+    it('should call update function in the service', function() {
+        spyOn(Mentor, 'update');
+        scope.currentUser = mockMentor;
+        console.log(scope.currentUser, 'currentUser');
+        console.log(mockMentor.uid);
+       	scope.currentUser.uid = mockMentor.uid;
+       	$scope.mentor.uid = scope.currentUser.uid;
+        scope.update();
+        expect(Mentor.update).toHaveBeenCalled();
+    });
 
 });
