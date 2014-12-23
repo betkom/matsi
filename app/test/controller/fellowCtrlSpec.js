@@ -12,19 +12,9 @@ describe('matsi.controller test', function(){
 	  }));
 	  
 
-	it('should expect end to be 4', function(){
+	it('should expect showMessageBox to be false', function(){
 		scope.showMessageBox = true;
 		scope.showBox();
 		expect(scope.showMessageBox).toBeFalsy();
 	});
-
-	// it('should post data to backeend', function(){
-	// 	var param = {
- //                    email: $scope.fellow.plumEmail,
- //                    fname: $scope.fellow.firstName,
- //                    lname: $scope.fellow.lastName
- //                };
-	// 	scope.plum();
-	// 	expect(Fellow.update).toHaveBeenCalled();
-	//});
 });
