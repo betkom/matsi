@@ -64,13 +64,14 @@ angular.module("matsi.controllers")
                 $scope.minDate = $scope.minDate ? null : new Date();
             };
             $scope.toggleMin();
+            $scope.opened = false;
             $scope.open = function($event) {
                 $event.preventDefault();
                 $event.stopPropagation();
-                $scope.opened = true;
-                setTimeout(function() {
-                    $scope.opened = false;
-                }, 100);
+                $scope.opened = !$scope.opened;
+                // setTimeout(function() {
+                    // $scope.opened = false;
+                // }, 100);
             };
             $scope.dateOptions = {
                 formatYear: 'yy',
