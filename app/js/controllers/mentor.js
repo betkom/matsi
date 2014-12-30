@@ -7,11 +7,11 @@ angular.module("matsi.controllers")
             };
 
             var start = 0,
-            end = 0,
-            currentPage = 0,
-            numPerPage = 16,
-            mentors = [],
-            lastIndexOfMentors = 0;
+                end = 0,
+                currentPage = 0,
+                numPerPage = 16,
+                mentors = [],
+                lastIndexOfMentors = 0;
             $scope.pageCount = [];
 
             $scope.shuffle = function(next) {
@@ -54,14 +54,14 @@ angular.module("matsi.controllers")
 
                 var mentor = Mentor.all();
                 if (mentor) {
-                mentor.$loaded(function(data) {
-                mentors = data;
-                $scope.pageCount = new Array(lastPage());
-                lastIndexOfMentors = mentors.length - 1;
-                mentorsFilter();
-                if (cb)
-                cb();
-                });
+                    mentor.$loaded(function(data) {
+                        mentors = data;
+                        $scope.pageCount = new Array(lastPage());
+                        lastIndexOfMentors = mentors.length - 1;
+                        mentorsFilter();
+                        if (cb)
+                            cb();
+                    });
                 }
             };
 
@@ -72,9 +72,9 @@ angular.module("matsi.controllers")
                 Mentor.enable(mentor);
                 $scope.sendMessage(mentor);
             };
-             $scope.sendMessage =  function(mentor){
-              console.log(mentor, 'ttttttt');
-              MailService.send(5, mentor);
+            $scope.sendMessage = function(mentor) {
+                console.log(mentor, 'ttttttt');
+                MailService.send(5, mentor);
             };
 
             $scope.update = function(data) {
@@ -93,5 +93,35 @@ angular.module("matsi.controllers")
                     });
                 }
             };
+            $scope.mentorCheck = false;
+            $scope.allCheck = false;
+            $scope.checkAll = function() {
+                    $scope.mentorCheck = !$scope.mentorCheck;
+                    console.log($scope.mentorCheck);
+                    if($scope.mentorCheck){
+                        $scope.allCheck = true;
+                        console.log($scope.allCheck, 'each one');
+                    }else{
+                        $scope.allCheck = false;
+                    }
+                angular.forEach($scope.mentors, function(mentor) {
+                    $scope.allCheck = $scope.mentorCheck;
+                console.log($scope.allCheck,'one');
+                    //console.log($scope.mentorCheck);
+                });
+            };
+            $scope.enableAll = function(){
+                if($scope.mentorCheck){
+                    angular.forEach($scope.mentors, function(mentor){
+                         Mentor.enable(mentor);
+                        $scope.sendMessage(mentor);
+                        console.log('enable');
+                    });
+                }
+            };
+            // $scope.toggleCheck = function(){
+            //     $scope.allCheck = !$scope.allCheck;
+            //     console.log($scope.allCheck);
+            // };
         }
     ]);
