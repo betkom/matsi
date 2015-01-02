@@ -43,8 +43,11 @@ describe('matsi.controller test', function() {
         expect(Mentor.disabled).toHaveBeenCalled();
     });
     it('should call Mentor service enable function', function() {
+    	scope.mentor = {
+            uid: 'uid'
+        };
         spyOn(Mentor, 'enable');
-        scope.enable();
+        scope.enable(scope.mentor);
         expect(Mentor.enable).toHaveBeenCalled();
     });
     it('should call Mentor service update function', function() {
