@@ -17,7 +17,6 @@ angular.module("matsi.controllers")
                     Fellow.update(data);
                 });
             }
-
             //Smarterer & plum Checkbox
             $scope.check = false;
             $scope.plumCheck = false;
@@ -29,7 +28,6 @@ angular.module("matsi.controllers")
                 }
 
             };
-
             // plum api integration
             $scope.plum = function() {
                 var param = {
@@ -46,7 +44,6 @@ angular.module("matsi.controllers")
                     Fellow.update(data);
                 });
             };
-
             //Date picker
             $scope.today = function() {
                 $scope.dt = new Date();
