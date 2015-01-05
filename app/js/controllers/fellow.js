@@ -19,7 +19,6 @@ angular.module("matsi.controllers")
                     Log.save(info);
                 });
             }
-
             //Smarterer & plum Checkbox
             $scope.check = false;
             $scope.plumCheck = false;
@@ -31,7 +30,6 @@ angular.module("matsi.controllers")
                 }
 
             };
-
             // plum api integration
             $scope.plum = function() {
                 var param = {
@@ -50,7 +48,6 @@ angular.module("matsi.controllers")
                     Log.save(info);
                 });
             };
-
             //Date picker
             $scope.today = function() {
                 $scope.dt = new Date();
@@ -68,13 +65,14 @@ angular.module("matsi.controllers")
                 $scope.minDate = $scope.minDate ? null : new Date();
             };
             $scope.toggleMin();
+            $scope.opened = false;
             $scope.open = function($event) {
                 $event.preventDefault();
                 $event.stopPropagation();
-                $scope.opened = true;
-                setTimeout(function() {
-                    $scope.opened = false;
-                }, 100);
+                $scope.opened = !$scope.opened;
+                // setTimeout(function() {
+                    // $scope.opened = false;
+                // }, 100);
             };
             $scope.dateOptions = {
                 formatYear: 'yy',

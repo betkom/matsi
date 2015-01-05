@@ -40,7 +40,7 @@ section.content.fellows(ng-init="findOne()")
                     .row
                       .col-md-8
                         .input-group
-                          input.form-control.ui-datepicker(type='text', data-ng-model="fellow.joinedDate", datepicker-popup='{{format}}', is-open='opened', min-date='"2014-03-01"', max-date='minDate', datepicker-options='dateOptions', date-disabled='disabled(date, mode)', close-text='Close')
+                          input.form-control.ui-datepicker(type='text', data-ng-model="fellow.joinedDate", datepicker-popup='{{format}}', is-open='$parent.opened', min-date='"2014-03-01"', max-date='minDate', datepicker-options='dateOptions', date-disabled='disabled(date, mode)', close-text='Close')
                           span.input-group-btn
                             button.btn.btn-default(type='button', ng-click='open($event)')
                               i.glyphicon.glyphicon-calendar
@@ -62,7 +62,9 @@ section.content.fellows(ng-init="findOne()")
                     input.form-control(type='text', placeholder='Rank', ng-model="fellow.andelaDeveloperRank")
                 .col-md-3
                   label Smarterer Score
-                    input.form-control(type='checkbox' checked = check ng-click = "toggleCheck('smarterer')")
+                  .form-group
+                    input(type='checkbox' checked = check ng-click = "toggleCheck('smarterer')") 
+                    | 
                     | Update
         .unit-wrap.bio
           .user-profile
@@ -70,7 +72,8 @@ section.content.fellows(ng-init="findOne()")
             hr
             h5 Plum Details
             input(type="checkbox" checked = plumCheck ng-click="toggleCheck()")
-            | Import plum badges
+            | 
+            | Import badges
             input.form-control(type='text' placeholder='Enter plum email address' ng-model="fellow.plumEmail" ng-if="plumCheck")
             .row
               .col-md-12

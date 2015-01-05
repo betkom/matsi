@@ -10,7 +10,6 @@ describe('matsi.controller test', function() {
            picture: 'this is pic url',
            firstName: 'happy'
         };
-
     beforeEach(module('Matsi'));
     beforeEach(inject(function($controller, $rootScope, $cookies, $injector) {
         scope = $rootScope;
@@ -19,6 +18,7 @@ describe('matsi.controller test', function() {
         });
         Mentor = $injector.get('Mentor');
         $cookies.rootRef = 'https://brilliant-heat-9512.firebaseio.com/';
+
     }));
 
     it('should expect check to toggle', function() {
@@ -61,5 +61,4 @@ describe('matsi.controller test', function() {
         scope.update();
         expect(Mentor.update).toHaveBeenCalled();
     });
-
 });

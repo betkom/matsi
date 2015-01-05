@@ -80,3 +80,4 @@ describe('matsi.controller test', function() {
         expect(scope.showMessageBox).toBeFalsy();
     });
 });
+
