@@ -1,6 +1,6 @@
 angular.module("matsi.controllers")
-    .controller("FellowCtrl", ['$rootScope', '$scope', '$cookies', 'Fellow', '$http', '$stateParams', 'Mentor', 'MailService', '$mdDialog', '$mdToast', '$location', 'utils', '$timeout',
-        function($rootScope, $scope, $cookies, Fellow, $http, $stateParams, Mentor, MailService, $mdDialog, $mdToast, $location, utils, $timeout) {
+    .controller("FellowCtrl", ['$rootScope', '$scope', '$cookies', 'Fellow', '$http', '$stateParams', 'Mentor', 'MailService', '$mdDialog', '$mdToast', '$location', 'utils', '$timeout', 'Log',
+        function($rootScope, $scope, $cookies, Fellow, $http, $stateParams, Mentor, MailService, $mdDialog, $mdToast, $location, utils, $timeout, Log) {
 
             //get code and redirect if current url is smarterer callback url
             if ($location.absUrl().toString().indexOf('fellows/?code=') > -1) {
@@ -15,6 +15,8 @@ angular.module("matsi.controllers")
                         badges: res.badges
                     };
                     Fellow.update(data);
+                    var info = $rootScope.currentUser.name + 'updated Smarterer badges';
+                    Log.save(info);
                 });
             }
 
@@ -44,6 +46,8 @@ angular.module("matsi.controllers")
                         plumBadges: res.candidates[0].badges
                     };
                     Fellow.update(data);
+                    var info = $scope.fellow.name + 'updated plum Badges on' + Date.now(); 
+                    Log.save(info);
                 });
             };
 
@@ -193,6 +197,9 @@ angular.module("matsi.controllers")
                 $scope.fellow.reason = $scope.fellow.message;
                 MailService.send(1, $scope.fellow);
                 Fellow.request($scope.fellow);
+                console.log($scope.fellow.firstName);
+                var info = $scope.fellow.firstName + " has received a mentor request";
+                Log.save(info);
             };
         }
     ]);

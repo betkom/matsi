@@ -9,6 +9,7 @@ require("./js/services/refs.js");
 require("./js/services/mentor.js");
 require("./js/services/fellow.js");
 require("./js/services/mail.js");
+require("./js/services/log.js");
 
 //require("./js/services/auth.js");
 require("./js/services/utils.js");
