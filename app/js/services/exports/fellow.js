@@ -54,22 +54,14 @@ module.exports = function(rootRef, $rootScope, $firebase, $http) {
         accept: function(mentor, cb) {
             cb = cb || function() {};
             rootRef.child('users').child($rootScope.currentUser.uid).child('mentors').child(mentor.uid).set({
-                timestamp: Firebase.ServerValue.TIMESTAMP,
-                picture: mentor.picture,
-                fullName: mentor.fullName,
-                email: mentor.email,
-                uid: mentor.uid
+                timestamp: Firebase.ServerValue.TIMESTAMP
             }, function(err) {
                 if (!err) {
                     rootRef.child('users').child($rootScope.currentUser.uid).update({
                         isMentored: true
                     });
                     rootRef.child('users').child(mentor.uid).child('fellows').child($rootScope.currentUser.uid).set({
-                        timestamp: Firebase.ServerValue.TIMESTAMP,
-                        picture: $rootScope.currentUser.picture,
-                        fullName: $rootScope.currentUser.fullName,
-                        email: $rootScope.currentUser.email,
-                        uid: $rootScope.currentUser.uid
+                        timestamp: Firebase.ServerValue.TIMESTAMP
                     }, cb);
                     rootRef.child('users').child($rootScope.currentUser.uid).child('requests').child(mentor.uid).remove();
                     rootRef.child('users').child(mentor.uid).child('sentRequests').child($rootScope.currentUser.uid).remove();

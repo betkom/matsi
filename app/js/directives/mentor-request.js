@@ -3,9 +3,9 @@ angular.module("matsi.directives")
         return {
             restrict: 'E',
             templateUrl: '/pages/mentor-request.html',
-            controller: ['$rootScope','$scope', '$http', 'Mentor', 'MailService', 'Fellow', 'utils','Log', function($rootScope, $scope, $http, MentorService, MailService, Fellow, utils, Log) {
+            controller: ['$rootScope','$scope', '$http', 'Mentor', 'MailService', 'Fellow', 'utils','Log', function($rootScope, $scope, $http, Mentor, MailService, Fellow, utils, Log) {
 
-                $scope.mentor = MentorService.findOne($scope.mentor_uid);
+                $scope.mentor = Mentor.findOne($scope.mentor_uid);
                 $scope.showMessageBox = false;
 
                 $scope.accept = function() {
