@@ -18,6 +18,8 @@ require("./js/controllers/mentor.js");
 require("./js/controllers/fellow.js");
 
 require("./js/directives/mentor-request.js");
+require("./js/directives/my-connections.js");
+require("./js/directives/notification.js");
 require("./js/directives/header.js");
 
 Matsi.run(['$rootScope', function($rootScope) {

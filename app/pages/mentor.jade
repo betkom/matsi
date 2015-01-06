@@ -49,10 +49,5 @@ section.content.fellows
           h4 My Fellows
           hr
           .row
-            a.profile-img.col-md-6(ng-repeat ="fellow in mentor.fellows" ng-href="fellows/{{fellow.uid}}")
-                img(ng-src='{{fellow.picture}}', alt='')
-                | {{fellow.fullName}}
-
-
-
+            my-connections(info="fellow" ng-repeat ="(user_id, user) in mentor.fellows")
 

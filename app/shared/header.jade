@@ -22,11 +22,7 @@ nav.navbar.navbar-static-top(role='navigation')
           a.dropdown-toggle(href='#', data-toggle='dropdown', role='button', aria-expanded='false', title='Notifications')
             em {{notifications}}
           ul.dropdown-menu(role='menu')
-            li(ng-repeat='request in currentUser.requests')
-              a.profile-img(href='fellows/{{currentUser.uid}}')
-                img(src='{{request.picture}}', alt='')
-                | {{request.firstName}} requested to be your mentor
-                div.date {{request.timestamp | date}}
+            notification(ng-repeat='request in currentUser.requests')
         li.dropdown(ng-if="currentUser")
           a.dropdown-toggle.profile-img(href='#', data-toggle='dropdown', data-target='dropdown-menu', role='button', aria-expanded='false')
             img(src='{{currentUser.picture}}', alt='')
