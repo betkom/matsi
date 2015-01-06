@@ -2,13 +2,14 @@ module.exports = function(rootRef, $rootScope, $firebase) {
     return {
         save: function(params) {
             var logParams = angular.copy(params);
-            rootRef.child('logs').child('log').push(logParams);
+            rootRef.child('logs').child(moment().format("YYYY-MM-DD")).push(logParams);
         },
-        allLogs: function(cb) {
+        allLogs: function(date,cb) {
             var logs;
             if (!cb) {
-                logs = $firebase(rootRef.child('logs').orderByChild('log').limitToLast(50)).$asArray();
-                return logs;
+                 logs = $firebase(rootRef.child('logs').child(date).limitToLast(20)).$asArray();
+                return logs; 
+
             }
         },
         allMentored: function(cb) {
@@ -27,11 +28,5 @@ module.exports = function(rootRef, $rootScope, $firebase) {
                 fellows = rootRef.child('users').orderByChild('isMentored').equalTo(false).once('value', cb);
             return fellows;
         }
-
-        // mentorHistory: function(params){
-        //   var logParams = angular.copy(params);
-        //    rootRef.child('logs').child('mentor History').push({log: logParams, timestamp: Firebase.ServerValue.TIMESTAMP });
-        //   //activityLog.push(logParams); 
-        // }
     };
 };

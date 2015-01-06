@@ -1,12 +1,6 @@
 angular.module("matsi.controllers")
     .controller("FellowCtrl", ['$rootScope', '$scope', '$cookies', '$filter', 'Fellow', '$http', '$stateParams', 'Mentor', 'MailService', '$mdDialog', '$mdToast', '$location', 'utils', '$timeout', 'Log',
         function($rootScope, $scope, $cookies, $filter, Fellow, $http, $stateParams, Mentor, MailService, $mdDialog, $mdToast, $location, utils, $timeout, Log) {
-            // var date = Date.now();
-            // var DateToday = new Date(date);
-            // var curr_date = DateToday.getDate();
-            // var curr_month = DateToday.getMonth();
-            // var curr_year = DateToday.getFullYear();
-            // DateToday = curr_year + curr_month + curr_date;
             //get code and redirect if current url is smarterer callback url
             if ($location.absUrl().toString().indexOf('fellows/?code=') > -1) {
                 var code = $location.search().code;
@@ -20,7 +14,7 @@ angular.module("matsi.controllers")
                         badges: res.badges
                     };
                     Fellow.update(data);
-                    var info = $rootScope.currentUser.fullName + ' updated Smarterer badges on' + moment().format();
+                    var info = $rootScope.currentUser.fullName + ' updated Smarterer badges on' + moment().format('MMMM Do YYYY, h:mm:ss a');
                     Log.save(info);
                 });
             }
@@ -49,7 +43,7 @@ angular.module("matsi.controllers")
                         plumBadges: res.candidates[0].badges
                     };
                     Fellow.update(data);
-                    var info = $scope.fellow.fullName + ' updated plum Badges on ' + moment().format();
+                    var info = $scope.fellow.fullName + ' updated plum Badges on ' + moment().format('MMMM Do YYYY, h:mm:ss a');
                     Log.save(info);
                 });
             };
@@ -83,8 +77,8 @@ angular.module("matsi.controllers")
                 formatYear: 'yy',
                 startingDay: 1
             };
-            $scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
-            $scope.format = $scope.formats[2];
+            $scope.formats = ['dd-MMMM-yyyy', 'yyyy-MM-dd', 'dd.MM.yyyy', 'shortDate'];
+            $scope.format = $scope.formats[1];
             $scope.currentPage = 0;
 
             var start = 0,
@@ -201,22 +195,15 @@ angular.module("matsi.controllers")
                 MailService.send(1, $scope.fellow);
                 Fellow.request($scope.fellow);
                 console.log($scope.fellow.firstName);
-                var info = $scope.fellow.fullName + " has received a mentor request on " + moment().format();
+                var info = $scope.fellow.fullName + " received a mentor request " + moment().format('HH:mm:ss');
                 Log.save(info);
             };
 
             $scope.allLogs = function() {
-                var log = Log.allLogs();
-                if (log) {
-                    log.$loaded(function(data) {
-                        var logsObject = data;
-                        console.log(logsObject);
-                        $scope.logs = logsObject[0];
+                        $scope.date = moment().format('YYYY-MM-DD'); 
+                        $scope.logs = Log.allLogs($scope.date);
                         console.log($scope.logs);
-                        console.log(DateToday);
-
-                    });
-                }
+                        //console.log(DateToday);
             };
             $scope.showFellows = false;
             $scope.showFellows1 = false;

@@ -1,6 +1,13 @@
 section.content.log(ng-controller="FellowCtrl")
   .container(ng-if="currentUser.isAdmin === true ")
-    ul
+    .row
+      .col-md-4
+        .input-group
+          input.form-control.ui-datepicker(type='text', data-ng-model="date", datepicker-popup='{{format}}', is-open='$parent.opened', min-date='"2014-03-01"', max-date='minDate', datepicker-options='dateOptions', date-disabled='disabled(date, mode)', close-text='Close')
+          span.input-group-btn
+            button.btn.btn-default(type='button', ng-click='open($event)')
+              i.glyphicon.glyphicon-calendar
+    ul.log
       li
         a(ng-click="allMentored()") View all Mentored Fellows
       li
@@ -10,7 +17,7 @@ section.content.log(ng-controller="FellowCtrl")
     .container(ng-init="allLogs()" ng-hide="showFellows || showFellows1")
       h4 Activity Log
       .unit-wrap(ng-repeat="log in logs")
-        p(ng-bind="log")
+        p(ng-bind="log.$value")
 
     .row(ng-if="showFellows")
       .col-xs-6.col-sm-3(ng-repeat='fellow in fellows')
