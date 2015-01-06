@@ -6,7 +6,7 @@ angular.module("matsi.directives")
             transclude: true,
             templateUrl: '/shared/notification.html',
             controller: ['$rootScope','$scope', 'Mentor', 'Fellow', function($rootScope, $scope,  Mentor, Fellow) {
-                    $scope.fellow = Mentor.findOne($rootScope.currentUser.uid);
+                    $scope.mentor = Mentor.findOne($scope.user_id);
             }]
         };
     });

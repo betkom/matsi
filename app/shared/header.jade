@@ -24,7 +24,7 @@ nav.navbar.navbar-static-top(role='navigation')
           a.dropdown-toggle(href='#', data-toggle='dropdown', role='button', aria-expanded='false', title='Notifications')
             em {{notifications}}
           ul.dropdown-menu(role='menu')
-            notification(ng-repeat='request in currentUser.requests')
+            notification(ng-repeat='(user_id, req) in currentUser.requests')
         li.dropdown(ng-if="currentUser")
           a.dropdown-toggle.profile-img(href='#', data-toggle='dropdown', data-target='dropdown-menu', role='button', aria-expanded='false')
             img(src='{{currentUser.picture}}', alt='')
