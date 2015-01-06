@@ -38,7 +38,7 @@ module.exports = function(rootRef, $rootScope, $firebase, $http) {
         },
         request: function(fellow, cb) {
             cb = cb || function() {};
-            rootRef.child('users').child($rootScope.currentUser.uid).child('sentRequests').child(fellow.uid).push({
+            rootRef.child('users').child($rootScope.currentUser.uid).child('sentRequests').child(fellow.uid).set({
                 timestamp: Firebase.ServerValue.TIMESTAMP,
             }, function(err) {
                 if (!err) {
@@ -71,6 +71,7 @@ module.exports = function(rootRef, $rootScope, $firebase, $http) {
                         email: $rootScope.currentUser.email,
                         uid: $rootScope.currentUser.uid
                     }, cb);
+                    rootRef.child('users').child(mentor.uid).child('history').push({fellow: $rootScope.currentUser.uid, timestamp: Firebase.ServerValue.TIMESTAMP});
                     rootRef.child('users').child($rootScope.currentUser.uid).child('requests').child(mentor.uid).remove();
                     rootRef.child('users').child(mentor.uid).child('sentRequests').child($rootScope.currentUser.uid).remove();
                 }

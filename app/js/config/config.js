@@ -93,6 +93,14 @@ Matsi.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', funct
             access: 'private'
           }   
         })
+        .state('log', {
+            url: '/logs',
+            templateUrl:('pages/log.html'),
+            controller: '',
+             data: {
+            access: 'private'
+          }   
+        })
         .state('admin-view', {
             url: '/admin',
             templateUrl: 'pages/admin.html',

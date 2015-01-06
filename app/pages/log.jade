@@ -1,0 +1,36 @@
+section.content.log(ng-controller="FellowCtrl")
+  .container(ng-if="currentUser.isAdmin === true ")
+    ul
+      li
+        a(ng-click="allMentored()") View all Mentored Fellows
+      li
+        a(ng-click="allUnMentored()") View all unMentored Fellows
+      li
+        a(ng-click="allLogs()" ng-if="showLog") View all activity    
+    .container(ng-init="allLogs()" ng-hide="showFellows || showFellows1")
+      h4 Activity Log
+      .unit-wrap(ng-repeat="log in logs")
+        p(ng-bind="log")
+
+    .row(ng-if="showFellows")
+      .col-xs-6.col-sm-3(ng-repeat='fellow in fellows')
+        a(ng-href='fellows/{{fellow.uid}}')
+          .user-wrap
+            .profile-pic
+              span.f-badge F
+              img(ng-src="{{fellow.picture}}")
+            .user-name
+              h5 {{fellow.fullName}}
+              p.text-muted {{fellow.email}}
+      h4.no-result(ng-if="fellows.length < 1") There are currently no Mentored fellows
+    .row(ng-if="showFellows1")
+      .col-xs-6.col-sm-3(ng-repeat='fellow in fellows1')
+        a(ng-href='fellows/{{fellow.uid}}')
+          .user-wrap
+            .profile-pic
+              span.f-badge F
+              img(ng-src="{{fellow.picture}}")
+            .user-name
+              h5 {{fellow.fullName}}
+              p.text-muted {{fellow.email}}
+      h4.no-result(ng-if="fellows1.length < 1") There are currently no UnMentored fellows
