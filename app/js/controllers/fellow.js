@@ -1,7 +1,12 @@
 angular.module("matsi.controllers")
-    .controller("FellowCtrl", ['$rootScope', '$scope', '$cookies', 'Fellow', '$http', '$stateParams', 'Mentor', 'MailService', '$mdDialog', '$mdToast', '$location', 'utils', '$timeout', 'Log',
-        function($rootScope, $scope, $cookies, Fellow, $http, $stateParams, Mentor, MailService, $mdDialog, $mdToast, $location, utils, $timeout, Log) {
-
+    .controller("FellowCtrl", ['$rootScope', '$scope', '$cookies', '$filter', 'Fellow', '$http', '$stateParams', 'Mentor', 'MailService', '$mdDialog', '$mdToast', '$location', 'utils', '$timeout', 'Log',
+        function($rootScope, $scope, $cookies, $filter, Fellow, $http, $stateParams, Mentor, MailService, $mdDialog, $mdToast, $location, utils, $timeout, Log) {
+            // var date = Date.now();
+            // var DateToday = new Date(date);
+            // var curr_date = DateToday.getDate();
+            // var curr_month = DateToday.getMonth();
+            // var curr_year = DateToday.getFullYear();
+            // DateToday = curr_year + curr_month + curr_date;
             //get code and redirect if current url is smarterer callback url
             if ($location.absUrl().toString().indexOf('fellows/?code=') > -1) {
                 var code = $location.search().code;
@@ -15,7 +20,7 @@ angular.module("matsi.controllers")
                         badges: res.badges
                     };
                     Fellow.update(data);
-                    var info = $rootScope.currentUser.fullName + ' updated Smarterer badges on' + Date.now();
+                    var info = $rootScope.currentUser.fullName + ' updated Smarterer badges on' + moment().format();
                     Log.save(info);
                 });
             }
@@ -44,7 +49,7 @@ angular.module("matsi.controllers")
                         plumBadges: res.candidates[0].badges
                     };
                     Fellow.update(data);
-                    var info = $scope.fellow.fullName + ' updated plum Badges on ' + Date.now(); 
+                    var info = $scope.fellow.fullName + ' updated plum Badges on ' + moment().format();
                     Log.save(info);
                 });
             };
@@ -71,7 +76,7 @@ angular.module("matsi.controllers")
                 $event.stopPropagation();
                 $scope.opened = !$scope.opened;
                 // setTimeout(function() {
-                    // $scope.opened = false;
+                // $scope.opened = false;
                 // }, 100);
             };
             $scope.dateOptions = {
@@ -196,37 +201,39 @@ angular.module("matsi.controllers")
                 MailService.send(1, $scope.fellow);
                 Fellow.request($scope.fellow);
                 console.log($scope.fellow.firstName);
-                var info = $scope.fellow.fullName + " has received a mentor request on " + Date.now();
+                var info = $scope.fellow.fullName + " has received a mentor request on " + moment().format();
                 Log.save(info);
             };
-            $scope.allLogs = function(){
+
+            $scope.allLogs = function() {
                 var log = Log.allLogs();
-                if (log){
-                    log.$loaded(function(data){
+                if (log) {
+                    log.$loaded(function(data) {
                         var logsObject = data;
                         console.log(logsObject);
-                       $scope.logs = logsObject[0];
-                       console.log($scope.logs);
+                        $scope.logs = logsObject[0];
+                        console.log($scope.logs);
+                        console.log(DateToday);
 
                     });
-                }   
+                }
             };
             $scope.showFellows = false;
             $scope.showFellows1 = false;
             $scope.showLog = false;
 
-            $scope.allMentored = function(){
+            $scope.allMentored = function() {
                 $scope.showFellows = true;
                 $scope.showFellows1 = false;
                 $scope.showLog = true;
                 $scope.fellows = Log.allMentored();
-                  console.log($scope.fellows);
+                console.log($scope.fellows);
             };
-            $scope.allUnMentored = function(){
-              $scope.showFellows1 = true;
-              $scope.showFellows = false;
-              $scope.showLog = true;
-              $scope.fellows1 = Log.allUnMentored();
+            $scope.allUnMentored = function() {
+                $scope.showFellows1 = true;
+                $scope.showFellows = false;
+                $scope.showLog = true;
+                $scope.fellows1 = Log.allUnMentored();
             };
         }
     ]);
