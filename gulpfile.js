@@ -62,9 +62,9 @@ gulp.task('bower', function() {
 });
 
 gulp.task('lint', function() {
-  return gulp.src('./lib/*.js')
+  return gulp.src(paths.scripts)
     .pipe(jshint())
-    .pipe(jshint.reporter('YOUR_REPORTER_HERE'));
+    .pipe(jshint.reporter('default'));
 });
 
 gulp.task('jade', function() {
@@ -81,12 +81,6 @@ gulp.task('less', function() {
         .pipe(gulp.dest('./public/css'));
 });
 
-gulp.task('lint', function() {
-    gulp.src(['index.js','./app/**/*.js']).pipe(jshint())
-    .pipe(jshint.reporter('default'));
-});
-
-//'app/**',
 gulp.task('nodemon', function() {
     nodemon({
             script: 'index.js',
