@@ -11,7 +11,7 @@ section.content.fellows(ng-init="findOne()")
       .col-xs-8.col-xs-offset-2.col-sm-3.col-sm-offset-0
         .unit-wrap
           .profile-pic
-            img(src='{{mentor.picture}}')
+            img(ng-src='{{mentor.picture}}')
           .user-name
             h5
               a(href='') {{mentor.fullName}}

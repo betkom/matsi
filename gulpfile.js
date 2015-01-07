@@ -33,7 +33,9 @@ var paths = {
     ],
     libTest: ['lib/tests/service.spec.js'],
     unitTest: [
+      'public/lib/ng-file-upload/angular-file-upload-shim.min.js',
       'public/lib/angular/angular.js',
+      'public/lib/ng-file-upload/angular-file-upload.min.js',
       'public/lib/angular-mocks/angular-mocks.js',
       'public/lib/moment/moment.js',
       'public/lib/firebase/firebase.js',

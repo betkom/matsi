@@ -1,5 +1,5 @@
 li
   a.profile-img(href='fellows/{{currentUser.uid}}')
-    img(src='{{request.picture}}', alt='')
+    img(ng-src='{{request.picture}}', alt='')
     | {{request.firstName}} requested to be your mentor
     div.date {{request.timestamp | date}}

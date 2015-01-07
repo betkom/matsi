@@ -1,7 +1,10 @@
-angular.module("matsi.controllers")
-    .controller("FellowCtrl", ['$rootScope', '$scope', '$cookies', '$filter', 'Fellow', '$http', '$stateParams', 'Mentor', 'MailService', '$mdDialog', '$mdToast', '$location', 'utils', '$timeout', 'Log',
-        function($rootScope, $scope, $cookies, $filter, Fellow, $http, $stateParams, Mentor, MailService, $mdDialog, $mdToast, $location, utils, $timeout, Log) {
+angular.module('matsi.controllers')
+    .controller("FellowCtrl", ['$rootScope', '$scope', '$cookies', '$upload', '$sce', 'Fellow', '$http', '$stateParams', 'Mentor', 'MailService', '$mdDialog', '$mdToast', '$location', 'utils', '$timeout', 'Log',
+        function($rootScope, $scope, $cookies, $upload, $sce, Fellow, $http, $stateParams, Mentor, MailService, $mdDialog, $mdToast, $location, utils, $timeout, Log) {
             //get code and redirect if current url is smarterer callback url
+            $scope.fileUploaded = false;
+            $scope.fileLoading = false;
+            $scope.videoAvailable = true;
             if ($location.absUrl().toString().indexOf('fellows/?code=') > -1) {
                 var code = $location.search().code;
                 var param = {
@@ -14,7 +17,7 @@ angular.module("matsi.controllers")
                         badges: res.badges
                     };
                     Fellow.update(data);
-                    var info = $rootScope.currentUser.fullName + ' updated Smarterer badges on' + moment().format('MMMM Do YYYY, h:mm:ss a');
+                    var info = $rootScope.currentUser.fullName + ' updated Smarterer badges ';
                     Log.save(info);
                 });
             }
@@ -43,7 +46,7 @@ angular.module("matsi.controllers")
                         plumBadges: res.candidates[0].badges
                     };
                     Fellow.update(data);
-                    var info = $scope.fellow.fullName + ' updated plum Badges on ' + moment().format('MMMM Do YYYY, h:mm:ss a');
+                    var info = $scope.fellow.fullName + ' updated plum Badges ';
                     Log.save(info);
                 });
             };
@@ -146,6 +149,7 @@ angular.module("matsi.controllers")
 
             $scope.update = function() {
                 if ($rootScope.currentUser.uid === $scope.fellow.uid || $rootScope.currentUser.isAdmin) {
+                    $scope.fellow.videoUrl = $scope.uploadResult;
                     Fellow.update($scope.fellow, function(err) {
                         if (err !== null) {
                             $mdDialog.show(
@@ -194,16 +198,21 @@ angular.module("matsi.controllers")
                 $scope.fellow.reason = $scope.fellow.message;
                 MailService.send(1, $scope.fellow);
                 Fellow.request($scope.fellow);
-                console.log($scope.fellow.firstName);
-                var info = $scope.fellow.fullName + " received a mentor request " + moment().format('HH:mm:ss');
-                Log.save(info);
+                var info = $scope.fellow.fullName + " received a mentor request ";
+                if ($scope.fellow.fullName) {
+                    Log.save(info);
+                }
             };
 
-            $scope.allLogs = function() {
-                        $scope.date = moment().format('YYYY-MM-DD'); 
-                        $scope.logs = Log.allLogs($scope.date);
-                        console.log($scope.logs);
-                        //console.log(DateToday);
+            $scope.allLogs = function(date) {
+                if (date) {
+                    $scope.date = moment(date).format('YYYY-MM-DD');
+                    $scope.logs = Log.allLogs($scope.date);
+                    $location.path('/logs');
+                } else {
+                    $scope.date = moment().format('YYYY-MM-DD');
+                }
+                $scope.logs = Log.allLogs($scope.date);
             };
             $scope.showFellows = false;
             $scope.showFellows1 = false;
@@ -221,6 +230,63 @@ angular.module("matsi.controllers")
                 $scope.showFellows = false;
                 $scope.showLog = true;
                 $scope.fellows1 = Log.allUnMentored();
+            };
+            $scope.scePermit = function(path) {      
+                return $sce.trustAsResourceUrl(path);    
+            };
+
+            $scope.onFileSelect = function($files, $index) {
+                //$scope.videoUrl = '';
+                $scope.fileUploaded = true;
+                console.log($files, 'files');
+                $scope.files = $files;
+                $scope.videoFiles = [];
+                $scope.uploadResult = '';
+                $scope.correctFormat = true;
+
+                if ($scope.files) {
+                    $scope.start(0, $index);
+                }
+            };
+            $scope.start = function(indexOftheFile, $index) {
+                //$scope.selectedItem = $index;
+                $scope.fileLoading = true;
+                var formData = {
+                    key: $scope.files[indexOftheFile].name,
+                    AWSAccessKeyID: 'AKIAIWGDKQ33PXY36LQA',
+                    acl: 'private',
+                    policy: 'ewogICJleHBpcmF0aW9uIjogIjIwMjAtMDEtMDFUMDA6MDA6MDBaIiwKICAiY29uZGl0aW9ucyI6IFsKICAgIHsiYnVja2V0IjogImtlaGVzamF5In0sCiAgICBbInN0YXJ0cy13aXRoIiwgIiRrZXkiLCAiIl0sCiAgICB7ImFjbCI6ICJwcml2YXRlIn0sCiAgICBbInN0YXJ0cy13aXRoIiwgIiRDb250ZW50LVR5cGUiLCAiIl0sCiAgICBbInN0YXJ0cy13aXRoIiwgIiRmaWxlbmFtZSIsICIiXSwKICAgIFsiY29udGVudC1sZW5ndGgtcmFuZ2UiLCAwLCA1MjQyODgwMDBdCiAgXQp9',
+                    signature: 'PLzajm+JQ9bf/rv9lZJzChPwiBc=',
+                    filename: $scope.files[indexOftheFile].name,
+                    'Content-Type': $scope.files[indexOftheFile].type
+                };
+                $scope.videoFiles[indexOftheFile] = $upload.upload({
+                    url: 'https://kehesjay.s3-us-west-2.amazonaws.com/',
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': $scope.files[indexOftheFile].type
+                    },
+                    data: formData,
+                    file: $scope.files[indexOftheFile]
+                });
+                $scope.videoFiles[indexOftheFile].then(function(response) {
+                    $timeout(function() {
+                        //alert('uploaded');
+                        var videoUrl = 'https://kehesjay.s3-us-west-2.amazonaws.com/' + $scope.files[indexOftheFile].name;
+                        $scope.uploadResult = videoUrl;
+                        console.log('upload done video', $scope.uploadResult);
+                        $scope.fileUploaded = false;
+                        $scope.fileLoading = false;
+                        //$scope.videoUrl = $scope.uploadResult;
+                    }, 6000);
+                }, function(response) {
+                    if (response.status > 0) $scope.errorMsg = response.status + ': ' + response.data;
+                    alert('Connection Timed out');
+                }, function(evt) {
+
+                });
+                //$scope.imageFiles[indexOftheFile].xhr(function(xhr) {});
+
             };
         }
     ]);

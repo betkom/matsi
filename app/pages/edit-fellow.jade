@@ -11,7 +11,7 @@ section.content.fellows(ng-init="findOne()")
       .col-xs-8.col-xs-offset-2.col-sm-3.col-sm-offset-0
         .unit-wrap
           .profile-pic
-            img(src='{{fellow.picture}}')
+            img(ng-src='{{fellow.picture}}')
           .user-name
             h5
               a(href='') {{fellow.fullName}}
@@ -64,8 +64,13 @@ section.content.fellows(ng-init="findOne()")
                   label Smarterer Score
                   .form-group
                     input(type='checkbox' checked = check ng-click = "toggleCheck('smarterer')") 
-                    | 
                     | Update
+                 .col-md-3
+                  label Upload Video   
+                  .form-group.controls
+                    input.form-control(type="file" ng-file-select="onFileSelect($files, $index)" ng-model="fellow.videoUrl" name="fileselect")
+                  p(data-ng-if="fileLoading") Uploading video file, please wait....
+                    md-progress-linear(md-mode="indeterminate")
         .unit-wrap.bio
           .user-profile
             h4 Plum Profile
@@ -79,7 +84,7 @@ section.content.fellows(ng-init="findOne()")
               .col-md-12
                 hr
               .col-md-4.col-md-offset-8
-                button.btn.btn-primary.btn-block(ng-click="update()") Save
+                button.btn.btn-primary.btn-block(ng-click="update()" data-ng-disabled='fileUploaded') Save
 
 
 

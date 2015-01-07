@@ -57,6 +57,11 @@ section.content.fellows(ng-init="findOne()")
               dt Rank
               dd
                 span.label.label-success {{fellow.andelaDeveloperRank}}
+        .unit-wrap.bio(ng-if="videoAvailable")
+          .text-center
+            video(data-ng-src='{{scePermit(fellow.videoUrl)}}' height='300' width='400' controls)
+
+
         .unit-wrap.bio
           .user-profile
             h4 Plum Profile

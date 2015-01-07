@@ -2,6 +2,7 @@ describe('Fellow Mentor Services Test', function() {
 
     var Fellow,
         Mentor,
+        Log,
         MailService,
         Refs,
         mockFellow = {
@@ -20,7 +21,8 @@ describe('Fellow Mentor Services Test', function() {
             email: 'happy-mentor-id@andela.co',
             picture: 'this is pic url',
             firstName: 'happy'
-        };
+        },
+        date = moment(1420634388603).format('YYYY-MM-DD');
 
     beforeEach(function() {
         module('Matsi');
@@ -29,6 +31,7 @@ describe('Fellow Mentor Services Test', function() {
     beforeEach(inject(function($injector) {
         Fellow = $injector.get('Fellow');
         Mentor = $injector.get('Mentor');
+        Log = $injector.get('Log');
         MailService = $injector.get('MailService');
         Refs = $injector.get('Refs');
         rootScope = $injector.get('$rootScope');
@@ -42,6 +45,36 @@ describe('Fellow Mentor Services Test', function() {
         });
 
     });
+
+    describe('Activity log', function() {
+
+        it('Should get log', function(done) {
+            Log.allLogs(date, function(snap) {
+                //console.log(snap.val());
+                var logsObject = snap.val();
+                var logs = Object.keys(logsObject).length;
+                expect(logs).toBeGreaterThan(0);
+                done();
+            });
+        });
+        it('should get mentored fellows', function(done){
+            Log.allMentored(function(snap){
+            var mentors = snap.val();
+            var mentorLog = Object.keys(mentors).length;
+            expect(mentorLog).toBeGreaterThan(0);
+            done();
+            });
+        });
+         it('should get unmentored fellows', function(done){
+            Log.allUnMentored(function(snap){
+            var mentors = snap.val();
+            var mentorLog = Object.keys(mentors).length;
+            expect(mentorLog).toBeGreaterThan(0);
+            done();
+            });
+        });
+    });
+
 
     describe('Mentors and Fellow Relationship', function() {
 
@@ -152,12 +185,12 @@ describe('Fellow Mentor Services Test', function() {
             rootScope.currentUser = updateMockMentor;
             Mentor.update(updateMockMentor, function(err) {
                 expect(err).toBe(null);
-                Mentor.findOne(mockMentor.uid, function(snap){
-                  var mentor = snap.val();
-                  expect(mentor).not.toBe(null);
-                  expect(mentor.lastName).toBe(updateMockMentor.lastName);
-                  expect(mentor.lastName).not.toBe(mockMentor.lastName);
-                  done();
+                Mentor.findOne(mockMentor.uid, function(snap) {
+                    var mentor = snap.val();
+                    expect(mentor).not.toBe(null);
+                    expect(mentor.lastName).toBe(updateMockMentor.lastName);
+                    expect(mentor.lastName).not.toBe(mockMentor.lastName);
+                    done();
                 });
             });
 

@@ -27,7 +27,7 @@ nav.navbar.navbar-static-top(role='navigation')
             notification(ng-repeat='request in currentUser.requests')
         li.dropdown(ng-if="currentUser")
           a.dropdown-toggle.profile-img(href='#', data-toggle='dropdown', data-target='dropdown-menu', role='button', aria-expanded='false')
-            img(src='{{currentUser.picture}}', alt='')
+            img(ng-src='{{currentUser.picture}}', alt='')
             | {{currentUser.fullName}}
             span.caret
           ul.dropdown-menu(role='menu')

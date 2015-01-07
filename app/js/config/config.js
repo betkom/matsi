@@ -5,7 +5,9 @@ window.Matsi = angular.module("Matsi", [
     'ngAnimate',
     'ngMaterial',
     'ui.router',
-    'ui.bootstrap'
+    'ui.bootstrap',
+    'ngSanitize',
+    'angularFileUpload'
 ]);
 Matsi.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', function($stateProvider, $urlRouterProvider, $locationProvider, $rootScope) {
     $locationProvider.html5Mode(true);
@@ -84,14 +86,6 @@ Matsi.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', funct
             data: {
                 access: 'private'
             }
-        })
-        .state('smarterer',{
-          url: '/smarterer/code/:code',
-          templateUrl: 'pages/smarterer.html',
-          controller: 'FellowCtrl',
-          data: {
-            access: 'private'
-          }   
         })
         .state('log', {
             url: '/logs',
