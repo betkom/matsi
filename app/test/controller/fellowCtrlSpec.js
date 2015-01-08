@@ -55,7 +55,6 @@ describe('matsi.controller test', function() {
         scope.mentorConstraints();
         expect(Fellow.mentorConstraint).toHaveBeenCalled();
     });
-
     it('should expect delete to have been called', function() {
         var fellowId = 'uid';
         spyOn(Fellow, 'delete');
@@ -102,6 +101,12 @@ describe('matsi.controller test', function() {
         var index = ''; 
         scope.onFileSelect(index);
         expect(file).toBeUndefined();
+    });
+    it('should  hhjjjjjjjjj', function(){
+        scope.check = false;
+        scope.plumCheck = false;
+        scope.toggleCheck('smarterer');
+        expect(scope.check).toBeTruthy();
     });
     // it('should set fileloading to be true', function(){
     //     var file;

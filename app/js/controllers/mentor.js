@@ -66,7 +66,7 @@ angular.module("matsi.controllers")
             };
             $scope.delete = function(mentorId) {
                 Mentor.delete(mentorId);
-                window.location.reload();
+                //window.location.reload('mentors');
             };
 
             $scope.disabled = function() {
@@ -114,7 +114,7 @@ angular.module("matsi.controllers")
                     //console.log($scope.mentorCheck);
                 });
             };
-            $scope.enableAll = function(){
+            $scope.enableAll = function(mentors){
                 if($scope.mentorCheck){
                     angular.forEach($scope.mentors, function(mentor){
                          Mentor.enable(mentor);

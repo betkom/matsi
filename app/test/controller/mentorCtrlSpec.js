@@ -2,6 +2,7 @@ describe('matsi.controller test', function() {
     var scope,
         ctrl,
         Mentor,
+        MailService,
         mockMentor = {
            uid: 'happy-mentor-id',
            role: '-mentor-',
@@ -17,6 +18,7 @@ describe('matsi.controller test', function() {
             $scope: scope
         });
         Mentor = $injector.get('Mentor');
+        MailService = $injector.get('MailService');
         $cookies.rootRef = 'https://brilliant-heat-9512.firebaseio.com/';
 
     }));
@@ -26,7 +28,14 @@ describe('matsi.controller test', function() {
         scope.toggleCheck();
         expect(scope.checked).toBeFalsy();
     });
-    it('should call Mentor service findOne function', function() {
+    it('should expect checkAll to check all checkbox', function(){
+        scope.mentorCheck = false;
+        scope.allCheck = false;
+        scope.checkAll();
+        expect(scope.allCheck).toBeTruthy();
+        expect(scope.mentorCheck).toBeTruthy();
+    });
+    it('should call Mentor service findOne function', function(){
         spyOn(Mentor, 'findOne');
         scope.findOne();
         expect(Mentor.findOne).toHaveBeenCalled();
@@ -36,6 +45,12 @@ describe('matsi.controller test', function() {
     	spyOn(Mentor, 'all');
     	scope.all();
     	expect(Mentor.all).toHaveBeenCalled();
+    });
+    it('should expect delete to have been called', function() {
+        var mentorId = 'uid';
+        spyOn(Mentor, 'delete');
+        scope.delete(mentorId);
+        expect(Mentor.delete).toHaveBeenCalled();
     });
     it('should call Mentor service disabled function', function() {
         spyOn(Mentor, 'disabled');
@@ -60,5 +75,14 @@ describe('matsi.controller test', function() {
         spyOn(Mentor, 'update');
         scope.update();
         expect(Mentor.update).toHaveBeenCalled();
+    });
+    it('should call sendmail', function(){
+        scope.mentor = {
+            uid: 'uid',
+            email: 'mentor@mentor.com'
+        }
+        spyOn(MailService, 'send');
+        scope.sendMessage(scope.mentor);
+        expect(MailService.send).toHaveBeenCalled();
     });
 });

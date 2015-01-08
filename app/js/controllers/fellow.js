@@ -150,7 +150,7 @@ angular.module('matsi.controllers')
 
             $scope.delete = function(fellowId) {
                 Fellow.delete(fellowId);
-                window.location.reload();
+                //window.location.reload();
             };
 
             $scope.update = function() {
