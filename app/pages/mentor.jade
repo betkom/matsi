@@ -6,6 +6,8 @@ section.content.mentors(ng-init="findOne()")
       .col-md-6
         .mentor-info
           h3 {{mentor.fullName}}
+          br
+          h3 {{mentor.jobTitle}}
 section.content.fellows
   .container
     .row
@@ -28,21 +30,21 @@ section.content.fellows
             dl.dl-horizontal
               dt Date Joined
               dd {{mentor.created | date}}
-            dl.dl-horizontal
+            dl.dl-horizontal(ng-show = "mentor.gitHubUrl")
               dt Github
               dd
                 a(ng-href='http://{{mentor.gitHubUrl}}') {{mentor.gitHubUrl}}
-            dl.dl-horizontal
+            dl.dl-horizontal(ng-show = "mentor.location")
               dt Location
               dd {{mentor.location}}
-            dl.dl-horizontal
+            dl.dl-horizontal(ng-show = "mentor.linkedInUrl")
               dt LinkedIn
               dd
                 a(ng-href='http://{{mentor.linkedInUrl}}') {{mentor.linkedInUrl}}
-            dl.dl-horizontal
+            dl.dl-horizontal(ng-show = "mentor.twitterHandle")
               dt Twitter
               dd {{mentor.twitterHandle}}
-            dl.dl-horizontal
+            dl.dl-horizontal(ng-show = "mentor.Skype")
               dt Skype
               dd {{mentor.Skype}}
         .user-wrap.bio(ng-if="currentUser.uid === mentor.uid && mentor.fellows")

@@ -4,7 +4,6 @@ angular.module('matsi.controllers')
             //get code and redirect if current url is smarterer callback url
             $scope.fileUploaded = false;
             $scope.fileLoading = false;
-            $scope.videoAvailable = true;
             if ($location.absUrl().toString().indexOf('fellows/?code=') > -1) {
                 var code = $location.search().code;
                 var param = {
@@ -139,17 +138,26 @@ angular.module('matsi.controllers')
 
             $scope.findOne = function() {
                 var uid = $rootScope.currentUser ? ($stateParams.uid || $rootScope.currentUser.uid) : $stateParams.uid;
-                $scope.fellow = Fellow.findOne(uid);
+                var fellow = Fellow.findOne(uid);
+                if (fellow){
+                    fellow.$loaded(function(data){
+                        $scope.fellow = data;
+                        $scope.uploadedResult = $scope.fellow.videoUrl;
+                    });
+                }
                 this.showMessageBox = true;
             };
 
             $scope.delete = function(fellowId) {
                 Fellow.delete(fellowId);
+                window.location.reload();
             };
 
             $scope.update = function() {
                 if ($rootScope.currentUser.uid === $scope.fellow.uid || $rootScope.currentUser.isAdmin) {
-                    $scope.fellow.videoUrl = $scope.uploadResult;
+                  if($scope.uploadedResult){
+                    $scope.fellow.videoUrl = $scope.uploadedResult;
+                  }
                     Fellow.update($scope.fellow, function(err) {
                         if (err !== null) {
                             $mdDialog.show(
@@ -223,7 +231,6 @@ angular.module('matsi.controllers')
                 $scope.showFellows1 = false;
                 $scope.showLog = true;
                 $scope.fellows = Log.allMentored();
-                console.log($scope.fellows);
             };
             $scope.allUnMentored = function() {
                 $scope.showFellows1 = true;
@@ -236,12 +243,9 @@ angular.module('matsi.controllers')
             };
 
             $scope.onFileSelect = function($files, $index) {
-                //$scope.videoUrl = '';
                 $scope.fileUploaded = true;
-                console.log($files, 'files');
                 $scope.files = $files;
                 $scope.videoFiles = [];
-                $scope.uploadResult = '';
                 $scope.correctFormat = true;
 
                 if ($scope.files) {
@@ -249,7 +253,6 @@ angular.module('matsi.controllers')
                 }
             };
             $scope.start = function(indexOftheFile, $index) {
-                //$scope.selectedItem = $index;
                 $scope.fileLoading = true;
                 var formData = {
                     key: $scope.files[indexOftheFile].name,
@@ -271,13 +274,10 @@ angular.module('matsi.controllers')
                 });
                 $scope.videoFiles[indexOftheFile].then(function(response) {
                     $timeout(function() {
-                        //alert('uploaded');
                         var videoUrl = 'https://kehesjay.s3-us-west-2.amazonaws.com/' + $scope.files[indexOftheFile].name;
-                        $scope.uploadResult = videoUrl;
-                        console.log('upload done video', $scope.uploadResult);
+                        $scope.uploadedResult = videoUrl;
                         $scope.fileUploaded = false;
                         $scope.fileLoading = false;
-                        //$scope.videoUrl = $scope.uploadResult;
                     }, 6000);
                 }, function(response) {
                     if (response.status > 0) $scope.errorMsg = response.status + ': ' + response.data;
@@ -285,7 +285,6 @@ angular.module('matsi.controllers')
                 }, function(evt) {
 
                 });
-                //$scope.imageFiles[indexOftheFile].xhr(function(xhr) {});
 
             };
         }

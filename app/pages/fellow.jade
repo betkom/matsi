@@ -32,6 +32,7 @@ section.content.fellows(ng-init="findOne()")
           .user-profile.text-wrap
             h4 Bio
             hr
+            p(ng-if="!fellow.longBio") No Bio yet
             p {{fellow.longBio}}
         .unit-wrap.bio
           .user-profile
@@ -43,26 +44,27 @@ section.content.fellows(ng-init="findOne()")
             dl.dl-horizontal
               dt Email
               dd {{fellow.email}}
-            dl.dl-horizontal
+            dl.dl-horizontal(ng-show="fellow.joinedDate") 
               dt Date Joined
               dd {{fellow.joinedDate | date}}
-            dl.dl-horizontal
+            dl.dl-horizontal(ng-show="fellow.gitHubUrl")
               dt Github
               dd
                 a(href='https://github.com/{{fellow.gitHubUrl}}' target="_blank") {{fellow.gitHubUrl}}
-            dl.dl-horizontal
+            dl.dl-horizontal(ng-show="fellow.location")
               dt Location
               dd {{fellow.location}}
-            dl.dl-horizontal
+            dl.dl-horizontal(ng-show="fellow.andelaDeveloperRank")
               dt Rank
               dd
                 span.label.label-success {{fellow.andelaDeveloperRank}}
-        .unit-wrap.bio(ng-if="videoAvailable")
+        .unit-wrap.bio(ng-if="fellow.videoUrl")
+          h4 {{fellow.fullName}}'s Story
           .text-center
             video(data-ng-src='{{scePermit(fellow.videoUrl)}}' height='300' width='400' controls)
 
 
-        .unit-wrap.bio
+        .unit-wrap.bio(ng-show="fellow.plumBadges")
           .user-profile
             h4 Plum Profile
             hr
@@ -70,7 +72,7 @@ section.content.fellows(ng-init="findOne()")
             .row
               .col-md-3(ng-repeat="badge in fellow.plumBadges")
                 img(ng-src="{{badge}}")
-        .unit-wrap.bio
+        .unit-wrap.bio(ng-show="fellow.badges")
           .user-profile
             h4 Smarterer Badges
             hr

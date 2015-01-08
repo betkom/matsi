@@ -15,7 +15,7 @@ section.content.fellows(ng-init="findOne()")
           .user-name
             h5
               a(href='') {{mentor.fullName}}
-            p.text-muted Lorem ipsum dolor sit amet
+            input.form-control(ng-model="mentor.jobTitle" ,placeholder="Enter your Job Title")
       .col-xs-12.col-sm-9
         .unit-wrap.bio
           .user-profile
@@ -29,17 +29,6 @@ section.content.fellows(ng-init="findOne()")
             form(role='form')
               .form-group
                 input.form-control(type='text', placeholder='Full Name', ng-model="mentor.fullName")
-              .form-group
-                .row
-                  .col-md-7
-                    label Email
-                    input.form-control(type='text', placeholder='Your email address', ng-model="mentor.email")
-                  .col-md-5.col-xs-12
-                    br.visible-sm.visible-xs
-                    label Date Joined
-                    .row.date-input
-                      .col-md-12
-                        input.form-control(type='date', ng-model = 'mentor.joinedDate', min='2014-01-01')
               .form-group
                 label Github Profile
                 .input-group
@@ -61,7 +50,7 @@ section.content.fellows(ng-init="findOne()")
                 .col-md-4
                   .form-group
                     label Location
-                    input.form-control(type='text', ng-model="mentor.location", placeholder='Select location')
+                    input.form-control(type='text', ng-model="mentor.location", placeholder='Enter location')
               .row
                 .col-md-12
                   hr

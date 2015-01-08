@@ -2,7 +2,7 @@
   h2.light Mentors at Andela
   hr
   .row
-    .col-xs-6.col-sm-3(ng-repeat='mentor in mentors')
+    .col-xs-6.col-sm-3(ng-if="mentors", ng-repeat='mentor in mentors')
       a(ng-href='mentors/{{mentor.uid}}')
         .user-wrap
           .profile-pic
@@ -11,6 +11,7 @@
           .user-name
             h5.text-wrap {{mentor.fullName}}
             p.text-muted.text-wrap {{mentor.email}}
+      .btn.btn-danger.delete(ng-click="delete(mentor.uid)" ng-if="currentUser.isAdmin") Delete      
   nav
     ul.pagination
       li

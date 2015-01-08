@@ -64,6 +64,10 @@ angular.module("matsi.controllers")
                     });
                 }
             };
+            $scope.delete = function(mentorId) {
+                Mentor.delete(mentorId);
+                window.location.reload();
+            };
 
             $scope.disabled = function() {
                 $scope.mentors = Mentor.disabled();

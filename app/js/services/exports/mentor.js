@@ -8,6 +8,12 @@ module.exports = function(rootRef, $rootScope, $firebase) {
                 mentors = rootRef.child('users').orderByChild('role').equalTo('-mentor-').once('value', cb);
             return mentors;
         },
+        delete: function(mentorId) {
+            rootRef.child('users').child(mentorId).update({
+                removed: true
+            });
+            rootRef.child('users').child(mentorId).remove();
+        },
         disabled: function(cb) {
             var mentors;
             if (!cb)
