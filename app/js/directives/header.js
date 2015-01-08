@@ -16,7 +16,7 @@ angular.module("matsi.directives")
                                 var user = buildUserObjectFromGoogle(authData);
                                 $rootScope.currentUser = user;
                                 console.log($rootScope.currentUser, 'User');
-                                Refs.userRef.child(user.uid).on('value', function(snap) {
+                                Refs.userRef.child(user.uid).once('value', function(snap) {
                                     if (!snap.val()) {
                                         user.created = Firebase.ServerValue.TIMESTAMP;
                                         user.isAdmin = false;
@@ -32,12 +32,12 @@ angular.module("matsi.directives")
                                             MailService.send(2, user);
                                         }
                                         Refs.userRef.child(user.uid).set(user);
-                                             $location.path('fellows/' + user.uid +'/edit');
+                                        $location.path('fellows/' + user.uid +'/edit');
 
                                     } else {
                                         user = snap.val();
                                         user.picture = authData.google.cachedUserProfile.picture;
-                                        rootRef.child('users').child(user.uid).update(user);
+                                        rootRef.child('users').child(user.uid).update({picture:user.picture});
                                         if (user.disabled || user.removed) {
                                             user = null;
                                             Refs.rootRef.unauth();

@@ -77,7 +77,6 @@ angular.module("matsi.controllers")
                 $scope.sendMessage(mentor);
             };
             $scope.sendMessage = function(mentor) {
-                console.log(mentor, 'ttttttt');
                 MailService.send(5, mentor);
             };
 
@@ -101,7 +100,6 @@ angular.module("matsi.controllers")
             $scope.allCheck = false;
             $scope.checkAll = function() {
                     $scope.mentorCheck = !$scope.mentorCheck;
-                    console.log($scope.mentorCheck);
                     if($scope.mentorCheck){
                         $scope.allCheck = true;
                         console.log($scope.allCheck, 'each one');

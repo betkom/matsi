@@ -80,7 +80,7 @@ describe('matsi.controller test', function() {
         scope.mentor = {
             uid: 'uid',
             email: 'mentor@mentor.com'
-        }
+        };
         spyOn(MailService, 'send');
         scope.sendMessage(scope.mentor);
         expect(MailService.send).toHaveBeenCalled();

@@ -31,7 +31,7 @@ angular.module('matsi.controllers')
                 }
 
             };
-            // plum api integration
+            // plum api integrations
             $scope.plum = function() {
                 var param = {
                     email: $scope.fellow.plumEmail,
