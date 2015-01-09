@@ -14,7 +14,9 @@ module.exports = function(config) {
 
 
         // list of files / patterns to load in the browser
-        files: [],
+        files: [
+            'public/**/*.html'
+        ],
 
 
         // list of files to exclude
@@ -35,7 +37,8 @@ module.exports = function(config) {
         },
 
         preprocessors: {
-            'public/js/index.js': 'coverage'
+            'public/js/index.js': 'coverage',
+            'public/**/*.html': 'html2js'
         },
 
         // test results reporter to use
