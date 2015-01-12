@@ -58,7 +58,7 @@ var paths = {
 
 gulp.task('bower', function() {
   return bower()
-    .pipe(gulp.dest('public/lib/'))
+    .pipe(gulp.dest('public/lib/'));
 });
 
 gulp.task('lint', function() {
@@ -70,7 +70,7 @@ gulp.task('lint', function() {
 gulp.task('jade', function() {
     gulp.src('./app/**/*.jade')
         .pipe(jade())
-        .pipe(gulp.dest('./public/'))
+        .pipe(gulp.dest('./public/'));
 });
 
 gulp.task('less', function() {
@@ -90,7 +90,7 @@ gulp.task('nodemon', function() {
         .on('change', ['lint'])
         .on('restart', function() {
             console.log('>> node restart');
-        })
+        });
 });
 
 
@@ -162,13 +162,13 @@ gulp.task('protractor',function(cb){
       args: ['--baseUrl', 'http://127.0.0.1:8000']
   }))    
   .on('error', function(e) {
-        console.log(e)
+        console.log(e);
   })
   .on('end', cb);    
 });
 
 
-gulp.task('test:one', function() {
+gulp.task('test:one', ['browserify'], function() {
 
    var argv = process.argv.slice(3);
    console.log(argv);

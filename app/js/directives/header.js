@@ -2,12 +2,11 @@ angular.module("matsi.directives")
     .directive('header', function() {
         return {
             restrict: 'E',
-            controller: ['$rootScope', '$scope', '$firebase', '$cookies', 'Fellow', '$timeout', '$stateParams', '$location', 'MailService', '$state', 'Refs',
+            controller: 'HeaderCtrl'
+          };
+          })
+    .controller('HeaderCtrl', ['$rootScope', '$scope', '$firebase', '$cookies', 'Fellow', '$timeout', '$stateParams', '$location', 'MailService', '$state', 'Refs',
                 function($rootScope, $scope, $firebase, $cookies, Fellow, $timeout, $stateParams, $location, MailService, $state, Refs) {
-                    var rootRef = new Firebase($cookies.rootRef);
-
-
-
                     $rootScope.currentUser = null;
                     $rootScope.allowUser = false;
                     $scope.auth = function() {
@@ -37,7 +36,7 @@ angular.module("matsi.directives")
                                     } else {
                                         user = snap.val();
                                         user.picture = authData.google.cachedUserProfile.picture;
-                                        rootRef.child('users').child(user.uid).update({picture:user.picture});
+                                        Refs.rootRef.child('users').child(user.uid).update({picture:user.picture});
                                         if (user.disabled || user.removed) {
                                             user = null;
                                             Refs.rootRef.unauth();
@@ -93,9 +92,7 @@ angular.module("matsi.directives")
                     };
                     $scope.auth();
                 }
-            ]
-        };
-    });
+            ]);
 
 function buildUserObjectFromGoogle(authData) {
     return {
