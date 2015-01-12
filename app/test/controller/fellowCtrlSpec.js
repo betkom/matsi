@@ -12,7 +12,8 @@ describe('matsi.controller test', function() {
         Log = $injector.get('Log');
         stateParams = $injector.get('$stateParams');
         ctrl = $controller('FellowCtrl', {
-            $scope: scope
+            $scope: scope,
+            $rootScope: scope
         });
         $cookies.rootRef = 'https://brilliant-heat-9512.firebaseio.com/';
     }));

@@ -1,6 +1,6 @@
 angular.module("matsi.controllers")
-    .controller("MentorCtrl", ['$rootScope', '$scope', '$cookies', 'Mentor', '$stateParams', '$location', 'MailService',
-        function($rootScope, $scope, $cookies, Mentor, $stateParams, $location, MailService) {
+    .controller("MentorCtrl", ['$rootScope', '$scope', '$cookies', '$state', 'Mentor', '$stateParams', '$location', 'MailService',
+        function($rootScope, $scope, $cookies, $state, Mentor, $stateParams, $location, MailService) {
             $scope.checked = false;
             $scope.toggleCheck = function() {
                 $scope.checked = !$scope.checked;
@@ -66,7 +66,7 @@ angular.module("matsi.controllers")
             };
             $scope.delete = function(mentorId) {
                 Mentor.delete(mentorId);
-                //window.location.reload('mentors');
+                //window.location = location.path('/mentors');
             };
 
             $scope.disabled = function() {
