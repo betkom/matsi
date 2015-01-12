@@ -66,6 +66,7 @@ section.content.fellows(ng-init="findOne()")
           label Upload Video   
           .form-group.controls
             input.form-control(type="file" ng-file-select="onFileSelect($files, $index)" ng-model="fellow.videoUrl" name="fileselect")
+            p(data-ng-if="changeSize") video too large or invalid format, please change video   
             p(data-ng-if="fileLoading") Uploading video file, please wait....
               md-progress-linear(md-mode="indeterminate")
             video(ng-if="uploadedResult" data-ng-src='{{scePermit(uploadedResult)}}' height='200' width='300' controls)

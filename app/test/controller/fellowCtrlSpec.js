@@ -103,10 +103,15 @@ describe('matsi.controller test', function() {
         expect(Log.allUnMentored).toHaveBeenCalled();
     });
     it('should expect files to be undefined', function() {
-        var file;
-        var index = '';
-        scope.onFileSelect(index);
-        expect(file).toBeUndefined();
+        var file = [
+            scope.video = {
+            type: '',
+            size: 0
+        }
+        ];
+        var index;
+        scope.onFileSelect(file,index);
+        expect(file).toBeDefined();
     });
 
     it('should expect plum checkbox to be checked', function() {

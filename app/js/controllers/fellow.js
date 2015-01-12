@@ -29,7 +29,6 @@ angular.module('matsi.controllers')
                 } else {
                     $scope.plumCheck = !$scope.plumCheck;
                 }
-
             };
             // plum api integrations
             $scope.plum = function() {
@@ -242,11 +241,15 @@ angular.module('matsi.controllers')
             $scope.onFileSelect = function($files, $index) {
                 $scope.fileUploaded = true;
                 $scope.files = $files;
-                $scope.videoFiles = [];
-                $scope.correctFormat = true;
-
-                if ($scope.files) {
-                    $scope.start(0, $index);
+                 if($scope.files[0].size < 7000000 && ($scope.files[0].type === 'video/mp4' || $scope.files[0].type ==='video/mkv' || $scope.files[0].type === 'video/wmv')){
+                    $scope.videoFiles = [];
+                    $scope.correctFormat = true;
+                    $scope.changeSize = false;
+                    if ($scope.files) {
+                        $scope.start(0, $index);
+                    }
+                }else{
+                  $scope.changeSize = true;
                 }
             };
             $scope.start = function(indexOftheFile, $index) {
