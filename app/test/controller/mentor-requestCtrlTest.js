@@ -19,22 +19,17 @@ describe('matsi.directives test', function(){
           fullName: 'FullName'
         };
         scope.currentUser = scope.fellow;
-        
         ctrl = $controller('mentorRequestCtrl', {
             $scope: scope,
             $rootScope: scope
         });
-        
         Mentor = $injector.get('Mentor');
         Fellow = $injector.get('Fellow');
         Log = $injector.get('Log');
         utils = $injector.get('utils');
         MailService = $injector.get('MailService');
-        
-
     }));
    it('should accept a mentor request', function(){
-    
     spyOn(Fellow, 'accept');
     spyOn(MailService, 'send');
     spyOn(Log, 'save');
@@ -45,6 +40,7 @@ describe('matsi.directives test', function(){
     expect(Log.save).toHaveBeenCalled();
     expect(utils.openToast).toHaveBeenCalled();
    });
+
    it('should reject a mentor request', function(){
     spyOn(Fellow, 'reject');
     spyOn(MailService, 'send');
@@ -56,6 +52,7 @@ describe('matsi.directives test', function(){
     expect(Log.save).toHaveBeenCalled();
     expect(utils.openToast).toHaveBeenCalled();
    });
+   
    it('should set show message box to true', function(){
     scope.showMessageBox = false;
     scope.showBox();

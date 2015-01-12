@@ -20,7 +20,6 @@ describe('matsi.controller test', function() {
         Mentor = $injector.get('Mentor');
         MailService = $injector.get('MailService');
         $cookies.rootRef = 'https://brilliant-heat-9512.firebaseio.com/';
-
     }));
 
     it('should expect check to toggle', function() {
@@ -28,6 +27,7 @@ describe('matsi.controller test', function() {
         scope.toggleCheck();
         expect(scope.checked).toBeFalsy();
     });
+
     it('should expect checkAll to check all checkbox', function(){
         scope.mentorCheck = false;
         scope.allCheck = false;
@@ -35,38 +35,43 @@ describe('matsi.controller test', function() {
         expect(scope.allCheck).toBeTruthy();
         expect(scope.mentorCheck).toBeTruthy();
     });
+
     it('should call Mentor service findOne function', function(){
         spyOn(Mentor, 'findOne');
         scope.findOne();
         expect(Mentor.findOne).toHaveBeenCalled();
+    });
 
-    });
     it('should call Mentor service all function', function(){
-    	spyOn(Mentor, 'all');
-    	scope.all();
-    	expect(Mentor.all).toHaveBeenCalled();
+      spyOn(Mentor, 'all');
+      scope.all();
+      expect(Mentor.all).toHaveBeenCalled();
     });
+
     it('should expect delete to have been called', function() {
         var mentorId = 'uid';
         spyOn(Mentor, 'delete');
         scope.delete(mentorId);
         expect(Mentor.delete).toHaveBeenCalled();
     });
+
     it('should call Mentor service disabled function', function() {
         spyOn(Mentor, 'disabled');
         scope.disabled();
         expect(Mentor.disabled).toHaveBeenCalled();
     });
+
     it('should call Mentor service enable function', function() {
-    	scope.mentor = {
+      scope.mentor = {
             uid: 'uid'
         };
         spyOn(Mentor, 'enable');
         scope.enable(scope.mentor);
         expect(Mentor.enable).toHaveBeenCalled();
     });
+
     it('should call Mentor service update function', function() {
-    		scope.mentor = {
+        scope.mentor = {
             uid: 'uid'
         };
         scope.currentUser = {
@@ -76,6 +81,7 @@ describe('matsi.controller test', function() {
         scope.update();
         expect(Mentor.update).toHaveBeenCalled();
     });
+    
     it('should call sendmail', function(){
         scope.mentor = {
             uid: 'uid',

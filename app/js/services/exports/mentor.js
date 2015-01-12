@@ -22,7 +22,7 @@ module.exports = function(rootRef, $rootScope, $firebase) {
                 mentors = rootRef.child('users').orderByChild('disabled').equalTo(true).once('value', cb);
             return mentors;
         },
-        enable: function(mentor,cb) {
+        enable: function(mentor, cb) {
             mentor = angular.copy(mentor);
             delete mentor.$$conf;
             delete mentor.$id;
@@ -40,7 +40,6 @@ module.exports = function(rootRef, $rootScope, $firebase) {
             else
                 return $firebase(rootRef.child('users').child(uid)).$asObject();
         },
-
         update: function(mentor, cb) {
             if (!$rootScope.currentUser || ($rootScope.currentUser && $rootScope.currentUser.uid != mentor.uid && !$rootScope.currentUser.isAdmin))
                 return;
