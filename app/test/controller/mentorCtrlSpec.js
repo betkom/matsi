@@ -42,9 +42,9 @@ describe('matsi.controller test', function() {
 
     });
     it('should call Mentor service all function', function(){
-    	spyOn(Mentor, 'all');
-    	scope.all();
-    	expect(Mentor.all).toHaveBeenCalled();
+      spyOn(Mentor, 'all');
+      scope.all();
+      expect(Mentor.all).toHaveBeenCalled();
     });
     it('should expect delete to have been called', function() {
         var mentorId = 'uid';
@@ -58,15 +58,27 @@ describe('matsi.controller test', function() {
         expect(Mentor.disabled).toHaveBeenCalled();
     });
     it('should call Mentor service enable function', function() {
-    	scope.mentor = {
+      scope.mentor = {
             uid: 'uid'
         };
         spyOn(Mentor, 'enable');
         scope.enable(scope.mentor);
         expect(Mentor.enable).toHaveBeenCalled();
     });
+     it('should enable All Mentor', function() {
+        scope.mentorCheck = true;
+        scope.mentors = [
+            scope.mentor = {
+                uid: 'uid'
+            }
+        ];
+        //var mentors;
+        spyOn(Mentor, 'enable');
+        scope.enableAll(scope.mentors);
+        expect(Mentor.enable).toHaveBeenCalled();
+    });
     it('should call Mentor service update function', function() {
-    		scope.mentor = {
+        scope.mentor = {
             uid: 'uid'
         };
         scope.currentUser = {

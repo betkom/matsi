@@ -4,12 +4,14 @@ describe('matsi.controller test', function() {
         stateParams,
         Fellow,
         Log,
+        MailService,
         ctrl;
     beforeEach(module('Matsi'));
     beforeEach(inject(function($controller, $rootScope, $cookies, $injector) {
         scope = $rootScope;
         Fellow = $injector.get('Fellow');
         Log = $injector.get('Log');
+        MailService = $injector.get('MailService');
         stateParams = $injector.get('$stateParams');
         ctrl = $controller('FellowCtrl', {
             $scope: scope,
@@ -38,8 +40,11 @@ describe('matsi.controller test', function() {
     });
 
     it('should expect update to have been called', function() {
+        scope.uploadedResult = 'https://kehesjay.s3-us-west-2.amazonaws.com/People';
+        scope.videoUrl = scope.uploadedResult;
         scope.fellow = {
-            uid: 'uid'
+            uid: 'uid',
+            videoUrl: 'yyyyyyy'
         };
         scope.currentUser = {
             uid: 'uid'
@@ -64,10 +69,16 @@ describe('matsi.controller test', function() {
     });
 
     it('should expect sendRequest to have been called', function() {
-        scope.fellow = {};
+        scope.fellow = {
+            fullName: 'Happy Fellow'
+        };
         spyOn(Fellow, 'request');
+        spyOn(MailService, 'send');
+        spyOn(Log, 'save');
         scope.sendRequest();
         expect(Fellow.request).toHaveBeenCalled();
+        expect(MailService.send).toHaveBeenCalled();
+        expect(Log.save).toHaveBeenCalled();
     });
 
     it('should expect all to have been called', function() {
