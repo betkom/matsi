@@ -41,14 +41,14 @@ function run(appdir) {
                 });
             } else {
                 // res.redirect('');
-                console.log(resp.body);
+                //console.log(resp.body);
                 needle.get('https://smarterer.com/api/badges?access_token=' + resp.body.access_token, function(error, response) {
                     if (error) {
                         res.send({
                             err: error
                         });
                     } else {
-                        console.log(response.body);
+                        //console.log(response.body);
                         res.send(response.body);
                     }
                 });

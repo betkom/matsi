@@ -12,7 +12,6 @@
     require("./js/services/mail.js");
     require("./js/services/log.js");
 
-    //require("./js/services/auth.js");
     require("./js/services/utils.js");
 
     require("./js/controllers/mentor.js");
@@ -27,7 +26,6 @@
         // set globals we want available in ng expressions
         $rootScope._ = window._;
         $rootScope.moment = window.moment;
-        // Auth.onAuth();
     }]);
     if (window.location.toString().indexOf('#&__firebase_request_key') > -1) {
         window.location = '/';

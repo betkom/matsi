@@ -5,7 +5,7 @@ angular.module("matsi.controllers")
             $scope.toggleCheck = function() {
                 $scope.checked = !$scope.checked;
             };
-
+            //Pagination
             var start = 0,
                 end = 0,
                 currentPage = 0,
@@ -13,7 +13,6 @@ angular.module("matsi.controllers")
                 mentors = [],
                 lastIndexOfMentors = 0;
             $scope.pageCount = [];
-
             $scope.shuffle = function(next) {
                 if (!next) {
                     if (currentPage > 0) {
@@ -32,11 +31,9 @@ angular.module("matsi.controllers")
                 $scope.currentPage = currentPage;
                 mentorsFilter();
             };
-
             var lastPage = function() {
                 return Math.ceil(mentors.length / numPerPage);
             };
-
             var mentorsFilter = function() {
                 start = numPerPage * currentPage;
                 end = numPerPage + start;
@@ -68,10 +65,11 @@ angular.module("matsi.controllers")
                 Mentor.delete(mentorId);
                 //window.location = location.path('/mentors');
             };
-
+            //get all deactivated mentor account
             $scope.disabled = function() {
                 $scope.mentors = Mentor.disabled();
             };
+            // Activate mentor account
             $scope.enable = function(mentor) {
                 Mentor.enable(mentor);
                 $scope.sendMessage(mentor);
@@ -79,7 +77,7 @@ angular.module("matsi.controllers")
             $scope.sendMessage = function(mentor) {
                 MailService.send(5, mentor);
             };
-
+            //Update Mentor Profile
             $scope.update = function(data) {
                 if ($rootScope.currentUser.uid === $scope.mentor.uid || $rootScope.currentUser.isAdmin) {
                     Mentor.update(data, function(err) {
@@ -98,32 +96,26 @@ angular.module("matsi.controllers")
             };
             $scope.mentorCheck = false;
             $scope.allCheck = false;
+            // check all checkboxes
             $scope.checkAll = function() {
                     $scope.mentorCheck = !$scope.mentorCheck;
                     if($scope.mentorCheck){
                         $scope.allCheck = true;
-                        console.log($scope.allCheck, 'each one');
                     }else{
                         $scope.allCheck = false;
                     }
                 angular.forEach($scope.mentors, function(mentor) {
                     $scope.allCheck = $scope.mentorCheck;
-                console.log($scope.allCheck,'one');
-                    //console.log($scope.mentorCheck);
                 });
             };
+            // Activate all deactivated mentor account
             $scope.enableAll = function(mentors){
                 if($scope.mentorCheck){
                     angular.forEach($scope.mentors, function(mentor){
                          Mentor.enable(mentor);
                         $scope.sendMessage(mentor);
-                        console.log('enable');
                     });
                 }
             };
-            // $scope.toggleCheck = function(){
-            //     $scope.allCheck = !$scope.allCheck;
-            //     console.log($scope.allCheck);
-            // };
         }
     ]);

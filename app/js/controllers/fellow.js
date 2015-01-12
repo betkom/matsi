@@ -29,7 +29,6 @@ angular.module('matsi.controllers')
                 } else {
                     $scope.plumCheck = !$scope.plumCheck;
                 }
-
             };
             // plum api integrations
             $scope.plum = function() {
@@ -71,9 +70,6 @@ angular.module('matsi.controllers')
                 $event.preventDefault();
                 $event.stopPropagation();
                 $scope.opened = !$scope.opened;
-                // setTimeout(function() {
-                // $scope.opened = false;
-                // }, 100);
             };
             $scope.dateOptions = {
                 formatYear: 'yy',
@@ -139,8 +135,8 @@ angular.module('matsi.controllers')
             $scope.findOne = function() {
                 var uid = $rootScope.currentUser ? ($stateParams.uid || $rootScope.currentUser.uid) : $stateParams.uid;
                 var fellow = Fellow.findOne(uid);
-                if (fellow){
-                    fellow.$loaded(function(data){
+                if (fellow) {
+                    fellow.$loaded(function(data) {
                         $scope.fellow = data;
                         $scope.uploadedResult = $scope.fellow.videoUrl;
                     });
@@ -155,9 +151,13 @@ angular.module('matsi.controllers')
 
             $scope.update = function() {
                 if ($rootScope.currentUser.uid === $scope.fellow.uid || $rootScope.currentUser.isAdmin) {
-                  if($scope.uploadedResult){
-                    $scope.fellow.videoUrl = $scope.uploadedResult;
-                  }
+                    if ($scope.uploadedResult) {
+                        $scope.fellow.videoUrl = $scope.uploadedResult;
+                        var info2 = $scope.fellow.fullName + 'has uploaded a video';
+                        if ($scope.fellow.fullName) {
+                            Log.save(info2);
+                        }
+                    }
                     Fellow.update($scope.fellow, function(err) {
                         if (err !== null) {
                             $mdDialog.show(
@@ -166,7 +166,6 @@ angular.module('matsi.controllers')
                                 .content('An error occured,  try again later')
                                 .ariaLabel('Password notification')
                                 .ok('Okay!')
-
                             );
                         }
                         if ($scope.plumCheck) {
@@ -179,7 +178,6 @@ angular.module('matsi.controllers')
                         } else {
                             $location.path('fellows/' + $rootScope.currentUser.uid);
                         }
-
                     });
                 }
             };
@@ -211,7 +209,6 @@ angular.module('matsi.controllers')
                     Log.save(info);
                 }
             };
-
             $scope.allLogs = function(date) {
                 if (date) {
                     $scope.date = moment(date).format('YYYY-MM-DD');
@@ -241,15 +238,18 @@ angular.module('matsi.controllers')
             $scope.scePermit = function(path) {      
                 return $sce.trustAsResourceUrl(path);    
             };
-
             $scope.onFileSelect = function($files, $index) {
                 $scope.fileUploaded = true;
                 $scope.files = $files;
-                $scope.videoFiles = [];
-                $scope.correctFormat = true;
-
-                if ($scope.files) {
-                    $scope.start(0, $index);
+                 if($scope.files[0].size < 7000000 && ($scope.files[0].type === 'video/mp4' || $scope.files[0].type ==='video/mkv' || $scope.files[0].type === 'video/wmv')){
+                    $scope.videoFiles = [];
+                    $scope.correctFormat = true;
+                    $scope.changeSize = false;
+                    if ($scope.files) {
+                        $scope.start(0, $index);
+                    }
+                }else{
+                  $scope.changeSize = true;
                 }
             };
             $scope.start = function(indexOftheFile, $index) {
@@ -283,9 +283,7 @@ angular.module('matsi.controllers')
                     if (response.status > 0) $scope.errorMsg = response.status + ': ' + response.data;
                     alert('Connection Timed out');
                 }, function(evt) {
-
                 });
-
             };
         }
     ]);

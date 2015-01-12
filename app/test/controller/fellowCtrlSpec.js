@@ -26,8 +26,10 @@ describe('matsi.controller test', function() {
         scope.fellow.firstName = 'this is fname';
         scope.fellow.lastName = 'this is lname';
         spyOn(Fellow, 'backEndPost');
+        //spyOn(Log, 'save');
         scope.plum();
         expect(Fellow.backEndPost).toHaveBeenCalled();
+        //expect(Log.save).toHaveBeenCalled();
     });
 
     it('should expect findOne to have been called', function() {
@@ -52,7 +54,6 @@ describe('matsi.controller test', function() {
         spyOn(Fellow, 'update');
         scope.update();
         expect(Fellow.update).toHaveBeenCalled();
-
     });
 
     it('should expect mentorConstraints to have been called', function() {
@@ -61,6 +62,7 @@ describe('matsi.controller test', function() {
         scope.mentorConstraints();
         expect(Fellow.mentorConstraint).toHaveBeenCalled();
     });
+
     it('should expect delete to have been called', function() {
         var fellowId = 'uid';
         spyOn(Fellow, 'delete');
@@ -92,41 +94,41 @@ describe('matsi.controller test', function() {
         scope.showBox();
         expect(scope.showMessageBox).toBeFalsy();
     });
-    it('should expect allLogs to have been called', function(){
+
+    it('should expect allLogs to have been called', function() {
         spyOn(Log, 'allLogs');
         scope.allLogs();
         expect(Log.allLogs).toHaveBeenCalled();
 
     });
-    it('should expect allMentored to have been called', function(){
+
+    it('should expect allMentored to have been called', function() {
         spyOn(Log, 'allMentored');
         scope.allMentored();
         expect(Log.allMentored).toHaveBeenCalled();
     });
-    it('should expect allunMentored to have been called', function(){
+
+    it('should expect allunMentored to have been called', function() {
         spyOn(Log, 'allUnMentored');
         scope.allUnMentored();
         expect(Log.allUnMentored).toHaveBeenCalled();
     });
-    it('should expect files to be undefined', function(){
-        var file;
-        var index = ''; 
-        scope.onFileSelect(index);
-        expect(file).toBeUndefined();
+    it('should expect files to be undefined', function() {
+        var file = [
+            scope.video = {
+            type: '',
+            size: 0
+        }
+        ];
+        var index;
+        scope.onFileSelect(file,index);
+        expect(file).toBeDefined();
     });
-    it('should  hhjjjjjjjjj', function(){
+
+    it('should expect plum checkbox to be checked', function() {
         scope.check = false;
         scope.plumCheck = false;
         scope.toggleCheck('smarterer');
         expect(scope.check).toBeTruthy();
     });
-    // it('should set fileloading to be true', function(){
-    //     var file;
-    //     var index;
-    //     scope.fileloading = false;
-    //     scope.start(file, index);
-    //     expect(scope.fileloading).toBeTruthy();
-    // });
-
 });
-

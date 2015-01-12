@@ -1,5 +1,4 @@
 describe('Fellow Mentor Services Test', function() {
-
     var Fellow,
         Mentor,
         Log,
@@ -23,11 +22,9 @@ describe('Fellow Mentor Services Test', function() {
             firstName: 'happy'
         },
         date = moment(1420634388603).format('YYYY-MM-DD');
-
     beforeEach(function() {
         module('Matsi');
     });
-
     beforeEach(inject(function($injector) {
         Fellow = $injector.get('Fellow');
         Mentor = $injector.get('Mentor');
@@ -36,21 +33,19 @@ describe('Fellow Mentor Services Test', function() {
         Refs = $injector.get('Refs');
         rootScope = $injector.get('$rootScope');
     }));
-
     beforeEach(function(done) {
         Refs.rootRef.child('users').child(mockMentor.uid).set(mockMentor, function(err) {
             Refs.rootRef.child('users').child(mockFellow.uid).set(mockFellow, function(err) {
                 done();
             });
         });
-
     });
-
+    /********************************
+            LOG SERVICE TEST
+    ********************************/
     describe('Activity log', function() {
-
         it('Should get log', function(done) {
             Log.allLogs(date, function(snap) {
-                //console.log(snap.val());
                 var logsObject = snap.val();
                 var logs = Object.keys(logsObject).length;
                 expect(logs).toBeGreaterThan(0);
@@ -75,9 +70,10 @@ describe('Fellow Mentor Services Test', function() {
         });
     });
 
-
+      /********************************
+            FELLOW SERVICE TEST
+      ********************************/
     describe('Mentors and Fellow Relationship', function() {
-
         it('should update mockFellow', function(done) {
             var newName = 'This is a Mock Name';
             var updateMockFellow = angular.copy(mockFellow);
@@ -110,11 +106,10 @@ describe('Fellow Mentor Services Test', function() {
                 expect(fellow.uid).toBe(mockFellow.uid);
                 done();
             });
-
         });
 
+        
         describe('make request and accept or reject request', function() {
-
             it('should send request to mockFellow', function(done) {
                 rootScope.currentUser = mockMentor;
                 Fellow.request(mockFellow, function(err) {
@@ -164,9 +159,10 @@ describe('Fellow Mentor Services Test', function() {
                     });
                 });
             });
-
         });
-        /*********************************************************************************************/
+        /***********************************************
+                          MENTORS SERVICE TEST
+        **********************************************/
         it('Should get mentors', function(done) {
             Mentor.all(function(snap) {
                 var mentors = [];
