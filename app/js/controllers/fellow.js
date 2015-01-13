@@ -91,26 +91,26 @@ angular.module('matsi.controllers')
                 if (!next) {
                     if (currentPage > 0) {
                         currentPage--;
-                        fellowsFilter();
+                        $scope.fellowsFilter();
                     }
                 } else {
                     if (currentPage < lastPage() - 1) {
                         currentPage++;
-                        fellowsFilter();
+                        $scope.fellowsFilter();
                     }
                 }
             };
             $scope.navigate = function(page) {
                 currentPage = page;
                 $scope.currentPage = currentPage;
-                fellowsFilter();
+                $scope.fellowsFilter();
             };
 
             var lastPage = function() {
                 return Math.ceil(fellowsOnpage.length / numPerPage);
             };
 
-            var fellowsFilter = function() {
+            $scope.fellowsFilter = function() {
                 start = numPerPage * currentPage;
                 end = numPerPage + start;
                 $scope.fellows = fellowsOnpage.slice(start, end);
@@ -153,7 +153,7 @@ angular.module('matsi.controllers')
                 if ($rootScope.currentUser.uid === $scope.fellow.uid || $rootScope.currentUser.isAdmin) {
                     if ($scope.uploadedResult) {
                         $scope.fellow.videoUrl = $scope.uploadedResult;
-                        var info2 = $scope.fellow.fullName + 'has uploaded a video';
+                        var info2 = $scope.fellow.fullName + ' has uploaded a video';
                         if ($scope.fellow.fullName) {
                             Log.save(info2);
                         }

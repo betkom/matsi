@@ -17,12 +17,12 @@ angular.module("matsi.controllers")
                 if (!next) {
                     if (currentPage > 0) {
                         currentPage--;
-                        mentorsFilter();
+                        $scope.mentorsFilter();
                     }
                 } else {
                     if (currentPage < lastPage() - 1) {
                         currentPage++;
-                        mentorsFilter();
+                        $scope.mentorsFilter();
                     }
                 }
             };
@@ -34,7 +34,7 @@ angular.module("matsi.controllers")
             var lastPage = function() {
                 return Math.ceil(mentors.length / numPerPage);
             };
-            var mentorsFilter = function() {
+            $scope.mentorsFilter = function() {
                 start = numPerPage * currentPage;
                 end = numPerPage + start;
                 $scope.mentors = mentors.slice(start, end);
