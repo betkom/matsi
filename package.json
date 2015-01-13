@@ -21,6 +21,7 @@
   "devDependencies": {
     "assert": "^1.1.2",
     "chromedriver": "^2.12.0",
+    "gulp-csslint": "^0.1.5",
     "gulp-karma": "0.0.4",
     "gulp-mocha": "^2.0.0",
     "gulp-protractor": "0.0.12",

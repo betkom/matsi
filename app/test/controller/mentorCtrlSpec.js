@@ -34,6 +34,11 @@ describe('matsi.controller test', function() {
         scope.checkAll();
         expect(scope.allCheck).toBeTruthy();
         expect(scope.mentorCheck).toBeTruthy();
+        expect(scope.allCheck).toBe(scope.mentorCheck);
+        scope.mentorCheck = true;
+        scope.checkAll();
+        expect(scope.mentorCheck).toBeFalsy();
+        expect(scope.allCheck).toBe(scope.mentorCheck);
     });
 
     it('should call Mentor service findOne function', function(){

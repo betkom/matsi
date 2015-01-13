@@ -3,6 +3,7 @@ var browserify = require('browserify'),
     es6ify = require('es6ify'),
     gulp = require('gulp'),
     bower = require('gulp-bower'),
+    csslint = require('gulp-csslint');
     jshint = require('gulp-jshint'),
     gutil = require('gulp-util'),
     jade = require('gulp-jade'),
@@ -65,6 +66,12 @@ gulp.task('lint', function() {
   return gulp.src(paths.scripts)
     .pipe(jshint())
     .pipe(jshint.reporter('default'));
+});
+
+gulp.task('css', function() {
+  gulp.src('app/styles/*.css')
+    .pipe(csslint())
+    .pipe(csslint.reporter());
 });
 
 gulp.task('jade', function() {
