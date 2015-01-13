@@ -5,6 +5,7 @@ describe('matsi.controller test', function() {
         Fellow,
         Log,
         MailService,
+        rootScope,
         ctrl;
     beforeEach(module('Matsi'));
     beforeEach(inject(function($controller, $rootScope, $cookies, $injector) {
@@ -13,6 +14,7 @@ describe('matsi.controller test', function() {
         Log = $injector.get('Log');
         MailService = $injector.get('MailService');
         stateParams = $injector.get('$stateParams');
+        rootScope = $injector.get('$rootScope');
         ctrl = $controller('FellowCtrl', {
             $scope: scope,
             $rootScope: scope
@@ -26,12 +28,42 @@ describe('matsi.controller test', function() {
         scope.fellow.firstName = 'this is fname';
         scope.fellow.lastName = 'this is lname';
         spyOn(Fellow, 'backEndPost');
-        //spyOn(Log, 'save');
         scope.plum();
         expect(Fellow.backEndPost).toHaveBeenCalled();
-        //expect(Log.save).toHaveBeenCalled();
     });
+    it('should clear the date', function(){
+        scope.dt = '2014-01-03';
+        scope.clear();
+        expect(scope.dt).toBe(null);
+    });
+    it('should paginate on shuffle', function(){
+       var start = 0,
+                end = 0,
+                currentPage = 0,
+                numPerPage = 2,
+                fellowsOnpage = [
+                scope.fellow1 = {},
+                scope.fellow2 = {}
+                ],
+                lastIndexOfFellows = 0;
+        scope.fellowsFilter();
+        expect(scope.fellows.length).toBe(0);
+    });
+    // it('should call filter', function(){
+    //     var start = 0,
+    //             end = 0,
+    //             currentPage = 1,
+    //             numPerPage = 2,
+    //             fellowsOnpage = [
+    //             scope.fellow1 = {},
+    //             scope.fellow2 = {}
+    //             ],
+    //             lastIndexOfFellows = 0;
+    //             spyOn(scope, 'fellowsFilter');
+    //             scope.shuffle();
+    //             expect(scope.fellowsFilter).toHaveBeenCalled();
 
+    // });
     it('should expect findOne to have been called', function() {
         scope.currentUser = {
             uid: 'uid'
@@ -46,14 +78,17 @@ describe('matsi.controller test', function() {
         scope.videoUrl = scope.uploadedResult;
         scope.fellow = {
             uid: 'uid',
-            videoUrl: 'yyyyyyy'
+            videoUrl: 'yyyyyyy',
+            fullName: 'fellow'
         };
         scope.currentUser = {
             uid: 'uid'
         };
         spyOn(Fellow, 'update');
+        spyOn(Log, 'save');
         scope.update();
         expect(Fellow.update).toHaveBeenCalled();
+        expect(Log.save).toHaveBeenCalled();
     });
 
     it('should expect mentorConstraints to have been called', function() {
@@ -96,8 +131,11 @@ describe('matsi.controller test', function() {
     });
 
     it('should expect allLogs to have been called', function() {
+      var date = 1420634388603;
         spyOn(Log, 'allLogs');
         scope.allLogs();
+        expect(Log.allLogs).toHaveBeenCalled();
+        scope.allLogs(date);
         expect(Log.allLogs).toHaveBeenCalled();
 
     });
@@ -116,13 +154,24 @@ describe('matsi.controller test', function() {
     it('should expect files to be undefined', function() {
         var file = [
             scope.video = {
-            type: '',
+            type: 'video/mp4',
             size: 0
         }
         ];
+        scope.changeSize = true;
         var index;
         scope.onFileSelect(file,index);
         expect(file).toBeDefined();
+        expect(scope.changeSize).toBeFalsy();
+        var file = [
+        scope.video = {
+          type: 'video/mkv',
+          size: 700000000
+        }
+        ];
+        scope.changeSize = false;
+        scope.onFileSelect(file,index);
+        expect(scope.changeSize).toBeTruthy();
     });
 
     it('should expect plum checkbox to be checked', function() {
@@ -130,5 +179,7 @@ describe('matsi.controller test', function() {
         scope.plumCheck = false;
         scope.toggleCheck('smarterer');
         expect(scope.check).toBeTruthy();
+        scope.toggleCheck('plum');
+        expect(scope.plumCheck).toBeTruthy();
     });
 });

@@ -27,10 +27,28 @@ describe('matsi.controller test', function() {
         scope.toggleCheck();
         expect(scope.checked).toBeFalsy();
     });
+    it('should paginate on shuffle', function(){
+       var start = 0,
+                end = 0,
+                currentPage = 0,
+                numPerPage = 2,
+                mentors = [
+                scope.mentor1 = {},
+                scope.mentor2 = {}
+                ],
+                lastIndexOfMentors = 0;
+        scope.mentorsFilter();
+        expect(scope.mentors.length).toBe(0);
+    });
 
     it('should expect checkAll to check all checkbox', function(){
         scope.mentorCheck = false;
         scope.allCheck = false;
+        scope.mentors = [
+            scope.mentor = {
+                uid: 'uid'
+            }
+        ];
         scope.checkAll();
         expect(scope.allCheck).toBeTruthy();
         expect(scope.mentorCheck).toBeTruthy();

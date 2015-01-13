@@ -198,6 +198,23 @@ describe('Fellow Mentor Services Test', function() {
                 done();
             });
         });
+        it('should get all disabled mentors', function(done){
+            Mentor.disabled(function(snap){
+                var mentors = [];
+                var mentorsObject = snap.val();
+                expect(mentorsObject).toBeDefined();
+                done();
+            });
+        });
+        it('should enable mentors', function(done){
+            Mentor.enable(mockMentor, function(err){
+                Mentor.findOne(mockMentor.uid, function(snap){
+                    var mentor = snap.val();
+                    done();
+                     expect(mentor.disabled).toBeFalsy();
+                });
+            });
+        });
     });
 
     afterEach(function(done) {
