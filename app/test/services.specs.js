@@ -223,26 +223,14 @@ describe('Fellow Mentor Services Test', function() {
               badges: 'badges'
             };
               httpBackend.expectPOST('/smarterer/code', {code: '23453242s323s423'}).respond(200,{yeet:'yeet'});
-              // httpBackend.expectPOST('/smarterer/code', {code: '23453242s323s423'}).respond(200, 'success'); 
               Fellow.backEndPost('/smarterer/code', {code: '23453242s323s423'}, function(res){
                 expect(typeof res).toBe(typeof {});
                 expect(res.yeet).toBeDefined();
                 expect(res.err).toBeUndefined();
               });
               httpBackend.flush();   
-             
+            
           });
-
-
-        // it('should test backend post', function(done) {
-        //     httpBackend.expectPOST('/smarterer/code', {code: '23453242s323s423'}, 
-        //       function(res)  {
-        //         console.log(res, 'backendpost res');
-                
-        //         httpBackend.flush();
-        //         done();
-        //     });
-        // });
     });
 
 

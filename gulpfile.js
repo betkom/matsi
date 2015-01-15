@@ -3,7 +3,6 @@ var browserify = require('browserify'),
     es6ify = require('es6ify'),
     gulp = require('gulp'),
     bower = require('gulp-bower'),
-    gulp = require('gulp');
     recess = require('gulp-recess'),
     jshint = require('gulp-jshint'),
     gutil = require('gulp-util'),
