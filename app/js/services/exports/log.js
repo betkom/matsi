@@ -1,10 +1,11 @@
 module.exports = function(rootRef, $rootScope, $firebase) {
     return {
-        save: function(params) {
+        save: function(params,img) {
             var logParams = angular.copy(params);
             rootRef.child('logs').child(moment().format("YYYY-MM-DD")).push({
                 value: logParams,
-                timestamp: Firebase.ServerValue.TIMESTAMP
+                timestamp: Firebase.ServerValue.TIMESTAMP,
+                icon: img
             });
         },
         allLogs: function(date, cb) {

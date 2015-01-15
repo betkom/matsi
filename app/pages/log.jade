@@ -21,7 +21,8 @@ section.content.log(ng-controller="FellowCtrl")
       .container(ng-init="allLogs()" ng-hide="showFellows || showFellows1")
         h4 Activity Log
         .col-md-7(ng-repeat="log in logs")
-          p.log {{log.value}} on {{log.timestamp | date}}
+          i(ng-class="log.icon")
+          span.log {{log.value}} on {{log.timestamp | date}}
       .row(ng-if="showFellows")
         .col-xs-6.col-sm-3(ng-repeat='fellow in fellows')
           a(ng-href='fellows/{{fellow.uid}}')

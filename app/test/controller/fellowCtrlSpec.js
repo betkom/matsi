@@ -59,9 +59,9 @@ describe('matsi.controller test', function() {
     //             scope.fellow2 = {}
     //             ],
     //             lastIndexOfFellows = 0;
-    //             spyOn(scope, 'fellowsFilter');
+    //             scope1 = jasmine.createSpyObj('scope', ['fellowsFilter']);
     //             scope.shuffle();
-    //             expect(scope.fellowsFilter).toHaveBeenCalled();
+    //             expect(scope1.fellowsFilter).toHaveBeenCalled();
 
     // });
     it('should expect findOne to have been called', function() {

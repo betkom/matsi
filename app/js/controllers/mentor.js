@@ -55,7 +55,7 @@ angular.module("matsi.controllers")
                         mentors = data;
                         $scope.pageCount = new Array(lastPage());
                         lastIndexOfMentors = mentors.length - 1;
-                        mentorsFilter();
+                        $scope.mentorsFilter();
                         if (cb)
                             cb();
                     });

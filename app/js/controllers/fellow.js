@@ -12,13 +12,14 @@ angular.module('matsi.controllers')
                 };
                 var url = '/smarterer/code/';
                 Fellow.backEndPost(url, param, function(res) {
-                  var data = {
-                      uid: $rootScope.currentUser.uid,
-                      badges: res.badges
-                  };
-                  Fellow.update(data);
-                  var info = $rootScope.currentUser.fullName + ' updated Smarterer badges ';
-                  Log.save(info);
+                    var data = {
+                        uid: $rootScope.currentUser.uid,
+                        badges: res.badges
+                    };
+                    Fellow.update(data);
+                    var info = $rootScope.currentUser.fullName + ' updated Smarterer badges ';
+                    var pic = 'fa fa-upload fa-fw';
+                    Log.save(info,pic);
                 });
             }
           };
@@ -49,7 +50,8 @@ angular.module('matsi.controllers')
                     };
                     Fellow.update(data);
                     var info = $scope.fellow.fullName + ' updated plum Badges ';
-                    Log.save(info);
+                    var pic = 'fa fa-upload fa-fw';
+                    Log.save(info, pic);
                 });
             };
             //Date picker
@@ -129,7 +131,7 @@ angular.module('matsi.controllers')
                         fellowsOnpage = data;
                         $scope.pageCount = new Array(lastPage());
                         lastIndexOfFellows = fellowsOnpage.length - 1;
-                        fellowsFilter();
+                        $scope.fellowsFilter();
                         if (cb)
                             cb();
                     });
@@ -158,8 +160,9 @@ angular.module('matsi.controllers')
                     if ($scope.uploadedResult) {
                         $scope.fellow.videoUrl = $scope.uploadedResult;
                         var info2 = $scope.fellow.fullName + ' has uploaded a video';
+                        var pic = 'fa fa-film fa-fw';
                         if ($scope.fellow.fullName) {
-                            Log.save(info2);
+                            Log.save(info2, pic);
                         }
                     }
                     Fellow.update($scope.fellow, function(err) {
@@ -209,8 +212,9 @@ angular.module('matsi.controllers')
                 MailService.send(1, $scope.fellow);
                 Fellow.request($scope.fellow);
                 var info = $scope.fellow.fullName + " received a mentor request ";
+                var pic = 'fa fa-tag fa-fw';
                 if ($scope.fellow.fullName) {
-                    Log.save(info);
+                    Log.save(info, pic);
                 }
             };
             $scope.allLogs = function(date) {
