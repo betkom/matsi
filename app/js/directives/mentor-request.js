@@ -14,7 +14,8 @@ angular.module("matsi.directives")
                 MailService.send(3, $scope.mentor);
                 utils.openToast('Request Accepted');
                 var info = $scope.mentor.fullName + "'s mentor request has been accepted by " + $rootScope.currentUser.fullName;
-                Log.save(info);
+                var pic = 'fa fa-tag fa-fw';
+                Log.save(info, pic);
             };
             // Reject mentor request
             $scope.reject = function() {
@@ -23,7 +24,8 @@ angular.module("matsi.directives")
                 $scope.showMessageBox = false;
                 utils.openToast('Request Rejected');
                 var info = $scope.mentor.fullName +  "'s mentor request has been rejected by " + $rootScope.currentUser.fullName;
-                Log.save(info);
+                var pic = 'fa fa-tag fa-fw';
+                Log.save(info, pic);
             };
             $scope.showBox = function() {
                 $scope.showMessageBox = true;

@@ -59,9 +59,9 @@ describe('matsi.controller test', function() {
     //             scope.fellow2 = {}
     //             ],
     //             lastIndexOfFellows = 0;
-    //             spyOn(scope, 'fellowsFilter');
+    //             scope1 = jasmine.createSpyObj('scope', ['fellowsFilter']);
     //             scope.shuffle();
-    //             expect(scope.fellowsFilter).toHaveBeenCalled();
+    //             expect(scope1.fellowsFilter).toHaveBeenCalled();
 
     // });
     it('should expect findOne to have been called', function() {
@@ -163,7 +163,7 @@ describe('matsi.controller test', function() {
         scope.onFileSelect(file,index);
         expect(file).toBeDefined();
         expect(scope.changeSize).toBeFalsy();
-        var file = [
+        file = [
         scope.video = {
           type: 'video/mkv',
           size: 700000000
