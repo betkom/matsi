@@ -2,6 +2,7 @@ describe('Fellow Mentor Services Test', function() {
     var Fellow,
         Mentor,
         Log,
+        httpBackend,
         MailService,
         Refs,
         mockFellow = {
@@ -25,13 +26,14 @@ describe('Fellow Mentor Services Test', function() {
     beforeEach(function() {
         module('Matsi');
     });
-    beforeEach(inject(function($injector) {
+    beforeEach(inject(function($injector,$httpBackend) {
         Fellow = $injector.get('Fellow');
         Mentor = $injector.get('Mentor');
         Log = $injector.get('Log');
         MailService = $injector.get('MailService');
         Refs = $injector.get('Refs');
         rootScope = $injector.get('$rootScope');
+        httpBackend = $httpBackend;
     }));
     beforeEach(function(done) {
         Refs.rootRef.child('users').child(mockMentor.uid).set(mockMentor, function(err) {
@@ -160,9 +162,9 @@ describe('Fellow Mentor Services Test', function() {
                 });
             });
         });
-        /***********************************************
-                          MENTORS SERVICE TEST
-        **********************************************/
+        // /***********************************************
+        //                   MENTORS SERVICE TEST
+        // **********************************************/
         it('Should get mentors', function(done) {
             Mentor.all(function(snap) {
                 var mentors = [];
@@ -215,7 +217,34 @@ describe('Fellow Mentor Services Test', function() {
                 });
             });
         });
+        it('should test backend post', function() {
+            var data = {
+              uid: 'uid',
+              badges: 'badges'
+            };
+              httpBackend.expectPOST('/smarterer/code', {code: '23453242s323s423'}).respond(200,{yeet:'yeet'});
+              // httpBackend.expectPOST('/smarterer/code', {code: '23453242s323s423'}).respond(200, 'success'); 
+              Fellow.backEndPost('/smarterer/code', {code: '23453242s323s423'}, function(res){
+                expect(typeof res).toBe(typeof {});
+                expect(res.yeet).toBeDefined();
+                expect(res.err).toBeUndefined();
+              });
+              httpBackend.flush();   
+             
+          });
+
+
+        // it('should test backend post', function(done) {
+        //     httpBackend.expectPOST('/smarterer/code', {code: '23453242s323s423'}, 
+        //       function(res)  {
+        //         console.log(res, 'backendpost res');
+                
+        //         httpBackend.flush();
+        //         done();
+        //     });
+        // });
     });
+
 
     afterEach(function(done) {
         Refs.rootRef.child('users').child(mockMentor.uid).remove(function(err) {

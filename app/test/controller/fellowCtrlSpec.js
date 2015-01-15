@@ -163,7 +163,7 @@ describe('matsi.controller test', function() {
         scope.onFileSelect(file,index);
         expect(file).toBeDefined();
         expect(scope.changeSize).toBeFalsy();
-        var file = [
+        file = [
         scope.video = {
           type: 'video/mkv',
           size: 700000000

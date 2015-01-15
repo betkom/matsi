@@ -4,22 +4,26 @@ angular.module('matsi.controllers')
             //get code and redirect if current url is smarterer callback url
             $scope.fileUploaded = false;
             $scope.fileLoading = false;
-            if ($location.absUrl().toString().indexOf('fellows/?code=') > -1) {
+            $scope.init = function() {
+              if($location.absUrl().toString().indexOf('fellows/?code=') > -1) {
                 var code = $location.search().code;
                 var param = {
                     code: code
                 };
                 var url = '/smarterer/code/';
                 Fellow.backEndPost(url, param, function(res) {
-                    var data = {
-                        uid: $rootScope.currentUser.uid,
-                        badges: res.badges
-                    };
-                    Fellow.update(data);
-                    var info = $rootScope.currentUser.fullName + ' updated Smarterer badges ';
-                    Log.save(info);
+                  var data = {
+                      uid: $rootScope.currentUser.uid,
+                      badges: res.badges
+                  };
+                  Fellow.update(data);
+                  var info = $rootScope.currentUser.fullName + ' updated Smarterer badges ';
+                  Log.save(info);
                 });
             }
+          };
+          
+          $scope.init();
             //Smarterer & plum Checkbox
             $scope.check = false;
             $scope.plumCheck = false;

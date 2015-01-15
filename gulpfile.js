@@ -4,7 +4,7 @@ var browserify = require('browserify'),
     gulp = require('gulp'),
     bower = require('gulp-bower'),
     gulp = require('gulp');
-    recess = require('gulp-recess');
+    recess = require('gulp-recess'),
     jshint = require('gulp-jshint'),
     gutil = require('gulp-util'),
     jade = require('gulp-jade'),
@@ -71,8 +71,7 @@ gulp.task('lint:js', function() {
 gulp.task('lint:less', function () {
     return gulp.src('app/styles/*.less')
         .pipe(recess())
-        .pipe(recess.reporter())
-        .pipe(gulp.dest('./public/'));
+        .pipe(recess.reporter());
 });
 
 gulp.task('jade', function() {
@@ -93,7 +92,7 @@ gulp.task('nodemon', function() {
     nodemon({
             script: 'index.js',
             ext: 'js',
-            ignore: ['public/']
+            ignore: ['public/lib/**']
         })
         .on('change', ['lint'])
         .on('restart', function() {
