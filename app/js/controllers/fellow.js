@@ -4,7 +4,8 @@ angular.module('matsi.controllers')
             //get code and redirect if current url is smarterer callback url
             $scope.fileUploaded = false;
             $scope.fileLoading = false;
-            if ($location.absUrl().toString().indexOf('fellows/?code=') > -1) {
+            $scope.init = function() {
+              if($location.absUrl().toString().indexOf('fellows/?code=') > -1) {
                 var code = $location.search().code;
                 var param = {
                     code: code
@@ -21,6 +22,9 @@ angular.module('matsi.controllers')
                     Log.save(info,pic);
                 });
             }
+          };
+          
+          $scope.init();
             //Smarterer & plum Checkbox
             $scope.check = false;
             $scope.plumCheck = false;

@@ -3,10 +3,10 @@ var browserify = require('browserify'),
     es6ify = require('es6ify'),
     gulp = require('gulp'),
     bower = require('gulp-bower'),
+    recess = require('gulp-recess'),
     jshint = require('gulp-jshint'),
     gutil = require('gulp-util'),
     jade = require('gulp-jade'),
-    jshint = require('gulp-jshint'),
     less = require('gulp-less'),
     minifyCss = require('gulp-minify-css'),
     minifyHtml = require('gulp-minify-html'),
@@ -61,16 +61,16 @@ gulp.task('bower', function() {
     .pipe(gulp.dest('public/lib/'));
 });
 
-gulp.task('lint', function() {
+gulp.task('lint:js', function() {
   return gulp.src(paths.scripts)
     .pipe(jshint())
     .pipe(jshint.reporter('default'));
 });
 
-gulp.task('css', function() {
-  gulp.src('app/styles/*.css')
-    .pipe(csslint())
-    .pipe(csslint.reporter());
+gulp.task('lint:less', function () {
+    return gulp.src('app/styles/*.less')
+        .pipe(recess())
+        .pipe(recess.reporter());
 });
 
 gulp.task('jade', function() {
@@ -91,7 +91,7 @@ gulp.task('nodemon', function() {
     nodemon({
             script: 'index.js',
             ext: 'js',
-            ignore: ['public/']
+            ignore: ['public/lib/**']
         })
         .on('change', ['lint'])
         .on('restart', function() {
@@ -203,4 +203,5 @@ gulp.task('production', ['nodemon','build']);
 gulp.task('e2e',['protractor']);
 gulp.task('heroku:production', ['build']);
 gulp.task('default', ['nodemon', 'watch', 'build']);
+gulp.task('lint',['lint:less','lint:js']);
 
