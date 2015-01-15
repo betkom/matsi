@@ -1,4 +1,4 @@
-module.exports = function($rootScope, $mdToast, $mdDialog) {
+module.exports = function($rootScope, $mdToast, $mdDialog, $timeout) {
   return {
     openToast: function(message) {
       $mdToast.show($mdToast.simple().content(message));
@@ -12,14 +12,15 @@ module.exports = function($rootScope, $mdToast, $mdDialog) {
         .targetEvent(ev)
       );
     },
-    showConfirm: function(ev) {
-      var confirm = $mdDialog.confirm()
-        .title('Terms and Condition Agreement')
-        .content('Do you agree to our Terms and conditions?')
-        .ariaLabel('Lucky day')
-        .ok('I Agree')
-        .cancel('I disagree')
-        .targetEvent(ev);
+    setTimeout: function(user) {
+      $timeout(function() {
+
+        $rootScope.currentUser = user;
+        if ($rootScope.currentUser.requests) {
+          $scope.notifications = Object.keys($rootScope.currentUser.requests).length;
+        }
+
+      }, 1);
     }
   };
 };

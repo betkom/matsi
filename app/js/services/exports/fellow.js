@@ -76,15 +76,12 @@ module.exports = function(rootRef, $rootScope, $firebase, $http) {
             rootRef.child('users').child($rootScope.currentUser.uid).child('requests').child(mentor.uid).remove();
         },
         backEndPost: function(url, params, cb) {
-            console.log(params);
             $http.post(url, params).success(function(res) {
                 if(cb) {
                     cb(res);
                 }
-                console.log(cb);
             }).error(function(err){
                 cb(err);
-                console.log(cb,'err');
             });
             
         }
