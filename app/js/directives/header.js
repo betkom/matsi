@@ -17,7 +17,7 @@ angular.module("matsi.directives")
               if (!snap.val()) {
                 var confirm = $mdDialog.confirm()
                   .title('Andela Terms and Conditions')
-                  .content("Andela will not pay any mentor, It's a voluntary position. During the period a mentor is signed up with andela, Andela reserves the right to evaluate a mentor's impact on its fellows and therefore reserves the right to terminate a mentor's account. If you are satisfied with the conditions, click 'I Agree'")
+                  .content("Andela will not pay any mentor, It's a voluntary position. During the period a mentor is signed up with andela, Andela reserves the right to evaluate a mentor's impact on its fellows and the performance of a fellow and therefore reserves the right to terminate a mentor's or a fellow's account. If you are satisfied with the conditions, click 'I Agree'")
                   .ariaLabel('Lucky day')
                   .ok('I Agree')
                   .cancel('I disagree');
