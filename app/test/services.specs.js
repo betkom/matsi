@@ -233,16 +233,6 @@ describe('Fellow Mentor Services Test', function() {
              
           });
 
-
-        // it('should test backend post', function(done) {
-        //     httpBackend.expectPOST('/smarterer/code', {code: '23453242s323s423'}, 
-        //       function(res)  {
-        //         console.log(res, 'backendpost res');
-                
-        //         httpBackend.flush();
-        //         done();
-        //     });
-        // });
     });
 
 
