@@ -14,8 +14,8 @@ module.exports = function($rootScope, $mdToast, $mdDialog, $timeout) {
     },
     setTimeout: function(user) {
       $timeout(function() {
-
         $rootScope.currentUser = user;
+        console.log($rootScope.currentUser, 'here');
         if ($rootScope.currentUser.requests) {
           $scope.notifications = Object.keys($rootScope.currentUser.requests).length;
         }

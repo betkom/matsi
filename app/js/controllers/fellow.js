@@ -11,11 +11,13 @@ angular.module('matsi.controllers')
                     code: code
                 };
                 var url = '/smarterer/code/';
+                console.log($rootScope.currentUser, 'in smarterer');
                 Fellow.backEndPost(url, param, function(res) {
                     var data = {
                         uid: $rootScope.currentUser.uid,
                         badges: res.badges
                     };
+
                     Fellow.update(data);
                     var info = $rootScope.currentUser.fullName + ' updated Smarterer badges ';
                     var pic = 'fa fa-upload fa-fw';
@@ -159,7 +161,6 @@ angular.module('matsi.controllers')
             };
 
             $scope.update = function() {
-                console.log('Yes I got here');
                 if ($rootScope.currentUser.uid === $scope.fellow.uid || $rootScope.currentUser.isAdmin) {
                     if ($scope.uploadedResult) {
                         $scope.fellow.videoUrl = $scope.uploadedResult;
@@ -171,7 +172,6 @@ angular.module('matsi.controllers')
                     }
                     console.log('Yes I got here');
                     Fellow.update($scope.fellow, function(err) {
-                        console.log('I still dey here');
                         if (err !== null) {
                             $mdDialog.show(
                                 $mdDialog.alert()
@@ -188,7 +188,6 @@ angular.module('matsi.controllers')
                         if ($scope.check) {
                             // request smarterer authorization
                             window.location.href = 'https://smarterer.com/oauth/authorize?client_id=b30a2803ffe34bc68a6fe7757b039468&callback_url=http%3A%2F%2Fmatsi.herokuapp.com%2Ffellows%2F';
-
                         } else {
                             $location.path('fellows/' + $rootScope.currentUser.uid);
                         }

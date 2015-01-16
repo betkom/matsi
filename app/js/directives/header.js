@@ -43,6 +43,7 @@ angular.module("matsi.directives")
                   function() {$mdDialog.hide();$scope.logout();});
               } else {
                 user = snap.val();
+                console.log(user, 'from header');
                 user.picture = authData.google.cachedUserProfile.picture;
                 Refs.rootRef.child('users').child(user.uid).update({
                   picture: user.picture

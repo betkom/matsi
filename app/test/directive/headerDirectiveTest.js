@@ -20,7 +20,6 @@ describe('matsi.directive test', function(){
   it('should sign in a user', function(){
   	 	scope.currentUser = null;
      	scope.allowUser = false;
-     	user;
   	 	authData = {
   			uid: 'google:115929039247026465294',
   			fullName: 'Olusola Adenekan',
