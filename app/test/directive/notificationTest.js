@@ -9,7 +9,9 @@ describe('notification directive', function() {
         var el = angular.element("<notification></notification>");
         $compile(el)($rootScope);
         scope.$digest();
+        var links = el.find('a');
         expect($log.assertEmpty).not.toThrow();
         expect(1).toEqual(1);
+        expect(links.length).toEqual(0);
     }));
 });

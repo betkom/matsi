@@ -2,6 +2,8 @@ describe('matsi.directive test', function(){
 	var scope,
 	Refs,
 	Mentor,
+  user,
+  authData,
 	Fellow;
   beforeEach(module('Matsi'));
   beforeEach(inject(function($controller, $rootScope, $injector, $cookies){
@@ -15,11 +17,11 @@ describe('matsi.directive test', function(){
 
   }));
   
-  it('should print abc', function(){
+  it('should sign in a user', function(){
   	 	scope.currentUser = null;
      	scope.allowUser = false;
-     	var user;
-  	 	var authData = {
+     	user;
+  	 	authData = {
   			uid: 'google:115929039247026465294',
   			fullName: 'Olusola Adenekan',
   			email: 'preciousdamsel2003@gmail.com',
@@ -27,5 +29,8 @@ describe('matsi.directive test', function(){
   		};
   		scope.auth();
   		expect(scope.currentUser).toBeDefined();
+      scope.logout();
+      expect(scope.currentUser).toBe(null);
   });
+
 });

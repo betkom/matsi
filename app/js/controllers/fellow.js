@@ -43,6 +43,9 @@ angular.module('matsi.controllers')
                     lname: $scope.fellow.lastName
                 };
                 var url = '/plum/api/';
+                console.log(param, 'params');
+                console.log(url, 'url');
+                console.log('testing scope.plum');
                 Fellow.backEndPost(url, param, function(res) {
                     var data = {
                         uid: $scope.fellow.uid,
@@ -156,6 +159,7 @@ angular.module('matsi.controllers')
             };
 
             $scope.update = function() {
+                console.log('Yes I got here');
                 if ($rootScope.currentUser.uid === $scope.fellow.uid || $rootScope.currentUser.isAdmin) {
                     if ($scope.uploadedResult) {
                         $scope.fellow.videoUrl = $scope.uploadedResult;
@@ -165,7 +169,9 @@ angular.module('matsi.controllers')
                             Log.save(info2, pic);
                         }
                     }
+                    console.log('Yes I got here');
                     Fellow.update($scope.fellow, function(err) {
+                        console.log('I still dey here');
                         if (err !== null) {
                             $mdDialog.show(
                                 $mdDialog.alert()
@@ -176,6 +182,7 @@ angular.module('matsi.controllers')
                             );
                         }
                         if ($scope.plumCheck) {
+                            console.log('plummm oooooo');
                             $scope.plum();
                         }
                         if ($scope.check) {

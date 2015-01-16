@@ -10,6 +10,8 @@ describe('mentor Request directive', function() {
         $compile(el)($rootScope);
         scope.$digest();
         expect($log.assertEmpty).not.toThrow();
+        var links = el.find('a');
         expect(1).toEqual(1);
+        expect(links.length).toEqual(0);
     }));
 });

@@ -38,7 +38,7 @@ module.exports = function(config) {
 
         preprocessors: {
             'public/js/index.js': 'coverage',
-            'public/**/*.html': 'html2js'
+            'public/**/*.html': 'ng-html2js'
         },
 
         // test results reporter to use
