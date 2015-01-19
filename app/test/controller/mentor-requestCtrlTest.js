@@ -2,7 +2,7 @@ describe('matsi.directives test', function(){
   var Mentor,
       Fellow,
       Log,
-      utils,
+      Utils,
       scope,
       MailService,
       ctrl;
@@ -26,31 +26,31 @@ describe('matsi.directives test', function(){
         Mentor = $injector.get('Mentor');
         Fellow = $injector.get('Fellow');
         Log = $injector.get('Log');
-        utils = $injector.get('utils');
+        Utils = $injector.get('Utils');
         MailService = $injector.get('MailService');
     }));
    it('should accept a mentor request', function(){
     spyOn(Fellow, 'accept');
     spyOn(MailService, 'send');
     spyOn(Log, 'save');
-    spyOn(utils, 'openToast');
+    spyOn(Utils, 'openToast');
     scope.accept();
     expect(Fellow.accept).toHaveBeenCalled();
     expect(MailService.send).toHaveBeenCalled();
     expect(Log.save).toHaveBeenCalled();
-    expect(utils.openToast).toHaveBeenCalled();
+    expect(Utils.openToast).toHaveBeenCalled();
    });
 
    it('should reject a mentor request', function(){
     spyOn(Fellow, 'reject');
     spyOn(MailService, 'send');
     spyOn(Log, 'save');
-    spyOn(utils, 'openToast');
+    spyOn(Utils, 'openToast');
     scope.reject();
     expect(Fellow.reject).toHaveBeenCalled();
     expect(MailService.send).toHaveBeenCalled();
     expect(Log.save).toHaveBeenCalled();
-    expect(utils.openToast).toHaveBeenCalled();
+    expect(Utils.openToast).toHaveBeenCalled();
    });
    
    it('should set show message box to true', function(){

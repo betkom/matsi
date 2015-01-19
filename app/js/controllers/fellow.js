@@ -1,6 +1,6 @@
 angular.module('matsi.controllers')
-    .controller("FellowCtrl", ['$rootScope', '$scope', '$cookies', '$upload', '$sce', 'Fellow', '$http', '$stateParams', 'Mentor', 'MailService', '$mdDialog', '$mdToast', '$location', 'utils', '$timeout', 'Log',
-        function($rootScope, $scope, $cookies, $upload, $sce, Fellow, $http, $stateParams, Mentor, MailService, $mdDialog, $mdToast, $location, utils, $timeout, Log) {
+    .controller("FellowCtrl", ['$rootScope', '$scope', '$cookies', '$upload', '$sce', 'Fellow', '$http', '$stateParams', 'Mentor', 'MailService', '$mdDialog', '$mdToast', '$location', 'Utils', '$timeout', 'Log', '$state',
+        function($rootScope, $scope, $cookies, $upload, $sce, Fellow, $http, $stateParams, Mentor, MailService, $mdDialog, $mdToast, $location, Utils, $timeout, Log, $state) {
             //get code and redirect if current url is smarterer callback url
             $scope.fileUploaded = false;
             $scope.fileLoading = false;
@@ -20,11 +20,12 @@ angular.module('matsi.controllers')
                     var info = $rootScope.currentUser.fullName + ' updated Smarterer badges ';
                     var pic = 'fa fa-upload fa-fw';
                     Log.save(info,pic);
+                    $location.path('fellows/' + $rootScope.currentUser.uid);
                 });
             }
           };
           
-          $scope.init();
+          //$scope.init();
             //Smarterer & plum Checkbox
             $scope.check = false;
             $scope.plumCheck = false;
@@ -140,6 +141,7 @@ angular.module('matsi.controllers')
 
             $scope.findOne = function() {
                 var uid = $rootScope.currentUser ? ($stateParams.uid || $rootScope.currentUser.uid) : $stateParams.uid;
+                if(uid){
                 var fellow = Fellow.findOne(uid);
                 if (fellow) {
                     fellow.$loaded(function(data) {
@@ -147,6 +149,7 @@ angular.module('matsi.controllers')
                         $scope.uploadedResult = $scope.fellow.videoUrl;
                     });
                 }
+            }
                 this.showMessageBox = true;
             };
 
@@ -159,7 +162,7 @@ angular.module('matsi.controllers')
                 if ($rootScope.currentUser.uid === $scope.fellow.uid || $rootScope.currentUser.isAdmin) {
                     if ($scope.uploadedResult) {
                         $scope.fellow.videoUrl = $scope.uploadedResult;
-                        var info2 = $scope.fellow.fullName + ' has uploaded a video';
+                        var info2 = $scope.fellow.fullName + ' uploaded a video';
                         var pic = 'fa fa-film fa-fw';
                         if ($scope.fellow.fullName) {
                             Log.save(info2, pic);
@@ -181,7 +184,6 @@ angular.module('matsi.controllers')
                         if ($scope.check) {
                             // request smarterer authorization
                             window.location.href = 'https://smarterer.com/oauth/authorize?client_id=b30a2803ffe34bc68a6fe7757b039468&callback_url=http%3A%2F%2Fmatsi.herokuapp.com%2Ffellows%2F';
-
                         } else {
                             $location.path('fellows/' + $rootScope.currentUser.uid);
                         }
@@ -199,7 +201,7 @@ angular.module('matsi.controllers')
                         if (hasUnmentored) {
                             $scope.sendRequest();
                         } else {
-                            utils.showAlert(ev, 'This fellow is already being mentored, please select a fellow that is not currently being mentored');
+                            Utils.showAlert(ev, 'This fellow is already being mentored, please select a fellow that is not currently being mentored');
                         }
                     } else {
                         $scope.sendRequest();

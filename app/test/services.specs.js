@@ -22,7 +22,7 @@ describe('Fellow Mentor Services Test', function() {
             picture: 'this is pic url',
             firstName: 'happy'
         },
-        date = moment(1420634388603).format('YYYY-MM-DD');
+        date = moment(1421678722532).format('YYYY-MM-DD');
     beforeEach(function() {
         module('Matsi');
     });
@@ -229,7 +229,6 @@ describe('Fellow Mentor Services Test', function() {
                 expect(res.err).toBeUndefined();
               });
               httpBackend.flush();   
-            
           });
     });
 

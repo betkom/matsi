@@ -5,20 +5,19 @@ angular.module("matsi.directives")
       controller: 'HeaderCtrl'
     };
   })
-  .controller('HeaderCtrl', ['$rootScope', '$scope', '$firebase', '$cookies', 'Fellow', '$timeout', '$stateParams', '$location', 'MailService', '$state', 'Refs', 'utils', '$mdDialog', '$mdToast',
-    function($rootScope, $scope, $firebase, $cookies, Fellow, $timeout, $stateParams, $location, MailService, $state, Refs, utils, $mdDialog, $mdToast) {
+  .controller('HeaderCtrl', ['$rootScope', '$scope', '$firebase', '$cookies', 'Fellow', '$timeout', '$stateParams', '$location', 'MailService', '$state', 'Refs', 'Utils', '$mdDialog', '$mdToast',
+    function($rootScope, $scope, $firebase, $cookies, Fellow, $timeout, $stateParams, $location, MailService, $state, Refs, Utils, $mdDialog, $mdToast) {
       $rootScope.currentUser = null;
       $rootScope.allowUser = false;
       $scope.auth = function() {
         Refs.rootRef.onAuth(function(authData) {
           if (authData) {
             var user = buildUserObjectFromGoogle(authData);
-            console.log($rootScope.currentUser, 'User');
             Refs.userRef.child(user.uid).once('value', function(snap) {
               if (!snap.val()) {
                 var confirm = $mdDialog.confirm()
-                  .title('Terms and Condition Agreement')
-                  .content('Do you agree to our Terms and conditions?')
+                  .title('Andela Terms and Conditions')
+                  .content("Andela will not pay any mentor, It's a voluntary position. During the period a mentor is signed up with andela, Andela reserves the right to evaluate a mentor's impact on its fellows and the performance of a fellow and therefore reserves the right to terminate a mentor's or a fellow's account. If you are satisfied with the conditions, click 'I Agree'")
                   .ariaLabel('Lucky day')
                   .ok('I Agree')
                   .cancel('I disagree');
@@ -27,7 +26,6 @@ angular.module("matsi.directives")
                     user.isAdmin = false;
                     user.role = user.email.indexOf('@andela.co') > -1 ? '-fellow-' : '-mentor-';
                     if (user.role === '-mentor-') {
-                      $rootScope.allowUser = true;
                       user.disabled = user.role !== "-fellow-";
                     }
                     if (!user.disabled) {
@@ -38,35 +36,22 @@ angular.module("matsi.directives")
                     }
                     Refs.userRef.child(user.uid).set(user);
                     $location.path('fellows/' + user.uid + '/edit');
-                    $timeout(function() {
-
-                      $rootScope.currentUser = user;
-                      if ($rootScope.currentUser.requests) {
-                        $scope.notifications = Object.keys($rootScope.currentUser.requests).length;
-                      }
-
-                    }, 1);
+                    Utils.setTimeout(user, $scope);
 
                   },
-                  function() {});
+                  function() {$mdDialog.hide();$scope.logout();});
               } else {
                 user = snap.val();
                 user.picture = authData.google.cachedUserProfile.picture;
                 Refs.rootRef.child('users').child(user.uid).update({
                   picture: user.picture
                 });
-                $timeout(function() {
-
-                  $rootScope.currentUser = user;
-                  if ($rootScope.currentUser.requests) {
-                    $scope.notifications = Object.keys($rootScope.currentUser.requests).length;
-                  }
-
-                }, 1);
+                if (user.disabled || user.removed) {
+                  $scope.logout();
+                  $scope.allowUser = true;
+                }else{
+                Utils.setTimeout(user, $scope);
               }
-              if (user.disabled || user.removed) {
-                user = null;
-                Refs.rootRef.unauth();
               }
             });
           } else {
@@ -85,13 +70,13 @@ angular.module("matsi.directives")
             alert('error logging in');
           } else {
             alert('login successful');
-            console.log(authData);
             $rootScope.currentUser.picture = authData.picture;
           }
         }, options);
       };
       $scope.logout = function() {
         Refs.rootRef.unauth();
+        $rootScope.currentUser = null;
         $state.go('home');
       };
       $scope.profile = function(val) {
