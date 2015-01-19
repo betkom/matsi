@@ -1,6 +1,6 @@
 angular.module('matsi.controllers')
-    .controller("FellowCtrl", ['$rootScope', '$scope', '$cookies', '$upload', '$sce', 'Fellow', '$http', '$stateParams', 'Mentor', 'MailService', '$mdDialog', '$mdToast', '$location', 'utils', '$timeout', 'Log',
-        function($rootScope, $scope, $cookies, $upload, $sce, Fellow, $http, $stateParams, Mentor, MailService, $mdDialog, $mdToast, $location, utils, $timeout, Log) {
+    .controller("FellowCtrl", ['$rootScope', '$scope', '$cookies', '$upload', '$sce', 'Fellow', '$http', '$stateParams', 'Mentor', 'MailService', '$mdDialog', '$mdToast', '$location', 'Utils', '$timeout', 'Log', '$state',
+        function($rootScope, $scope, $cookies, $upload, $sce, Fellow, $http, $stateParams, Mentor, MailService, $mdDialog, $mdToast, $location, Utils, $timeout, Log, $state) {
             //get code and redirect if current url is smarterer callback url
             $scope.fileUploaded = false;
             $scope.fileLoading = false;
@@ -11,22 +11,21 @@ angular.module('matsi.controllers')
                     code: code
                 };
                 var url = '/smarterer/code/';
-                console.log($rootScope.currentUser, 'in smarterer');
                 Fellow.backEndPost(url, param, function(res) {
                     var data = {
                         uid: $rootScope.currentUser.uid,
                         badges: res.badges
                     };
-
                     Fellow.update(data);
                     var info = $rootScope.currentUser.fullName + ' updated Smarterer badges ';
                     var pic = 'fa fa-upload fa-fw';
                     Log.save(info,pic);
+                    $location.path('fellows/' + $rootScope.currentUser.uid);
                 });
             }
           };
           
-          $scope.init();
+          //$scope.init();
             //Smarterer & plum Checkbox
             $scope.check = false;
             $scope.plumCheck = false;
@@ -45,9 +44,6 @@ angular.module('matsi.controllers')
                     lname: $scope.fellow.lastName
                 };
                 var url = '/plum/api/';
-                console.log(param, 'params');
-                console.log(url, 'url');
-                console.log('testing scope.plum');
                 Fellow.backEndPost(url, param, function(res) {
                     var data = {
                         uid: $scope.fellow.uid,
@@ -145,6 +141,7 @@ angular.module('matsi.controllers')
 
             $scope.findOne = function() {
                 var uid = $rootScope.currentUser ? ($stateParams.uid || $rootScope.currentUser.uid) : $stateParams.uid;
+                if(uid){
                 var fellow = Fellow.findOne(uid);
                 if (fellow) {
                     fellow.$loaded(function(data) {
@@ -152,6 +149,7 @@ angular.module('matsi.controllers')
                         $scope.uploadedResult = $scope.fellow.videoUrl;
                     });
                 }
+            }
                 this.showMessageBox = true;
             };
 
@@ -164,13 +162,12 @@ angular.module('matsi.controllers')
                 if ($rootScope.currentUser.uid === $scope.fellow.uid || $rootScope.currentUser.isAdmin) {
                     if ($scope.uploadedResult) {
                         $scope.fellow.videoUrl = $scope.uploadedResult;
-                        var info2 = $scope.fellow.fullName + ' has uploaded a video';
+                        var info2 = $scope.fellow.fullName + ' uploaded a video';
                         var pic = 'fa fa-film fa-fw';
                         if ($scope.fellow.fullName) {
                             Log.save(info2, pic);
                         }
                     }
-                    console.log('Yes I got here');
                     Fellow.update($scope.fellow, function(err) {
                         if (err !== null) {
                             $mdDialog.show(
@@ -182,7 +179,6 @@ angular.module('matsi.controllers')
                             );
                         }
                         if ($scope.plumCheck) {
-                            console.log('plummm oooooo');
                             $scope.plum();
                         }
                         if ($scope.check) {
@@ -205,7 +201,7 @@ angular.module('matsi.controllers')
                         if (hasUnmentored) {
                             $scope.sendRequest();
                         } else {
-                            utils.showAlert(ev, 'This fellow is already being mentored, please select a fellow that is not currently being mentored');
+                            Utils.showAlert(ev, 'This fellow is already being mentored, please select a fellow that is not currently being mentored');
                         }
                     } else {
                         $scope.sendRequest();

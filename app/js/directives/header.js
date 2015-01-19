@@ -5,8 +5,8 @@ angular.module("matsi.directives")
       controller: 'HeaderCtrl'
     };
   })
-  .controller('HeaderCtrl', ['$rootScope', '$scope', '$firebase', '$cookies', 'Fellow', '$timeout', '$stateParams', '$location', 'MailService', '$state', 'Refs', 'utils', '$mdDialog', '$mdToast',
-    function($rootScope, $scope, $firebase, $cookies, Fellow, $timeout, $stateParams, $location, MailService, $state, Refs, utils, $mdDialog, $mdToast) {
+  .controller('HeaderCtrl', ['$rootScope', '$scope', '$firebase', '$cookies', 'Fellow', '$timeout', '$stateParams', '$location', 'MailService', '$state', 'Refs', 'Utils', '$mdDialog', '$mdToast',
+    function($rootScope, $scope, $firebase, $cookies, Fellow, $timeout, $stateParams, $location, MailService, $state, Refs, Utils, $mdDialog, $mdToast) {
       $rootScope.currentUser = null;
       $rootScope.allowUser = false;
       $scope.auth = function() {
@@ -26,7 +26,6 @@ angular.module("matsi.directives")
                     user.isAdmin = false;
                     user.role = user.email.indexOf('@andela.co') > -1 ? '-fellow-' : '-mentor-';
                     if (user.role === '-mentor-') {
-                      $rootScope.allowUser = true;
                       user.disabled = user.role !== "-fellow-";
                     }
                     if (!user.disabled) {
@@ -37,22 +36,22 @@ angular.module("matsi.directives")
                     }
                     Refs.userRef.child(user.uid).set(user);
                     $location.path('fellows/' + user.uid + '/edit');
-                    utils.setTimeout(user);
+                    Utils.setTimeout(user, $scope);
 
                   },
                   function() {$mdDialog.hide();$scope.logout();});
               } else {
                 user = snap.val();
-                console.log(user, 'from header');
                 user.picture = authData.google.cachedUserProfile.picture;
                 Refs.rootRef.child('users').child(user.uid).update({
                   picture: user.picture
                 });
                 if (user.disabled || user.removed) {
-                  user = null;
-                  Refs.rootRef.unauth();
-                }
-                utils.setTimeout(user);
+                  $scope.logout();
+                  $scope.allowUser = true;
+                }else{
+                Utils.setTimeout(user, $scope);
+              }
               }
             });
           } else {
