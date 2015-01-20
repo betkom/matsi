@@ -145,7 +145,7 @@ gulp.task('browserify', function() {
 gulp.task('test:lib', function() {
     return gulp.src(paths.libTest)
         .pipe(mocha({
-            reporter: 'dot',
+            reporter: 'spec',
             timeout: 60000
         }));
 });

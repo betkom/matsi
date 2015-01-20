@@ -2,7 +2,7 @@ global._ = require('lodash');
 global.t = require('moment');
 global.bodyParser = require('body-parser');
 global.nodemailer = require('nodemailer');
-var firebaseRef = require('./firebaseRef');
+var firebaseRef = require('./firebase-ref');
 
 
 
