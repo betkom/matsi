@@ -1,4 +1,4 @@
-var browserify = require('browserify'),
+ var browserify = require('browserify'),
     concat = require('gulp-concat'),
     es6ify = require('es6ify'),
     gulp = require('gulp'),
