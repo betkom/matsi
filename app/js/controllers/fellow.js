@@ -1,6 +1,6 @@
 angular.module('matsi.controllers')
-    .controller("FellowCtrl", ['$rootScope', '$scope', '$cookies', '$upload', '$sce', 'Fellow', '$http', '$stateParams', 'Mentor', 'MailService', '$mdDialog', '$mdToast', '$location', 'Utils', '$timeout', 'Log', '$state',
-        function($rootScope, $scope, $cookies, $upload, $sce, Fellow, $http, $stateParams, Mentor, MailService, $mdDialog, $mdToast, $location, Utils, $timeout, Log, $state) {
+    .controller("FellowCtrl", ['$rootScope', '$scope', '$cookies', '$upload', '$sce', 'Fellow', '$http', '$stateParams', 'Mentor', 'MailService', '$mdDialog', '$mdToast', '$location', 'Utils', '$timeout', 'Log', '$state', 'Levels', 
+        function($rootScope, $scope, $cookies, $upload, $sce, Fellow, $http, $stateParams, Mentor, MailService, $mdDialog, $mdToast, $location, Utils, $timeout, Log, $state, Levels) {
             //get code and redirect if current url is smarterer callback url
             $scope.fileUploaded = false;
             $scope.fileLoading = false;

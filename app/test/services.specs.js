@@ -36,8 +36,8 @@ describe('Fellow Mentor Services Test', function() {
         httpBackend = $httpBackend;
     }));
     beforeEach(function(done) {
-        Refs.rootRef.child('users').child(mockMentor.uid).set(mockMentor, function(err) {
-            Refs.rootRef.child('users').child(mockFellow.uid).set(mockFellow, function(err) {
+        Refs.users.child(mockMentor.uid).set(mockMentor, function(err) {
+            Refs.users.child(mockFellow.uid).set(mockFellow, function(err) {
                 done();
             });
         });
@@ -234,9 +234,9 @@ describe('Fellow Mentor Services Test', function() {
 
 
     afterEach(function(done) {
-        Refs.rootRef.child('users').child(mockMentor.uid).remove(function(err) {
+        Refs.users.child(mockMentor.uid).remove(function(err) {
             expect(err).toBe(null);
-            Refs.rootRef.child('users').child(mockFellow.uid).remove(function(err) {
+            Refs.users.child(mockFellow.uid).remove(function(err) {
                 expect(err).toBe(null);
                 done();
             });

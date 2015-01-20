@@ -12,7 +12,7 @@ module.exports = function($rootScope, $mdToast, $mdDialog, $timeout) {
         .targetEvent(ev)
       );
     },
-    setTimeout: function(user, $scope) {
+    setUser: function(user, $scope) {
       $timeout(function() {
         $rootScope.currentUser = user;
         if ($rootScope.currentUser.requests) {

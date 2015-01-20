@@ -10,10 +10,10 @@ angular.module("matsi.directives")
       $rootScope.currentUser = null;
       $rootScope.allowUser = false;
       $scope.auth = function() {
-        Refs.rootRef.onAuth(function(authData) {
+        Refs.root.onAuth(function(authData) {
           if (authData) {
             var user = buildUserObjectFromGoogle(authData);
-            Refs.userRef.child(user.uid).once('value', function(snap) {
+            Refs.users.child(user.uid).once('value', function(snap) {
               if (!snap.val()) {
                 var confirm = $mdDialog.confirm()
                   .title('Andela Terms and Conditions')
@@ -36,21 +36,21 @@ angular.module("matsi.directives")
                     }
                     Refs.userRef.child(user.uid).set(user);
                     $location.path('fellows/' + user.uid + '/edit');
-                    Utils.setTimeout(user, $scope);
+                    Utils.setUser(user, $scope);
 
                   },
                   function() {$mdDialog.hide();$scope.logout();});
               } else {
                 user = snap.val();
                 user.picture = authData.google.cachedUserProfile.picture;
-                Refs.rootRef.child('users').child(user.uid).update({
+                Refs.users.child(user.uid).update({
                   picture: user.picture
                 });
                 if (user.disabled || user.removed) {
                   $scope.logout();
                   $scope.allowUser = true;
                 }else{
-                Utils.setTimeout(user, $scope);
+                Utils.setUser(user, $scope);
               }
               }
             });
@@ -65,7 +65,7 @@ angular.module("matsi.directives")
           remember: false,
           scope: "email"
         };
-        Refs.rootRef.authWithOAuthRedirect("google", function(err, authData) {
+        Refs.root.authWithOAuthRedirect("google", function(err, authData) {
           if (err) {
             alert('error logging in');
           } else {
@@ -75,7 +75,7 @@ angular.module("matsi.directives")
         }, options);
       };
       $scope.logout = function() {
-        Refs.rootRef.unauth();
+        Refs.root.unauth();
         $rootScope.currentUser = null;
         $state.go('home');
       };
