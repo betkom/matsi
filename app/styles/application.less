@@ -1,3 +1,5 @@
+@small-text:8pt;
+@medium-text:10pt;
 html, body {
     height: inherit;
     padding: 0;
@@ -14,6 +16,12 @@ body {
 }
 ul.log{
     margin-top: 15px;
+}
+.small-text {
+    font-size: @small-text;
+}
+.medium-text {
+    font-size: @medium-text;
 }
 ul.log li{
     display: inline;
@@ -253,8 +261,8 @@ footer a, footer a:hover {
     }
 }
 .smarterer{
-    padding-top: 10px;
-    padding-bottom: 10px;
+    margin-bottom: 30px;
+    h5 { margin: 0;}
 }
 .profile-pic {
     position: relative;
@@ -465,10 +473,7 @@ input[type="text"]:focus{
         margin: 0 0 0 15px;
     }
 }
-.smarterer{
-    text-align: center;
-    vertical-align: middle;
-}
+
 .text-wrap, .user-name{
     word-wrap: break-word;
 }

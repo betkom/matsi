@@ -65,21 +65,22 @@ section.content.fellows(ng-init="findOne()")
             video(data-ng-src='{{scePermit(fellow.videoUrl)}}' height='300' width='400' controls)
 
 
-        .unit-wrap.bio(ng-show="fellow.plumBadges")
+        .unit-wrap.bio(ng-if="fellow.plumBadges")
           .user-profile
             h4 Plum Profile
             hr
-            h5
-            .row
-              .col-md-3(ng-repeat="badge in fellow.plumBadges")
-                img(ng-src="{{badge}}")
-        .unit-wrap.bio(ng-show="fellow.badges")
+            include includes/plum.jade
+        .unit-wrap.bio(ng-if="fellow.badges")
           .user-profile
             h4 Smarterer Badges
             hr
-            .row
-              .col-md-3.smarterer(ng-repeat="badge in fellow.badges")
-                img(class="smarterer" ng-src="{{badge.badge.image}}")
+            .row.smarterer(ng-repeat="badge in fellow.badges")
+              .col-md-12
+                h5
+                  span {{badge.quiz.name}}
+                  | &nbsp;
+                  span(ng-bind="badge.badge.score" style='border-radius:2px;background:#03a9f4;padding:2px;display:inline-block;font-size:0.8em;color:#fff;font-weight:400;')
+                md-progress-linear.md-warn(md-mode="buffer" value="{{badge.badge.percentile}}")
         .unit-wrap.bio(ng-if="currentUser.uid === fellow.uid && fellow.mentors")
           .user-profile
             h4 My Mentors
