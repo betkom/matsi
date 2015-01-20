@@ -6,19 +6,19 @@ describe('Fellow Mentor Services Test', function() {
         MailService,
         Refs,
         mockFellow = {
-            uid: 'happy-fellow-id',
+            uid: 'google:happy-fellow-uid',
             fullName: 'Happy Fellow',
             role: '-fellow-',
-            email: 'happy-fellow-id@andela.co',
+            email: 'happy-fellow-uid@andela.co',
             isMentored: true,
             picture: 'this is pic url',
             firstName: 'happy'
         },
         mockMentor = {
-            uid: 'happy-mentor-id',
+            uid: 'google:happy-mentor-uid',
             role: '-mentor-',
             fullName: 'Happy Mentor',
-            email: 'happy-mentor-id@andela.co',
+            email: 'happy-mentor-uid@andela.co',
             picture: 'this is pic url',
             firstName: 'happy'
         },

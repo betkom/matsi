@@ -79,7 +79,7 @@ section.content.fellows(ng-init="findOne()")
                 h5
                   span {{badge.quiz.name}}
                   | &nbsp;
-                  span(ng-bind="badge.badge.score" style='border-radius:2px;background:#03a9f4;padding:2px;display:inline-block;font-size:0.8em;color:#fff;font-weight:400;')
+                  span.smarterer-score(ng-bind="badge.badge.score")
                 md-progress-linear.md-warn(md-mode="buffer" value="{{badge.badge.percentile}}")
         .unit-wrap.bio(ng-if="currentUser.uid === fellow.uid && fellow.mentors")
           .user-profile

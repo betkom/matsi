@@ -55,12 +55,14 @@ section.content.fellows(ng-init="findOne()")
                 .col-md-4
                   label Andela Developer Rank
                   .form-group
-                    input.form-control(type='text', placeholder='Rank', ng-model="fellow.andelaDeveloperRank")
-                .col-md-3
-                  label Smarterer Score
-                  .form-group
-                    input(type='checkbox' checked = check ng-click = "toggleCheck('smarterer')") 
-                    | Update
+                    select.form-control(type='text', placeholder='Select Rank', ng-model="fellow.andelaDeveloperRank")
+                      option D0 Trainee A
+                      option D0 Trainee B
+                      option D0 Trainee C
+                      option D1 Jr Consultant
+                      option D2 Consultant
+                      option D3 Sr Consultant
+                      option D4 Ninja
         .unit-wrap.bio
           label Upload Video   
           .form-group.controls
@@ -75,7 +77,7 @@ section.content.fellows(ng-init="findOne()")
             hr
             h5    
               .form-group
-                label()
+                label
                   input(type='checkbox' checked = check ng-click = "toggleCheck('smarterer')")
                   |  
                   | Import scores

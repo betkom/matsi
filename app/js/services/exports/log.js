@@ -5,6 +5,7 @@ module.exports = function(rootRef, $rootScope, $firebase) {
             rootRef.child('logs').child(moment().format("YYYY-MM-DD")).push({
                 value: logParams,
                 timestamp: Firebase.ServerValue.TIMESTAMP,
+                uid: $rootScope.currentUser.uid, 
                 icon: img
             });
         },
