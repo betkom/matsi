@@ -4,8 +4,6 @@ angular.module('matsi.controllers')
             //get code and redirect if current url is smarterer callback url
             $scope.fileUploaded = false;
             $scope.fileLoading = false;
-            $scope.plumChecked = true;
-            $scope.smartererChecked = true;
             $scope.init = function() {
               if($location.absUrl().toString().indexOf('fellows/?code=') > -1) {
                 var code = $location.search().code;
@@ -26,6 +24,16 @@ angular.module('matsi.controllers')
                 });
             }
           };
+           //Smarterer & plum Checkbox
+            $scope.smartererCheck = false;
+            $scope.plumCheck = false;
+            $scope.toggleCheck = function(val) {
+                if (val === "smarterer") {
+                    $scope.smartererCheck = !$scope.smartererCheck;
+                } else {
+                    $scope.plumCheck = !$scope.plumCheck;
+                }
+            };
         
             // plum api integrations
             $scope.plum = function() {
@@ -174,12 +182,14 @@ angular.module('matsi.controllers')
                                 .ok('Okay!')
                             );
                         }
-                        if ($scope.plumChecked) {
+                        if ($scope.plumCheck) {
                             $scope.plum();
                         }
-                        if ($scope.smartererChecked) {
+                        if ($scope.smartererCheck) {
                             // request smarterer authorization
                             window.location.href = 'https://smarterer.com/oauth/authorize?client_id=b30a2803ffe34bc68a6fe7757b039468&callback_url=http%3A%2F%2Fmatsi.herokuapp.com%2Ffellows%2F';
+                        }else{
+                             $location.path('fellows/' + $rootScope.currentUser.uid);
                         }
                     });
                 }

@@ -180,10 +180,10 @@ describe('matsi.controller test', function() {
   });
 
   it('should expect plum checkbox to be checked', function() {
-    scope.check = false;
+    scope.smartererCheck = false;
     scope.plumCheck = false;
     scope.toggleCheck('smarterer');
-    expect(scope.check).toBeTruthy();
+    expect(scope.smartererCheck).toBeTruthy();
     scope.toggleCheck('plum');
     expect(scope.plumCheck).toBeTruthy();
   });
