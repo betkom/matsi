@@ -1,6 +1,6 @@
 angular.module('matsi.controllers')
-    .controller("FellowCtrl", ['$rootScope', '$scope', '$cookies', '$upload', '$sce', 'Fellow', '$http', '$stateParams', 'Mentor', 'MailService', '$mdDialog', '$mdToast', '$location', 'Utils', '$timeout', 'Log', '$state', 'Levels', 
-        function($rootScope, $scope, $cookies, $upload, $sce, Fellow, $http, $stateParams, Mentor, MailService, $mdDialog, $mdToast, $location, Utils, $timeout, Log, $state, Levels) {
+    .controller("FellowCtrl", ['$rootScope', '$scope', '$cookies', '$upload', '$sce', 'Fellow', '$http', '$stateParams', 'Mentor', 'MailService', '$mdDialog', '$mdToast', '$location', 'Utils', '$timeout', 'Log', '$state',
+        function($rootScope, $scope, $cookies, $upload, $sce, Fellow, $http, $stateParams, Mentor, MailService, $mdDialog, $mdToast, $location, Utils, $timeout, Log, $state) {
             //get code and redirect if current url is smarterer callback url
             $scope.fileUploaded = false;
             $scope.fileLoading = false;
@@ -49,6 +49,7 @@ angular.module('matsi.controllers')
                         uid: $scope.fellow.uid,
                         plumBadges: res.candidates[0].badges
                     };
+                    console.log(res);
                     Fellow.update(data);
                     var info = $scope.fellow.fullName + ' updated plum Badges ';
                     var pic = 'fa fa-upload fa-fw';
