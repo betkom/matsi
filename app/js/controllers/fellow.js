@@ -55,6 +55,17 @@ angular.module('matsi.controllers')
                     Log.save(info, pic);
                 });
             };
+            //Developer rank
+            $scope.levels = function() {
+                var result = Levels.all();
+                if(result){
+                    result.$loaded(function(data){
+                    $scope.ranks = data;
+                    console.log($scope.ranks);
+                    });
+                } 
+            };
+            $scope.levels();
             //Date picker
             $scope.today = function() {
                 $scope.dt = new Date();
