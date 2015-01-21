@@ -34,7 +34,7 @@ angular.module("matsi.directives")
                     } else {
                       MailService.send(2, user);
                     }
-                    Refs.userRef.child(user.uid).set(user);
+                    Refs.users.child(user.uid).set(user);
                     $location.path('fellows/' + user.uid + '/edit');
                     Utils.setUser(user, $scope);
 
