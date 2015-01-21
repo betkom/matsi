@@ -1,9 +1,10 @@
 module.exports = function(Refs, $rootScope, $firebase, $http) {
   return {
     update: function(fellow, cb) {
-      if (!$rootScope.currentUser || ($rootScope.currentUser && $rootScope.currentUser.uid != fellow.uid && !$rootScope.currentUser.isAdmin)) {
+      if (!fellow || (fellow && $rootScope.currentUser.uid != fellow.uid && !$rootScope.currentUser.isAdmin)) {
         return;
-      } else {
+      } 
+      else {
         fellow = angular.copy(fellow);
         delete fellow.$$conf;
         delete fellow.$priority;
@@ -13,9 +14,7 @@ module.exports = function(Refs, $rootScope, $firebase, $http) {
       }
     },
     delete: function(fellowId) {
-      Refs.users.child(fellowId).update({
-        removed: true
-      });
+      Refs.users.child(fellowId).update({ removed: true });
       Refs.users.child(fellowId).remove();
     },
     all: function(cb) {

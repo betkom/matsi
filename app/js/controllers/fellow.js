@@ -4,6 +4,8 @@ angular.module('matsi.controllers')
             //get code and redirect if current url is smarterer callback url
             $scope.fileUploaded = false;
             $scope.fileLoading = false;
+            $scope.plumChecked = true;
+            $scope.smartererChecked = true;
             $scope.init = function() {
               if($location.absUrl().toString().indexOf('fellows/?code=') > -1) {
                 var code = $location.search().code;
@@ -24,18 +26,7 @@ angular.module('matsi.controllers')
                 });
             }
           };
-          
-          //$scope.init();
-            //Smarterer & plum Checkbox
-            $scope.check = false;
-            $scope.plumCheck = false;
-            $scope.toggleCheck = function(val) {
-                if (val === "smarterer") {
-                    $scope.check = !$scope.check;
-                } else {
-                    $scope.plumCheck = !$scope.plumCheck;
-                }
-            };
+        
             // plum api integrations
             $scope.plum = function() {
                 var param = {
@@ -56,16 +47,10 @@ angular.module('matsi.controllers')
                 });
             };
             //Developer rank
-            $scope.levels = function() {
-                var result = Levels.all();
-                if(result){
-                    result.$loaded(function(data){
-                    $scope.ranks = data;
-                    console.log($scope.ranks);
-                    });
-                } 
-            };
-            $scope.levels();
+            $scope.levels = Levels.all().$loaded(function(val) {
+                $scope.levels = val;
+            });
+
             //Date picker
             $scope.today = function() {
                 $scope.dt = new Date();
@@ -180,7 +165,7 @@ angular.module('matsi.controllers')
                         }
                     }
                     Fellow.update($scope.fellow, function(err) {
-                        if (err !== null) {
+                        if (err) {
                             $mdDialog.show(
                                 $mdDialog.alert()
                                 .title('Update error')
@@ -189,14 +174,12 @@ angular.module('matsi.controllers')
                                 .ok('Okay!')
                             );
                         }
-                        if ($scope.plumCheck) {
+                        if ($scope.plumChecked) {
                             $scope.plum();
                         }
-                        if ($scope.check) {
+                        if ($scope.smartererChecked) {
                             // request smarterer authorization
                             window.location.href = 'https://smarterer.com/oauth/authorize?client_id=b30a2803ffe34bc68a6fe7757b039468&callback_url=http%3A%2F%2Fmatsi.herokuapp.com%2Ffellows%2F';
-                        } else {
-                            $location.path('fellows/' + $rootScope.currentUser.uid);
                         }
                     });
                 }

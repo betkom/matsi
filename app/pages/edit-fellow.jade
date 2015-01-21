@@ -28,10 +28,6 @@ section.content.fellows(ng-init="findOne()")
             form(role='form')
               .form-group
                 input.form-control(type='text', placeholder='Full Name', ng-model="fellow.fullName")
-              //- .form-group
-              //-   .row
-              //-     .col-md-7.col-xs-12
-              //-       br.visible-sm.visible-xs
               .form-group
                 label Github Profile
                 .input-group
@@ -55,8 +51,7 @@ section.content.fellows(ng-init="findOne()")
                 .col-md-4
                   label Andela Developer Rank
                   .form-group
-                    select.form-control(type='text', placeholder='Select Rank')
-                      option(ng-repeat="rank in ranks") {{rank.name}}
+                    select.form-control(ng-model="fellow.level" ng-options="level.name as level.name for level in levels")
         .unit-wrap.bio
           label Upload Video   
           .form-group.controls
@@ -72,8 +67,8 @@ section.content.fellows(ng-init="findOne()")
             h5    
               .form-group
                 label
-                  input(type='checkbox' checked = check ng-click = "toggleCheck('smarterer')")
-                  |  
+                  input(type='checkbox' ng-model="smartererChecked")
+                  | 
                   | Import scores
            blockquote.medium-text
             i To include your smarterer scores, check the box and click the save button.
@@ -84,11 +79,11 @@ section.content.fellows(ng-init="findOne()")
             h5 
               include includes/plum.jade
             label
-              input(type="checkbox" checked = plumCheck ng-click="toggleCheck()")
+              input(type="checkbox" ng-model="plumChecked")
               | 
               | Import badges
             .form-group.controls
-              input.form-control(type='text' placeholder='Enter plum email address' ng-model="fellow.plumEmail" ng-if="plumCheck")
+              input.form-control(type='text' placeholder='Enter plum email address' ng-model="fellow.plumEmail" ng-if="plumChecked")
             blockquote.medium-text
               i To include your plum badges on your profile, check the box above, input your plum email, and click the save button.
 
