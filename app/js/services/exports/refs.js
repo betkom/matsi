@@ -1,6 +1,9 @@
 module.exports = function(rootRef) {
+	var config = rootRef.child('config');
     return {
-        rootRef: rootRef,
-        userRef: rootRef.child('users')
+        root: rootRef,
+        users: rootRef.child('users'),
+        logs: rootRef.child('logs'),
+        levels: config.child('levels')
     };
 };

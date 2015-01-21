@@ -14,7 +14,7 @@ section.content.fellows(ng-init="findOne()")
             img(ng-src='{{mentor.picture}}')
           .user-name
             h5
-              a(href='') {{mentor.fullName}}
+              a {{mentor.fullName}}
             input.form-control(ng-model="mentor.jobTitle" ,placeholder="Enter your Job Title")
       .col-xs-12.col-sm-9
         .unit-wrap.bio
@@ -29,11 +29,7 @@ section.content.fellows(ng-init="findOne()")
             form(role='form')
               .form-group
                 input.form-control(type='text', placeholder='Full Name', ng-model="mentor.fullName")
-              .form-group
-                label Are you a developer? If yes
-                .input-group
-                  .input-group-addon https://
-                  input.form-control(type='text', placeholder='Please enter your Github URL', ng-model="mentor.gitHubUrl")
+                br
                 label LinkedIn
                 .input-group
                   .input-group-addon https://
@@ -46,6 +42,18 @@ section.content.fellows(ng-init="findOne()")
                 .input-group
                   .input-group-addon #
                   input.form-control(type='text', placeholder='Skype Username', ng-model="mentor.Skype")
+                hr
+               .form-group
+                label
+                  input(type='checkbox' ng-model="developer") 
+                  | 
+                  span Are you a developer?
+                br
+                div(ng-show="developer")
+                  label Github  
+                  .input-group
+                    .input-group-addon https://
+                    input.form-control(type='text', placeholder='Please enter your Github URL', ng-model="mentor.gitHubUrl")
               .row
                 .col-md-4
                   .form-group

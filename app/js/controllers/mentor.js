@@ -2,9 +2,11 @@ angular.module("matsi.controllers")
     .controller("MentorCtrl", ['$rootScope', '$scope', '$cookies', '$state', 'Mentor', '$stateParams', '$location', 'MailService',
         function($rootScope, $scope, $cookies, $state, Mentor, $stateParams, $location, MailService) {
             $scope.checked = false;
+            $scope.developer = false;
             $scope.toggleCheck = function() {
                 $scope.checked = !$scope.checked;
             };
+            
             //Pagination
             var start = 0,
                 end = 0,
