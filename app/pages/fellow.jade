@@ -55,10 +55,10 @@ section.content.fellows(ng-init="findOne()")
             dl.dl-horizontal(ng-show="fellow.location")
               dt Location
               dd {{fellow.location}}
-            dl.dl-horizontal(ng-show="fellow.andelaDeveloperRank")
+            dl.dl-horizontal(ng-show="fellow.level")
               dt Rank
               dd
-                span.label.label-success {{fellow.andelaDeveloperRank}}
+                span.label.label-success {{fellow.level}}
         .unit-wrap.bio(ng-if="fellow.videoUrl")
           h4 {{fellow.fullName}}'s Story
           .text-center

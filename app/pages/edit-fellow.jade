@@ -29,40 +29,29 @@ section.content.fellows(ng-init="findOne()")
               .form-group
                 input.form-control(type='text', placeholder='Full Name', ng-model="fellow.fullName")
               .form-group
-                .row
-                  .col-md-7.col-xs-12
-                    br.visible-sm.visible-xs
-                    label Date Joined
-                    .row
-                      .col-md-8
-                        .input-group
-                          input.form-control.ui-datepicker(type='text', data-ng-model="fellow.joinedDate", datepicker-popup='{{format}}', is-open='$parent.opened', min-date='"2014-03-01"', max-date='minDate', datepicker-options='dateOptions', date-disabled='disabled(date, mode)', close-text='Close')
-                          span.input-group-btn
-                            button.btn.btn-default(type='button', ng-click='open($event)')
-                              i.glyphicon.glyphicon-calendar
-              .form-group
                 label Github Profile
                 .input-group
-                  .input-group-addon https://
+                  .input-group-addon github.com/
                   input.form-control(type='text', placeholder='Please enter github username', ng-model="fellow.gitHubUrl")
               .row
-                .col-md-4
+                .col-md-5
+                  label Date Joined
                   .form-group
-                    label Location
+                    .input-group
+                      input.form-control.ui-datepicker(type='text', data-ng-model="fellow.joinedDate", datepicker-popup='{{format}}', is-open='$parent.opened', min-date='"2014-03-01"', max-date='minDate', datepicker-options='dateOptions', date-disabled='disabled(date, mode)', close-text='Close')
+                      span.input-group-btn
+                        button.btn.btn-default(type='button', ng-click='open($event)')
+                          i.glyphicon.glyphicon-calendar
+                .col-md-3
+                  label Location
+                  .form-group
                     select.form-control(ng-model="fellow.location", placeholder='Select location')
                       option Lagos
                       option New York
                 .col-md-4
                   label Andela Developer Rank
                   .form-group
-                    select.form-control(type='text', placeholder='Select Rank', ng-model="fellow.andelaDeveloperRank")
-                      option D0 Trainee A
-                      option D0 Trainee B
-                      option D0 Trainee C
-                      option D1 Jr Consultant
-                      option D2 Consultant
-                      option D3 Sr Consultant
-                      option D4 Ninja
+                    select.form-control(ng-model="fellow.level" ng-options="level.name as level.name for level in levels")
         .unit-wrap.bio
           label Upload Video   
           .form-group.controls
@@ -78,8 +67,8 @@ section.content.fellows(ng-init="findOne()")
             h5    
               .form-group
                 label
-                  input(type='checkbox' checked = check ng-click = "toggleCheck('smarterer')")
-                  |  
+                  input(type='checkbox' checked = smartererCheck ng-click="toggleCheck(smarterer)")
+                  | 
                   | Import scores
            blockquote.medium-text
             i To include your smarterer scores, check the box and click the save button.
@@ -90,7 +79,7 @@ section.content.fellows(ng-init="findOne()")
             h5 
               include includes/plum.jade
             label
-              input(type="checkbox" checked = plumCheck ng-click="toggleCheck()")
+              input(type="checkbox" checked = plumCheck ng-click="toggleCheck()") 
               | 
               | Import badges
             .form-group.controls

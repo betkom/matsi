@@ -1,11 +1,11 @@
 describe('matsi.controller test', function() {
-
     var scope,
         stateParams,
         Fellow,
         Log,
         MailService,
         rootScope,
+        Levels,
         ctrl;
     beforeEach(module('Matsi'));
     beforeEach(inject(function($controller, $rootScope, $cookies, $injector) {
@@ -15,6 +15,7 @@ describe('matsi.controller test', function() {
         MailService = $injector.get('MailService');
         stateParams = $injector.get('$stateParams');
         rootScope = $injector.get('$rootScope');
+        Levels = $injector.get('Levels');
         ctrl = $controller('FellowCtrl', {
             $scope: scope,
             $rootScope: scope
@@ -27,7 +28,6 @@ describe('matsi.controller test', function() {
         scope.fellow.plumEmail = 'this is plumEmail';
         scope.fellow.firstName = 'this is fname';
         scope.fellow.lastName = 'this is lname';
-        scope.fellow.uid = 'google:happy-fellow-id';
         spyOn(Fellow, 'backEndPost');
         scope.plum();
         expect(Fellow.backEndPost).toHaveBeenCalled();
@@ -94,6 +94,7 @@ describe('matsi.controller test', function() {
         scope.update();
         expect(Fellow.update).toHaveBeenCalled();
         expect(Log.save).toHaveBeenCalled();
+
     });
 
     it('should expect mentorConstraints to have been called', function() {
@@ -180,10 +181,10 @@ describe('matsi.controller test', function() {
     });
 
     it('should expect plum checkbox to be checked', function() {
-        scope.check = false;
+        scope.smartererCheck = false;
         scope.plumCheck = false;
         scope.toggleCheck('smarterer');
-        expect(scope.check).toBeTruthy();
+        expect(scope.smartererCheck).toBeTruthy();
         scope.toggleCheck('plum');
         expect(scope.plumCheck).toBeTruthy();
     });
@@ -204,7 +205,6 @@ describe('matsi.controller test', function() {
             scope.plumCheck = true;
             spyOn(scope, 'update');
             scope.update();
-
         });
         it('should expect update to have been called', function() {
             expect(scope.update).toHaveBeenCalled();
