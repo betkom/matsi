@@ -5,6 +5,8 @@ describe('Fellow Mentor Services Test', function() {
         httpBackend,
         MailService,
         Refs,
+        Utils,
+        Levels,
         mockFellow = {
             uid: 'google:happy-fellow-uid',
             fullName: 'Happy Fellow',
@@ -26,12 +28,14 @@ describe('Fellow Mentor Services Test', function() {
     beforeEach(function() {
         module('Matsi');
     });
-    beforeEach(inject(function($injector,$httpBackend) {
+    beforeEach(inject(function($injector, $httpBackend) {
         Fellow = $injector.get('Fellow');
         Mentor = $injector.get('Mentor');
         Log = $injector.get('Log');
         MailService = $injector.get('MailService');
         Refs = $injector.get('Refs');
+        Utils = $injector.get('Utils');
+        Levels = $injector.get('Levels');
         rootScope = $injector.get('$rootScope');
         httpBackend = $httpBackend;
     }));
@@ -54,27 +58,27 @@ describe('Fellow Mentor Services Test', function() {
                 done();
             });
         });
-        it('should get mentored fellows', function(done){
-            Log.allMentored(function(snap){
-            var mentors = snap.val();
-            var mentorLog = Object.keys(mentors).length;
-            expect(mentorLog).toBeGreaterThan(0);
-            done();
+        it('should get mentored fellows', function(done) {
+            Log.allMentored(function(snap) {
+                var mentors = snap.val();
+                var mentorLog = Object.keys(mentors).length;
+                expect(mentorLog).toBeGreaterThan(0);
+                done();
             });
         });
-         it('should get unmentored fellows', function(done){
-            Log.allUnMentored(function(snap){
-            var mentors = snap.val();
-            var mentorLog = Object.keys(mentors).length;
-            expect(mentorLog).toBeGreaterThan(0);
-            done();
+        it('should get unmentored fellows', function(done) {
+            Log.allUnMentored(function(snap) {
+                var mentors = snap.val();
+                var mentorLog = Object.keys(mentors).length;
+                expect(mentorLog).toBeGreaterThan(0);
+                done();
             });
         });
     });
 
-      /********************************
-            FELLOW SERVICE TEST
-      ********************************/
+    /********************************
+          FELLOW SERVICE TEST
+    ********************************/
     describe('Mentors and Fellow Relationship', function() {
         it('should update mockFellow', function(done) {
             var newName = 'This is a Mock Name';
@@ -110,7 +114,7 @@ describe('Fellow Mentor Services Test', function() {
             });
         });
 
-        
+
         describe('make request and accept or reject request', function() {
             it('should send request to mockFellow', function(done) {
                 rootScope.currentUser = mockMentor;
@@ -200,37 +204,72 @@ describe('Fellow Mentor Services Test', function() {
                 done();
             });
         });
-        it('should get all disabled mentors', function(done){
-            Mentor.disabled(function(snap){
+        it('should get all disabled mentors', function(done) {
+            Mentor.disabled(function(snap) {
                 var mentors = [];
                 var mentorsObject = snap.val();
                 expect(mentorsObject).toBeDefined();
                 done();
             });
         });
-        it('should enable mentors', function(done){
-            Mentor.enable(mockMentor, function(err){
-                Mentor.findOne(mockMentor.uid, function(snap){
+        it('should enable mentors', function(done) {
+            Mentor.enable(mockMentor, function(err) {
+                Mentor.findOne(mockMentor.uid, function(snap) {
                     var mentor = snap.val();
                     done();
-                     expect(mentor.disabled).toBeFalsy();
+                    expect(mentor.disabled).toBeFalsy();
                 });
             });
         });
         it('should test backend post', function() {
             var data = {
-              uid: 'uid',
-              badges: 'badges'
+                uid: 'uid',
+                badges: 'badges'
             };
-              httpBackend.expectPOST('/smarterer/code', {code: '23453242s323s423'}).respond(200,{yeet:'yeet'});
-              Fellow.backEndPost('/smarterer/code', {code: '23453242s323s423'}, function(res){
+            httpBackend.expectPOST('/smarterer/code', {
+                code: '23453242s323s423'
+            }).respond(200, {
+                yeet: 'yeet'
+            });
+            Fellow.backEndPost('/smarterer/code', {
+                code: '23453242s323s423'
+            }, function(res) {
                 expect(typeof res).toBe(typeof {});
                 expect(res.yeet).toBeDefined();
                 expect(res.err).toBeUndefined();
+            });
+            httpBackend.flush();
+        });
+        describe('Utils service test', function() {
+            beforeEach(function() {
+                timerCallback = jasmine.createSpy("timerCallback");
+                jasmine.clock().install();
+            });
+            it('should call timeout', function() {
+                //Utils.setUser(mockFellow, scope);
+                setTimeout(function() {
+                    timerCallback();
+                }, 1);
+                 expect(timerCallback).not.toHaveBeenCalled();
+                 jasmine.clock().tick(2);
+                 expect(timerCallback).toHaveBeenCalled();
+
+            });
+            afterEach(function() {
+                jasmine.clock().uninstall();
+            });
+        });
+        describe('Levels service test', function(){
+          it('should get all levels', function(done){
+              Levels.all(function(snap){
+                var levels = snap.val();
+                expect(levels).toBeDefined();
+                done();
               });
-              httpBackend.flush();   
           });
+        });
     });
+
 
 
     afterEach(function(done) {
