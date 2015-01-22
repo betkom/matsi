@@ -58,7 +58,7 @@ section.content.fellows(ng-init="findOne()")
             dl.dl-horizontal(ng-show="fellow.level")
               dt Rank
               dd
-                span.label.label-success {{fellow.level}}
+                span.label.label-success(ng-style="{'background-color': level.color}") {{level.name}}
         .unit-wrap.bio(ng-if="fellow.videoUrl")
           h4 {{fellow.fullName}}'s Story
           .text-center

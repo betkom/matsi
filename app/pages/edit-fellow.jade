@@ -51,7 +51,7 @@ section.content.fellows(ng-init="findOne()")
                 .col-md-4
                   label Andela Developer Rank
                   .form-group
-                    select.form-control(ng-model="fellow.level" ng-options="level.name as level.name for level in levels")
+                    select.form-control(ng-model="fellow.level" ng-options="level.$id as level.name for level in levels")
         .unit-wrap.bio
           label Upload Video   
           .form-group.controls

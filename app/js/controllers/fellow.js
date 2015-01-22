@@ -151,6 +151,8 @@ angular.module('matsi.controllers')
                     fellow.$loaded(function(data) {
                         $scope.fellow = data;
                         $scope.uploadedResult = $scope.fellow.videoUrl;
+                        $scope.level = Levels.find(data.level);
+                        console.log($scope.level);
                     });
                 }
             }
