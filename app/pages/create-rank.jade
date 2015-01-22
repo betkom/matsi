@@ -1,0 +1,5 @@
+section.content(ng-controller="FellowCtrl")
+	input(type="text", placeholder="enter rank id", ng-model="level.$id")
+	input(type="text", placeholder="enter rank name", ng-model="level.name")
+	input(type="text", placeholder="enter rank color", ng-model="level.color")
+	.btn.btn-default(ng-click="createLevel(level)") Add	

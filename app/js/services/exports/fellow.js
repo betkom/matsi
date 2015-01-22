@@ -1,5 +1,6 @@
 module.exports = function(Refs, $rootScope, $firebase, $http) {
   return {
+    
     update: function(fellow, cb) {
       if (!fellow || (fellow && $rootScope.currentUser.uid != fellow.uid && !$rootScope.currentUser.isAdmin)) {
         return;
@@ -13,26 +14,22 @@ module.exports = function(Refs, $rootScope, $firebase, $http) {
         Refs.users.child(fellow.uid).update(fellow, cb);
       }
     },
+
     delete: function(fellowId) {
       Refs.users.child(fellowId).update({ removed: true });
       Refs.users.child(fellowId).remove();
     },
+
     all: function(cb) {
+      var ref = Refs.users.orderByChild('role').equalTo('-fellow-');
       if (!cb) {
-        return $firebase(Refs.users.orderByChild('role').equalTo('-fellow-')).$asArray();
+        return $firebase(ref).$asArray();
       }
       else {
-        return Refs.users.orderByChild('role').equalTo('-fellow-').once('value', cb);
+        return ref.once('value', cb);
       }
     },
-    findOne: function(uid, cb) {
-      if (!cb) {
-        return $firebase(Refs.users.child(uid)).$asObject();
-      }
-      else {
-        return Refs.users.child(uid).once('value', cb);
-      }
-    },
+
     mentorConstraint: function(uid, cb) {
       Refs.users.child(uid).once('value', function(snap) {
         if (snap.val() && snap.val().isMentored === true) {
@@ -41,6 +38,7 @@ module.exports = function(Refs, $rootScope, $firebase, $http) {
           cb(null);
       });
     },
+
     request: function(fellow, cb) {
       cb = cb || function() {};
       Refs.users.child($rootScope.currentUser.uid).child('sentRequests').child(fellow.uid).set({
@@ -55,31 +53,36 @@ module.exports = function(Refs, $rootScope, $firebase, $http) {
         }
       });
     },
+
     accept: function(mentor, cb) {
       cb = cb || function() {};
-      Refs.users.child($rootScope.currentUser.uid).child('mentors').child(mentor.uid).set({
+      var mentorRef =  Refs.users.child(mentor.uid);
+      var ref =  Refs.users.child($rootScope.currentUser.uid);
+      ref.child('mentors').child(mentor.uid).set({
         timestamp: Firebase.ServerValue.TIMESTAMP
       }, function(err) {
         if (!err) {
-          Refs.users.child($rootScope.currentUser.uid).update({
+          ref.update({
             isMentored: true
           });
-          Refs.users.child(mentor.uid).child('fellows').child($rootScope.currentUser.uid).set({
+          mentorRef.child('fellows').child($rootScope.currentUser.uid).set({
             timestamp: Firebase.ServerValue.TIMESTAMP
           }, cb);
-          Refs.users.child(mentor.uid).child('history').push({
+          mentorRef.child('history').push({
             fellow: $rootScope.currentUser.uid,
             timestamp: Firebase.ServerValue.TIMESTAMP
           });
-          Refs.users.child($rootScope.currentUser.uid).child('requests').child(mentor.uid).remove();
-          Refs.users.child(mentor.uid).child('sentRequests').child($rootScope.currentUser.uid).remove();
+          ref.child('requests').child(mentor.uid).remove();
+          mentorRef.child('sentRequests').child($rootScope.currentUser.uid).remove();
         }
       });
     },
+
     reject: function(mentor) {
       Refs.users.child(mentor.uid).child('sentRequests').child($rootScope.currentUser.uid).remove();
       Refs.users.child($rootScope.currentUser.uid).child('requests').child(mentor.uid).remove();
     },
+
     backEndPost: function(url, params, cb) {
       $http.post(url, params).success(function(res) {
         if (cb) {

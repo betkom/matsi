@@ -1,0 +1,11 @@
+section.content(ng-controller="FellowCtrl")
+	.container
+		.unit-wrap
+			.col-md-8(ng-repeat="level in levels")
+				a(ng-click="deleteLevel(level)")
+					i.fa.fa-trash
+				a(ng-click="updateLevel(level)")
+					i.fa.fa-pencil-square-o
+				input(type="text" ng-model="level.name")
+				input(type="text" ng-model="level.color")
+				span{{level.$id}}

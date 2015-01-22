@@ -1,6 +1,6 @@
 angular.module('matsi.controllers')
-    .controller("FellowCtrl", ['$rootScope', '$scope', '$cookies', '$upload', '$sce', 'Fellow', '$http', '$stateParams', 'Mentor', 'MailService', '$mdDialog', '$mdToast', '$location', 'Utils', '$timeout', 'Log', '$state', 'Levels',
-        function($rootScope, $scope, $cookies, $upload, $sce, Fellow, $http, $stateParams, Mentor, MailService, $mdDialog, $mdToast, $location, Utils, $timeout, Log, $state, Levels) {
+    .controller("FellowCtrl", ['$rootScope', '$scope', '$cookies', '$upload', '$sce', 'Fellow', '$http', '$stateParams', 'Mentor', 'MailService', '$mdDialog', '$mdToast', '$location', 'Utils', '$timeout', 'Log', '$state', 'Levels', 'User', 
+        function($rootScope, $scope, $cookies, $upload, $sce, Fellow, $http, $stateParams, Mentor, MailService, $mdDialog, $mdToast, $location, Utils, $timeout, Log, $state, Levels, User) {
             //get code and redirect if current url is smarterer callback url
             $scope.fileUploaded = false;
             $scope.fileLoading = false;
@@ -147,7 +147,8 @@ angular.module('matsi.controllers')
             $scope.findOne = function() {
                 var uid = $rootScope.currentUser ? ($stateParams.uid || $rootScope.currentUser.uid) : $stateParams.uid;
                 if(uid){
-                var fellow = Fellow.findOne(uid);
+                var fellow = User.findOne(uid);
+                console.log(fellow, 'huh');
                 if (fellow) {
                     fellow.$loaded(function(data) {
                         $scope.fellow = data;
@@ -301,6 +302,16 @@ angular.module('matsi.controllers')
                     alert('Connection Timed out');
                 }, function(evt) {
                 });
+            };
+            $scope.createLevel = function(level){
+                console.log(level);
+                Levels.create(level);
+            };
+            $scope.deleteLevel = function(level){
+                Levels.delete(level);
+            };
+            $scope.updateLevel = function(level){
+              Levels.update(level);
             };
         }
     ]);

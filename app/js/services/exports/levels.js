@@ -9,13 +9,37 @@ module.exports = function($firebase, $rootScope, Refs) {
             }
         },
 
-         find: function(id, cb) {
-            if (cb) {
-                return Refs.levels.child(id).once('value', cb);
-            }
-            else {
-                return $firebase(Refs.levels.child(id)).$asObject();
-            }
-        }
+    find: function(id, cb) {
+      var ref = Refs.levels;
+      if (cb) {
+          return ref.child(id).once('value', cb);
+      }
+      else {
+          return $firebase(ref.child(id)).$asObject();
+      }
+    },
+
+    create: function(level, cb) {
+      cb = cb|| function(){};
+      if($rootScope.currentUser.isAdmin) {
+        Refs.levels.child(level.$id).set({
+          name: level.name,
+          color: level.color
+        }, cb);
+      }
+    },
+
+    delete: function(level){
+      if($rootScope.currentUser.isAdmin){
+        Refs.levels.child(level.$id).remove();
+      }
+    },
+     update: function(level, cb) {
+      cb = cb || function() {};
+      if($rootScope.currentUser.isAdmin) {
+        Refs.levels.child(level.$id).update({name:level.name, color: level.color}, cb);
+      }
+     }
+
   };  
 };

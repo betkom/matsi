@@ -39,14 +39,7 @@ module.exports = function(Refs, $rootScope, $firebase) {
                 }
             });
         },
-        findOne: function(uid, cb) {
-            if (cb) {
-                return Refs.users.child(uid).once('value', cb);
-            }
-            else {
-                return $firebase(Refs.users.child(uid)).$asObject();
-            }
-        },
+        
         update: function(mentor, cb) {
             if (!$rootScope.currentUser || ($rootScope.currentUser && $rootScope.currentUser.uid != mentor.uid && !$rootScope.currentUser.isAdmin)) {
                 return;

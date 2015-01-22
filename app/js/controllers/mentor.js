@@ -1,6 +1,6 @@
 angular.module("matsi.controllers")
-    .controller("MentorCtrl", ['$rootScope', '$scope', '$cookies', '$state', 'Mentor', '$stateParams', '$location', 'MailService',
-        function($rootScope, $scope, $cookies, $state, Mentor, $stateParams, $location, MailService) {
+    .controller("MentorCtrl", ['$rootScope', '$scope', '$cookies', '$state', 'Mentor', '$stateParams', '$location', 'MailService', 'User', 
+        function($rootScope, $scope, $cookies, $state, Mentor, $stateParams, $location, MailService, User) {
             $scope.checked = false;
             $scope.developer = false;
             $scope.toggleCheck = function() {
@@ -44,7 +44,7 @@ angular.module("matsi.controllers")
 
             $scope.findOne = function() {
                 var uid = $rootScope.currentUser ? ($stateParams.uid || $rootScope.currentUser.uid) : $stateParams.uid;
-                $scope.mentor = Mentor.findOne(uid);
+                $scope.mentor = User.findOne(uid);
             };
 
             $scope.all = function(cb) {

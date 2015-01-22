@@ -12,6 +12,7 @@
     require("./js/services/mail.js");
     require("./js/services/log.js");
     require("./js/services/levels.js");
+    require("./js/services/user.js");
 
     require("./js/services/utils.js");
 
