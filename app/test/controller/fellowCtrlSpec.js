@@ -6,6 +6,7 @@ describe('matsi.controller test', function() {
         MailService,
         rootScope,
         Levels,
+        User,
         ctrl;
     beforeEach(module('Matsi'));
     beforeEach(inject(function($controller, $rootScope, $cookies, $injector) {
@@ -16,6 +17,7 @@ describe('matsi.controller test', function() {
         stateParams = $injector.get('$stateParams');
         rootScope = $injector.get('$rootScope');
         Levels = $injector.get('Levels');
+        User = $injector.get('User');
         ctrl = $controller('FellowCtrl', {
             $scope: scope,
             $rootScope: scope
@@ -69,9 +71,9 @@ describe('matsi.controller test', function() {
         scope.currentUser = {
             uid: 'uid'
         };
-        spyOn(Fellow, 'findOne');
-        scope.findOne();
-        expect(Fellow.findOne).toHaveBeenCalled();
+        spyOn(User, 'find');
+        scope.find();
+        expect(User.find).toHaveBeenCalled();
     });
 
     it('should expect update to have been called', function() {
@@ -97,6 +99,20 @@ describe('matsi.controller test', function() {
 
     });
 
+    it('should expect Levels create to have been called', function(){
+        var levelId = 'id';
+        spyOn(Levels, 'create');
+        scope.createLevel();
+        expect(Levels.create).toHaveBeenCalled();
+    });
+
+    it('should expect Levels update to have been called', function() {
+        var levelId = 'id';
+        spyOn(Levels, 'update');
+        scope.updateLevel();
+        expect(Levels.update).toHaveBeenCalled();
+    });
+
     it('should expect mentorConstraints to have been called', function() {
         stateParams.uid = 'uid';
         spyOn(Fellow, 'mentorConstraint');
@@ -109,6 +125,16 @@ describe('matsi.controller test', function() {
         spyOn(Fellow, 'delete');
         scope.delete(fellowId);
         expect(Fellow.delete).toHaveBeenCalled();
+    });
+
+    it('should expect delete levels to have been called', function() {
+        var levelId = 'id';
+        spyOn(Levels, 'delete');
+        scope.deleteLevel(levelId);
+        expect(Levels.delete).toHaveBeenCalled();
+    });
+    it('should expect scope. levels to be defined', function(){
+        expect(scope.levels).toBeDefined();
     });
 
     it('should expect sendRequest to have been called', function() {

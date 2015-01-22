@@ -4,8 +4,8 @@ angular.module("matsi.directives")
             restrict: 'E',
             replace: true,
             templateUrl: '/shared/notification.html',
-            controller: ['$rootScope','$scope', 'Mentor', 'Fellow', function($rootScope, $scope,  Mentor, Fellow) {
-                    $scope.mentor = Mentor.findOne($scope.user_id);
+            controller: ['$rootScope','$scope', 'User', 'Fellow', function($rootScope, $scope,  User, Fellow) {
+                    $scope.mentor = User.find($scope.user_id);
             }]
         };
     });

@@ -144,17 +144,15 @@ angular.module('matsi.controllers')
                 }
             };
 
-            $scope.findOne = function() {
+            $scope.find = function() {
                 var uid = $rootScope.currentUser ? ($stateParams.uid || $rootScope.currentUser.uid) : $stateParams.uid;
                 if(uid){
-                var fellow = User.findOne(uid);
-                console.log(fellow, 'huh');
+                var fellow = User.find(uid);
                 if (fellow) {
                     fellow.$loaded(function(data) {
                         $scope.fellow = data;
                         $scope.uploadedResult = $scope.fellow.videoUrl;
                         $scope.level = Levels.find(data.level);
-                        console.log($scope.level);
                     });
                 }
             }

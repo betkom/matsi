@@ -1,11 +1,10 @@
-module.exports = function($firebase, $rootScope, Refs) {
+module.exports = function(Refs, $rootScope, $firebase) {
   return {
-		findOne: function(uid, cb) {
+		find: function(uid, cb) {
 		  if (cb) {
 		      return Refs.users.child(uid).once('value', cb);
 		  }
 		  else {
-		  	console.log(Refs.users, 'yipeee');
 		      return $firebase(Refs.users.child(uid)).$asObject();
 		  }
 		},

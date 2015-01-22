@@ -1,4 +1,4 @@
 angular.module("matsi.services")
-  .factory('User', ['$firebase', '$rootScope', 'Refs', function($firebase, $rootScope, Refs) {
-    return require('./exports/user')($firebase,$rootScope,Refs);
+  .factory('User', ['Refs', '$rootScope', '$firebase', function(Refs, $rootScope, $firebase) {
+    return require('./exports/user')(Refs, $rootScope, $firebase);
   }]);

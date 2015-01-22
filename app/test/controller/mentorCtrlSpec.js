@@ -2,6 +2,7 @@ describe('matsi.controller test', function() {
     var scope,
         ctrl,
         Mentor,
+        User,
         MailService,
         mockMentor = {
            uid: 'happy-mentor-id',
@@ -18,6 +19,7 @@ describe('matsi.controller test', function() {
             $scope: scope
         });
         Mentor = $injector.get('Mentor');
+        User = $injector.get('User');
         MailService = $injector.get('MailService');
         $cookies.rootRef = 'https://brilliant-heat-9512.firebaseio.com/';
     }));
@@ -59,10 +61,10 @@ describe('matsi.controller test', function() {
         expect(scope.allCheck).toBe(scope.mentorCheck);
     });
 
-    it('should call Mentor service findOne function', function(){
-        spyOn(Mentor, 'findOne');
-        scope.findOne();
-        expect(Mentor.findOne).toHaveBeenCalled();
+    it('should call Mentor service find function', function(){
+        spyOn(User, 'find');
+        scope.find();
+        expect(User.find).toHaveBeenCalled();
     });
 
     it('should call Mentor service all function', function(){

@@ -1,4 +1,4 @@
-section.content.fellows(ng-init="findOne()")
+section.content.fellows(ng-init="find()")
   .container(ng-if="currentUser.uid && currentUser.uid !== fellow.uid" ng-cloak)
     h3 please edit your profile 
       a(href="fellows/{{currentUser.uid}}/edit") here

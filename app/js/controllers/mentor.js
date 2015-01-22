@@ -42,9 +42,9 @@ angular.module("matsi.controllers")
                 $scope.mentors = mentors.slice(start, end);
             };
 
-            $scope.findOne = function() {
+            $scope.find = function() {
                 var uid = $rootScope.currentUser ? ($stateParams.uid || $rootScope.currentUser.uid) : $stateParams.uid;
-                $scope.mentor = User.findOne(uid);
+                $scope.mentor = User.find(uid);
             };
 
             $scope.all = function(cb) {

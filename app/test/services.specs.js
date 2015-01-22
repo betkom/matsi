@@ -1,12 +1,12 @@
 describe('Fellow Mentor Services Test', function() {
     var Fellow,
         Mentor,
+        User,
         Log,
         httpBackend,
         MailService,
         Refs,
         Utils,
-        Levels,
         mockFellow = {
             uid: 'google:happy-fellow-uid',
             fullName: 'Happy Fellow',
@@ -22,7 +22,8 @@ describe('Fellow Mentor Services Test', function() {
             fullName: 'Happy Mentor',
             email: 'happy-mentor-uid@andela.co',
             picture: 'this is pic url',
-            firstName: 'happy'
+            firstName: 'happy',
+            isAdmin: true
         },
         date = moment(1421678722532).format('YYYY-MM-DD');
     beforeEach(function() {
@@ -31,18 +32,18 @@ describe('Fellow Mentor Services Test', function() {
     beforeEach(inject(function($injector, $httpBackend) {
         Fellow = $injector.get('Fellow');
         Mentor = $injector.get('Mentor');
+        User = $injector.get('User');
         Log = $injector.get('Log');
         MailService = $injector.get('MailService');
         Refs = $injector.get('Refs');
         Utils = $injector.get('Utils');
-        Levels = $injector.get('Levels');
         rootScope = $injector.get('$rootScope');
         httpBackend = $httpBackend;
     }));
     beforeEach(function(done) {
         Refs.users.child(mockMentor.uid).set(mockMentor, function(err) {
             Refs.users.child(mockFellow.uid).set(mockFellow, function(err) {
-                done();
+                  done(); 
             });
         });
     });
@@ -87,7 +88,7 @@ describe('Fellow Mentor Services Test', function() {
             rootScope.currentUser = updateMockFellow;
             Fellow.update(updateMockFellow, function(err) {
                 expect(err).toBe(null);
-                Fellow.findOne(mockFellow.uid, function(snap) {
+                User.find(mockFellow.uid, function(snap) {
                     var fellow = snap.val();
                     expect(fellow).not.toBe(null);
                     expect(fellow.name).not.toBe(mockFellow.name);
@@ -107,7 +108,7 @@ describe('Fellow Mentor Services Test', function() {
         });
 
         it('should get mockFellow by id', function(done) {
-            Fellow.findOne(mockFellow.uid, function(snap) {
+            User.find(mockFellow.uid, function(snap) {
                 var fellow = snap.val();
                 expect(fellow.uid).toBe(mockFellow.uid);
                 done();
@@ -120,11 +121,11 @@ describe('Fellow Mentor Services Test', function() {
                 rootScope.currentUser = mockMentor;
                 Fellow.request(mockFellow, function(err) {
                     expect(err).toBe(null);
-                    Fellow.findOne(mockFellow.uid, function(snap) {
+                    User.find(mockFellow.uid, function(snap) {
                         var fellow = snap.val().requests;
                         fellow = Object.keys(fellow).length;
                         expect(fellow).toBeGreaterThan(0);
-                        Mentor.findOne(rootScope.currentUser.uid, function(snap) {
+                        User.find(rootScope.currentUser.uid, function(snap) {
                             var mentor = snap.val().sentRequests;
                             mentor = Object.keys(mentor).length;
                             expect(mentor).toBeGreaterThan(0);
@@ -138,11 +139,11 @@ describe('Fellow Mentor Services Test', function() {
                 rootScope.currentUser = mockFellow;
                 Fellow.accept(mockMentor, function(err) {
                     expect(err).toBe(null);
-                    Mentor.findOne(mockMentor.uid, function(snap) {
+                    User.find(mockMentor.uid, function(snap) {
                         var mentor = snap.val().fellows;
                         mentor = Object.keys(mentor).length;
                         expect(mentor).toBeGreaterThan(0);
-                        Fellow.findOne(rootScope.currentUser.uid, function(snap) {
+                        User.find(rootScope.currentUser.uid, function(snap) {
                             var fellow = snap.val().mentors;
                             fellow = Object.keys(fellow).length;
                             expect(fellow).toBeGreaterThan(0);
@@ -155,10 +156,10 @@ describe('Fellow Mentor Services Test', function() {
             it('should reject request', function(done) {
                 rootScope.currentUser = mockFellow;
                 Fellow.reject(mockMentor);
-                Fellow.findOne(rootScope.currentUser.uid, function(snap) {
+                User.find(rootScope.currentUser.uid, function(snap) {
                     var fellow = snap.val().requests;
                     expect(fellow).toBeUndefined();
-                    Mentor.findOne(mockMentor.uid, function(snap) {
+                    User.find(mockMentor.uid, function(snap) {
                         var mentor = snap.val().sentRequests;
                         expect(mentor).toBeUndefined();
                         done();
@@ -187,7 +188,7 @@ describe('Fellow Mentor Services Test', function() {
             rootScope.currentUser = updateMockMentor;
             Mentor.update(updateMockMentor, function(err) {
                 expect(err).toBe(null);
-                Mentor.findOne(mockMentor.uid, function(snap) {
+                User.find(mockMentor.uid, function(snap) {
                     var mentor = snap.val();
                     expect(mentor).not.toBe(null);
                     expect(mentor.lastName).toBe(updateMockMentor.lastName);
@@ -214,7 +215,7 @@ describe('Fellow Mentor Services Test', function() {
         });
         it('should enable mentors', function(done) {
             Mentor.enable(mockMentor, function(err) {
-                Mentor.findOne(mockMentor.uid, function(snap) {
+                User.find(mockMentor.uid, function(snap) {
                     var mentor = snap.val();
                     done();
                     expect(mentor.disabled).toBeFalsy();
@@ -258,15 +259,6 @@ describe('Fellow Mentor Services Test', function() {
             afterEach(function() {
                 jasmine.clock().uninstall();
             });
-        });
-        describe('Levels service test', function(){
-          it('should get all levels', function(done){
-              Levels.all(function(snap){
-                var levels = snap.val();
-                expect(levels).toBeDefined();
-                done();
-              });
-          });
         });
     });
 

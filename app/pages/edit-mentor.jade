@@ -1,4 +1,4 @@
-section.content.fellows(ng-init="findOne()")
+section.content.fellows(ng-init="find()")
   .container(ng-if="currentUser.uid !== mentor.uid && currentUser")
     h3 please edit your profile 
       a(href="mentors/{{currentUser.uid}}/edit") here 

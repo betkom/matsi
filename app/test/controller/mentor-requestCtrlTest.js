@@ -1,6 +1,7 @@
 describe('matsi.directives test', function(){
   var Mentor,
       Fellow,
+      User,
       Log,
       Utils,
       scope,
@@ -25,6 +26,7 @@ describe('matsi.directives test', function(){
         });
         Mentor = $injector.get('Mentor');
         Fellow = $injector.get('Fellow');
+        User = $injector.get('User');
         Log = $injector.get('Log');
         Utils = $injector.get('Utils');
         MailService = $injector.get('MailService');

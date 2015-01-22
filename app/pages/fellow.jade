@@ -1,5 +1,5 @@
 div(ng-init="init()" ng-if="currentUser")
-section.content.fellows(ng-init="findOne()")
+section.content.fellows(ng-init="find()")
   .container(ng-if="fellow.role==='-fellow-'" )
     div.alert.alert-warning.clearfix(role='alert' ng-if="currentUser.uid === fellow.uid && fellow.requests")
       span.request-text
