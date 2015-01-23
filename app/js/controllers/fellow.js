@@ -301,15 +301,5 @@ angular.module('matsi.controllers')
                 }, function(evt) {
                 });
             };
-            $scope.createLevel = function(level){
-                console.log(level);
-                Levels.create(level);
-            };
-            $scope.deleteLevel = function(level){
-                Levels.delete(level);
-            };
-            $scope.updateLevel = function(level){
-              Levels.update(level);
-            };
         }
     ]);

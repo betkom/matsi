@@ -98,7 +98,7 @@ Matsi.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', funct
         .state('admin-view', {
             url: '/admin',
             templateUrl: 'pages/admin.html',
-            controller: '',
+            controller: 'MentorCtrl',
             data: {
                 access: 'private'
             }

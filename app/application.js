@@ -1,7 +1,7 @@
 (function() {
     'use strict';
     angular.module("matsi.services", ['firebase', 'ngCookies']);
-    angular.module("matsi.controllers", ['firebase', 'ngCookies', 'ngSanitize', 'angularFileUpload']);
+    angular.module("matsi.controllers", ['firebase', 'ngCookies', 'ngSanitize', 'angularFileUpload', 'ui.bootstrap']);
     angular.module("matsi.directives", ['firebase', 'ngCookies']);
 
     require("./js/config/config.js");
@@ -18,6 +18,7 @@
 
     require("./js/controllers/mentor.js");
     require("./js/controllers/fellow.js");
+    require("./js/controllers/levels.js");
 
     require("./js/directives/mentor-request.js");
     require("./js/directives/my-connections.js");

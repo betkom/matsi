@@ -2,12 +2,11 @@
   h3 You are not an Administrator.
 .container(ng-init="disabled()", ng-if="currentUser.isAdmin === true ")
   h2.light Administrator
-  section(ng-controller="FellowCtrl")
-    ul
-      a(ng-href="create-rank") 
-        li Add Developer Ranks
-      a(ng-href="all-levels")
-        li View Developer Rank
+  ul.rank
+    li
+      a(ng-click="modalCreate(sm)") Add Developer Ranks
+    li
+      a(ng-click="modalPopup(sm)") View Developer Ranks
   hr
   input(type="checkbox" checked=mentorCheck ng-click="checkAll()" ng-if="mentors.length > 1" value="Select All")
   .btn.btn-success.enableAll(ng-click="enableAll(mentors)" ng-if="mentors.length > 1") Enable All
@@ -24,6 +23,6 @@
             h5 {{mentor.fullName}}
             p.text-muted {{mentor.email}}
       .btn.btn-success(ng-click="enable(mentor)") Enable
-    h4.no-result(ng-if="mentors.length < 1") There are currently no disabled Mentor
+  h4.no-result(ng-if="mentors.length < 1") There are currently no disabled Mentor
 
    

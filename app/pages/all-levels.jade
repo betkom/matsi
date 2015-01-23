@@ -1,11 +1,20 @@
-section.content(ng-controller="FellowCtrl")
+span.glyphicon.glyphicon-remove.pull-right(ng-click="ok()")
+section.content
 	.container
 		.unit-wrap
 			.col-md-8(ng-repeat="level in levels")
-				a(ng-click="deleteLevel(level)")
-					i.fa.fa-trash
-				a(ng-click="updateLevel(level)")
-					i.fa.fa-pencil-square-o
-				input(type="text" ng-model="level.name")
-				input(type="text" ng-model="level.color")
-				span{{level.$id}}
+				.row
+					.col-md-4
+						.form-group
+							input.form-control(type="text" ng-model="level.name")
+					.col-md-4
+						.form-group
+							input.form-control(type="text" ng-model="level.color")
+					.col-md-2
+						.form-group
+							a(ng-click="deleteLevel(level)")
+								i.fa.fa-trash.fa-lg
+					.col-md-2
+						.form-group
+							a(ng-click="updateLevel(level)")
+								i.fa.fa-pencil-square-o.fa-lg

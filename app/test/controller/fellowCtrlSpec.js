@@ -99,20 +99,6 @@ describe('matsi.controller test', function() {
 
     });
 
-    it('should expect Levels create to have been called', function(){
-        var levelId = 'id';
-        spyOn(Levels, 'create');
-        scope.createLevel();
-        expect(Levels.create).toHaveBeenCalled();
-    });
-
-    it('should expect Levels update to have been called', function() {
-        var levelId = 'id';
-        spyOn(Levels, 'update');
-        scope.updateLevel();
-        expect(Levels.update).toHaveBeenCalled();
-    });
-
     it('should expect mentorConstraints to have been called', function() {
         stateParams.uid = 'uid';
         spyOn(Fellow, 'mentorConstraint');
@@ -125,13 +111,6 @@ describe('matsi.controller test', function() {
         spyOn(Fellow, 'delete');
         scope.delete(fellowId);
         expect(Fellow.delete).toHaveBeenCalled();
-    });
-
-    it('should expect delete levels to have been called', function() {
-        var levelId = 'id';
-        spyOn(Levels, 'delete');
-        scope.deleteLevel(levelId);
-        expect(Levels.delete).toHaveBeenCalled();
     });
     it('should expect scope. levels to be defined', function(){
         expect(scope.levels).toBeDefined();

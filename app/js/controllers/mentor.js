@@ -1,12 +1,12 @@
 angular.module("matsi.controllers")
-    .controller("MentorCtrl", ['$rootScope', '$scope', '$cookies', '$state', 'Mentor', '$stateParams', '$location', 'MailService', 'User', 
-        function($rootScope, $scope, $cookies, $state, Mentor, $stateParams, $location, MailService, User) {
+    .controller("MentorCtrl", ['$rootScope', '$scope', '$cookies', '$state', 'Mentor', '$stateParams', '$location', 'MailService', 'User', '$modal', '$log',
+        function($rootScope, $scope, $cookies, $state, Mentor, $stateParams, $location, MailService, User, $modal, $log) {
             $scope.checked = false;
             $scope.developer = false;
             $scope.toggleCheck = function() {
                 $scope.checked = !$scope.checked;
             };
-            
+
             //Pagination
             var start = 0,
                 end = 0,
@@ -100,24 +100,38 @@ angular.module("matsi.controllers")
             $scope.allCheck = false;
             // check all checkboxes
             $scope.checkAll = function() {
-                    $scope.mentorCheck = !$scope.mentorCheck;
-                    if($scope.mentorCheck){
-                        $scope.allCheck = true;
-                    }else{
-                        $scope.allCheck = false;
-                    }
+                $scope.mentorCheck = !$scope.mentorCheck;
+                if ($scope.mentorCheck) {
+                    $scope.allCheck = true;
+                } else {
+                    $scope.allCheck = false;
+                }
                 angular.forEach($scope.mentors, function(mentor) {
                     $scope.allCheck = $scope.mentorCheck;
                 });
             };
             // Activate all deactivated mentor account
-            $scope.enableAll = function(mentors){
-                if($scope.mentorCheck){
-                    angular.forEach($scope.mentors, function(mentor){
-                         Mentor.enable(mentor);
+            $scope.enableAll = function(mentors) {
+                if ($scope.mentorCheck) {
+                    angular.forEach($scope.mentors, function(mentor) {
+                        Mentor.enable(mentor);
                         $scope.sendMessage(mentor);
                     });
                 }
+            };
+            $scope.modalCreate = function(size) {
+                var modalInstance = $modal.open({
+                    templateUrl: '/pages/create-rank.html',
+                    controller: 'LevelCtrl',
+                    size: size,
+                });
+            };
+            $scope.modalPopup = function(size){
+              var modalInstance = $modal.open({
+                    templateUrl: '/pages/all-levels.html',
+                    controller: 'LevelCtrl',
+                    size: size,
+                });
             };
         }
     ]);
