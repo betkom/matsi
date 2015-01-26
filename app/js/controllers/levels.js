@@ -8,7 +8,6 @@ angular.module('matsi.controllers')
             });
 
             $scope.createLevel = function(level) {
-                console.log(level);
                 Levels.create(level);
                 $modalInstance.close(level);
             };

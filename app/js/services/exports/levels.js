@@ -8,7 +8,6 @@ module.exports = function($firebase, $rootScope, Refs) {
               return $firebase(Refs.levels).$asArray();
             }
         },
-
     find: function(id, cb) {
       var ref = Refs.levels;
       if (cb) {
