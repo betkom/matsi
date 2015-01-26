@@ -4,7 +4,24 @@ angular.module('matsi.controllers')
             //get code and redirect if current url is smarterer callback url
             $scope.fileUploaded = false;
             $scope.fileLoading = false;
+
             $scope.init = function() {
+                if($location.absUrl().toString().indexOf('fellows/?code=') > -1) {
+                    console.log($location.absUrl());
+                    var param = {};
+                    var url = '/smarterer/code/';
+                    Fellow.backEndPost(url, param, function(res) {
+                        var data = {
+                        };
+                        Fellow.update(data);
+                        var info = '';
+                        var pic = '';
+                        Log.save(info,pic);
+                        console.log($rootScope.currentUser.uid);
+                        $location.path('fellows/' + $rootScope.currentUser.uid);
+                    });
+                }
+                /*
               if($location.absUrl().toString().indexOf('fellows/?code=') > -1) {
                 var code = $location.search().code;
                 var param = {
@@ -20,10 +37,12 @@ angular.module('matsi.controllers')
                     var info = $rootScope.currentUser.fullName + ' updated Smarterer badges ';
                     var pic = 'fa fa-upload fa-fw';
                     Log.save(info,pic);
-                    $location.path('fellows/' + $rootScope.currentUser.uid);
+                   
                 });
-            }
+*/
+          //   }
           };
+
            //Smarterer & plum Checkbox
             $scope.smartererCheck = false;
             $scope.plumCheck = false;
@@ -160,7 +179,9 @@ angular.module('matsi.controllers')
             };
 
             $scope.delete = function(fellowId) {
-                Fellow.delete(fellowId);
+                Fellow.delete(fellowId, function() {
+                    
+                });
                 //window.location.reload();
             };
 
