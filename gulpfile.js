@@ -49,7 +49,7 @@ var paths = {
       'public/lib/angular-animate/angular-animate.js',
       'public/lib/angular-sanitize/angular-sanitize.js',
       'public/lib/angularfire/dist/angularfire.js',
-      'public/lib/lodash/dist/lodash.min.js',
+      'public/lib/lodash/lodash.min.js',
       'public/js/index.js',
       'app/test/**/*.js'
     ],
