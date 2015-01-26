@@ -2,14 +2,14 @@
   "name": "skilltree",
   "dependencies": {
     "angular": "1.3.*",
-    "angular-animate": "latest",
-    "angular-aria": "latest",
-    "angular-cookies": "latest",
-    "angular-mocks": "latest",
+    "angular-animate": "^1.3.0",
+    "angular-aria": "^1.3.0",
+    "angular-cookies": "1.3.8",
+    "angular-mocks": "^1.3.4",
     "angular-bootstrap": "~0.11.0",
     "angular-ui-router": "~0.2.11",
-    "angular-material": "latest",
-    "angularfire": "latest",
+    "angular-material": "0.6.1",
+    "angularfire": "0.8.2",
     "firebase": "2.0.4",
     "lodash": "~3.0.0",
     "moment": "^2.8.2",
@@ -17,7 +17,7 @@
     "angular-sanitize": "~1.3.8"
   },
   "resolutions": {
-    "angular": "1.3.6",
+    "angular": "1.3.8",
     "firebase": "2.0.x"
   },
   "devDependencies": {
