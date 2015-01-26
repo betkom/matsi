@@ -7,10 +7,13 @@ describe('matsi.controller test', function() {
         rootScope,
         Levels,
         User,
-        ctrl;
+        ctrl,
+        $location,
+        $httpBackend;
     beforeEach(module('Matsi'));
     beforeEach(inject(function($controller, $rootScope, $cookies, $injector) {
-        scope = $rootScope;
+        $httpBackend = $injector.get('$httpBackend');
+        scope = $rootScope.$new();
         Fellow = $injector.get('Fellow');
         Log = $injector.get('Log');
         MailService = $injector.get('MailService');
@@ -18,12 +21,47 @@ describe('matsi.controller test', function() {
         rootScope = $injector.get('$rootScope');
         Levels = $injector.get('Levels');
         User = $injector.get('User');
+        $location = $injector.get('$location');
         ctrl = $controller('FellowCtrl', {
             $scope: scope,
             $rootScope: scope
         });
         $cookies.rootRef = 'https://brilliant-heat-9512.firebaseio.com/';
     }));
+
+    describe('init', function(){
+        describe('when URL contains a code', function() {
+            it('should call backecnd post', function(){
+
+                rootScope.currentUser = {
+                    uid: 'uid'
+                };
+             
+                $httpBackend.expect('POST', '/smarterer/code/').respond({});
+                $httpBackend.expect('GET', 'pages/home.html').respond({});
+                spyOn($location, 'absUrl').and.returnValue('fellows/?code=12345');
+                
+                spyOn(Fellow, 'update');
+                spyOn(Log, 'save');
+                scope.init();
+                $httpBackend.flush();
+                expect(Fellow.update).toHaveBeenCalled();
+                expect(Log.save).toHaveBeenCalled();
+            });
+
+        });
+
+
+        describe('when URL does not contain a code', function() {
+            it('should not call backecnd post', function(){
+                spyOn($location, 'absUrl').and.returnValue('fellows/12345');
+                spyOn(Fellow, 'backEndPost');
+                scope.init();
+                expect(Fellow.backEndPost).not.toHaveBeenCalled();
+
+            });
+        });
+    });
 
     it('should expect backEndPost to have been called', function() {
         scope.fellow = {};
