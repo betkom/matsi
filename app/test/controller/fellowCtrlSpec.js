@@ -34,13 +34,13 @@ describe('matsi.controller test', function() {
             it('should call backecnd post', function(){
 
                 rootScope.currentUser = {
-                    uid: 'uid'
+                    uid: 'uid',
+                    fullName: 'Happy fellow'
                 };
              
                 $httpBackend.expect('POST', '/smarterer/code/').respond({});
                 $httpBackend.expect('GET', 'pages/home.html').respond({});
-                spyOn($location, 'absUrl').and.returnValue('fellows/?code=12345');
-                
+                spyOn($location, 'absUrl').and.returnValue('fellows/?code=12345'); 
                 spyOn(Fellow, 'update');
                 spyOn(Log, 'save');
                 scope.init();
@@ -50,8 +50,6 @@ describe('matsi.controller test', function() {
             });
 
         });
-
-
         describe('when URL does not contain a code', function() {
             it('should not call backecnd post', function(){
                 spyOn($location, 'absUrl').and.returnValue('fellows/12345');
@@ -63,14 +61,22 @@ describe('matsi.controller test', function() {
         });
     });
 
-    it('should expect backEndPost to have been called', function() {
-        scope.fellow = {};
-        scope.fellow.plumEmail = 'this is plumEmail';
-        scope.fellow.firstName = 'this is fname';
-        scope.fellow.lastName = 'this is lname';
+    iit('should expect backEndPost to have been called', function() {
+        scope.fellow = {
+          uid: 'google:244563632',
+          plumEmail: 'this is plumEmail',
+          firstName:'this is fname',
+          lastName: 'this is lname',
+          fullName: 'happy fellow'
+        };
+        // $httpBackend.expect('GET', 'pages/home.html').respond({});
+        // $httpBackend.expect('POST', '/plum/api/').respond({});
         spyOn(Fellow, 'backEndPost');
+        //spyOn(Fellow, 'update');
+        //$httpBackend.flush();
         scope.plum();
         expect(Fellow.backEndPost).toHaveBeenCalled();
+        //expect(Fellow.update).toHaveBeenCalled();
     });
     it('should clear the date', function() {
         scope.dt = '2014-01-03';

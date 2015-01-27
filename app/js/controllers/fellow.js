@@ -1,49 +1,32 @@
 angular.module('matsi.controllers')
-    .controller("FellowCtrl", ['$rootScope', '$scope', '$cookies', '$upload', '$sce', 'Fellow', '$http', '$stateParams', 'Mentor', 'MailService', '$mdDialog', '$mdToast', '$location', 'Utils', '$timeout', 'Log', '$state', 'Levels', 'User', 
+    .controller("FellowCtrl", ['$rootScope', '$scope', '$cookies', '$upload', '$sce', 'Fellow', '$http', '$stateParams', 'Mentor', 'MailService', '$mdDialog', '$mdToast', '$location', 'Utils', '$timeout', 'Log', '$state', 'Levels', 'User',
         function($rootScope, $scope, $cookies, $upload, $sce, Fellow, $http, $stateParams, Mentor, MailService, $mdDialog, $mdToast, $location, Utils, $timeout, Log, $state, Levels, User) {
             //get code and redirect if current url is smarterer callback url
             $scope.fileUploaded = false;
             $scope.fileLoading = false;
 
             $scope.init = function() {
-                if($location.absUrl().toString().indexOf('fellows/?code=') > -1) {
-                    console.log($location.absUrl());
-                    var param = {};
+                if ($location.absUrl().toString().indexOf('fellows/?code=') > -1) {
+                    var code = $location.search().code;
+                    var param = {
+                        code: code
+                    };
                     var url = '/smarterer/code/';
                     Fellow.backEndPost(url, param, function(res) {
                         var data = {
+                            uid: $rootScope.currentUser.uid,
+                            badges: res.badges
                         };
                         Fellow.update(data);
-                        var info = '';
-                        var pic = '';
-                        Log.save(info,pic);
-                        console.log($rootScope.currentUser.uid);
+                        var info = $rootScope.currentUser.fullName + ' updated Smarterer badges ';
+                        var pic = 'fa fa-upload fa-fw';
+                        Log.save(info, pic);
                         $location.path('fellows/' + $rootScope.currentUser.uid);
                     });
                 }
-                /*
-              if($location.absUrl().toString().indexOf('fellows/?code=') > -1) {
-                var code = $location.search().code;
-                var param = {
-                    code: code
-                };
-                var url = '/smarterer/code/';
-                Fellow.backEndPost(url, param, function(res) {
-                    var data = {
-                        uid: $rootScope.currentUser.uid,
-                        badges: res.badges
-                    };
-                    Fellow.update(data);
-                    var info = $rootScope.currentUser.fullName + ' updated Smarterer badges ';
-                    var pic = 'fa fa-upload fa-fw';
-                    Log.save(info,pic);
-                   
-                });
-*/
-          //   }
-          };
+            };
 
-           //Smarterer & plum Checkbox
+            //Smarterer & plum Checkbox
             $scope.smartererCheck = false;
             $scope.plumCheck = false;
             $scope.toggleCheck = function(val) {
@@ -53,7 +36,7 @@ angular.module('matsi.controllers')
                     $scope.plumCheck = !$scope.plumCheck;
                 }
             };
-        
+
             // plum api integrations
             $scope.plum = function() {
                 var param = {
@@ -165,22 +148,22 @@ angular.module('matsi.controllers')
 
             $scope.find = function() {
                 var uid = $rootScope.currentUser ? ($stateParams.uid || $rootScope.currentUser.uid) : $stateParams.uid;
-                if(uid){
-                var fellow = User.find(uid);
-                if (fellow) {
-                    fellow.$loaded(function(data) {
-                        $scope.fellow = data;
-                        $scope.uploadedResult = $scope.fellow.videoUrl;
-                        $scope.level = Levels.find(data.level);
-                    });
+                if (uid) {
+                    var fellow = User.find(uid);
+                    if (fellow) {
+                        fellow.$loaded(function(data) {
+                            $scope.fellow = data;
+                            $scope.uploadedResult = $scope.fellow.videoUrl;
+                            $scope.level = Levels.find(data.level);
+                        });
+                    }
                 }
-            }
                 this.showMessageBox = true;
             };
 
             $scope.delete = function(fellowId) {
                 Fellow.delete(fellowId, function() {
-                    
+
                 });
                 //window.location.reload();
             };
@@ -211,8 +194,8 @@ angular.module('matsi.controllers')
                         if ($scope.smartererCheck) {
                             // request smarterer authorization
                             window.location.href = 'https://smarterer.com/oauth/authorize?client_id=b30a2803ffe34bc68a6fe7757b039468&callback_url=http%3A%2F%2Fmatsi.herokuapp.com%2Ffellows%2F';
-                        }else{
-                             $location.path('fellows/' + $rootScope.currentUser.uid);
+                        } else {
+                            $location.path('fellows/' + $rootScope.currentUser.uid);
                         }
                     });
                 }
@@ -278,15 +261,15 @@ angular.module('matsi.controllers')
             $scope.onFileSelect = function($files, $index) {
                 $scope.fileUploaded = true;
                 $scope.files = $files;
-                 if($scope.files[0].size < 7000000 && ($scope.files[0].type === 'video/mp4' || $scope.files[0].type ==='video/mkv' || $scope.files[0].type === 'video/wmv')){
+                if ($scope.files[0].size < 7000000 && ($scope.files[0].type === 'video/mp4' || $scope.files[0].type === 'video/mkv' || $scope.files[0].type === 'video/wmv')) {
                     $scope.videoFiles = [];
                     $scope.correctFormat = true;
                     $scope.changeSize = false;
                     if ($scope.files) {
                         $scope.start(0, $index);
                     }
-                }else{
-                  $scope.changeSize = true;
+                } else {
+                    $scope.changeSize = true;
                 }
             };
             $scope.start = function(indexOftheFile, $index) {
@@ -319,8 +302,7 @@ angular.module('matsi.controllers')
                 }, function(response) {
                     if (response.status > 0) $scope.errorMsg = response.status + ': ' + response.data;
                     alert('Connection Timed out');
-                }, function(evt) {
-                });
+                }, function(evt) {});
             };
         }
     ]);
