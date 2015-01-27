@@ -61,7 +61,7 @@ describe('matsi.controller test', function() {
         });
     });
 
-    iit('should expect backEndPost to have been called', function() {
+    it('should expect backEndPost to have been called', function() {
         scope.fellow = {
           uid: 'google:244563632',
           plumEmail: 'this is plumEmail',
