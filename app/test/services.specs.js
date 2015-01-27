@@ -115,6 +115,15 @@ describe('Fellow Mentor Services Test', function() {
             });
         });
 
+        // it('Should get all users', function(done) {
+        //     User.all(function(snap) {
+        //         var usersArray = snap.val();
+        //         var users = usersArray.length;
+        //         expect(users).toBeGreaterThan(1);
+        //         done();
+        //     });
+        // }); 
+// });
 
         describe('make request and accept or reject request', function() {
             it('should send request to mockFellow', function(done) {
