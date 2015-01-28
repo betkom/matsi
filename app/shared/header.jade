@@ -37,3 +37,16 @@ nav.navbar.navbar-static-top(role='navigation')
               a(ng-click='editProfile()') Edit Profile
             li
               a(ng-click="logout()") Logout
+
+        li.dropdown(ng-if='currentUser')
+            form.navbar-form.navbar-left(role='search')
+                .form-group
+                  input.form-control(type='text', placeholder='Search')
+                |         
+                button.btn.btn-default(type='submit') Submit
+              |           
+              ul.dropdown-menu(role='menu')
+                li
+                  a(ng-click='profile()') My Profile
+
+
