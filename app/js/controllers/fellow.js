@@ -17,6 +17,7 @@ angular.module('matsi.controllers')
                             uid: $rootScope.currentUser.uid,
                             badges: res.badges
                         };
+                        console.log(data, 'data from smarterer');
                         Fellow.update(data);
                         var info = $rootScope.currentUser.fullName + ' updated Smarterer badges ';
                         var pic = 'fa fa-upload fa-fw';
@@ -30,10 +31,16 @@ angular.module('matsi.controllers')
             $scope.smartererCheck = false;
             $scope.plumCheck = false;
             $scope.toggleCheck = function(val) {
-                if (val === "smarterer") {
+              console.log($scope.smartererCheck, 'first smarterer');
+              console.log($scope.plumCheck, 'first plum');
+                if (val === "smarterer"){
                     $scope.smartererCheck = !$scope.smartererCheck;
+                    console.log($scope.smartererCheck, 'second smarterer');
+                    console.log($scope.plumCheck, 'second plum');
                 } else {
                     $scope.plumCheck = !$scope.plumCheck;
+                    console.log($scope.smartererCheck, 'third smarterer');
+                    console.log($scope.plumCheck, 'third plum');
                 }
             };
 
@@ -50,7 +57,7 @@ angular.module('matsi.controllers')
                         uid: $scope.fellow.uid,
                         plumBadges: res.candidates[0].badges
                     };
-                    console.log(res);
+                    console.log(data, 'data');
                     Fellow.update(data);
                     var info = $scope.fellow.fullName + ' updated plum Badges ';
                     var pic = 'fa fa-upload fa-fw';
@@ -192,13 +199,13 @@ angular.module('matsi.controllers')
                             );
                         }
                         if ($scope.plumCheck) {
+                          console.log('plum');
                             $scope.plum();
                         }
                         if ($scope.smartererCheck) {
+                            console.log('smarterer');
                             // request smarterer authorization
                             window.location.href = 'https://smarterer.com/oauth/authorize?client_id=b30a2803ffe34bc68a6fe7757b039468&callback_url=http%3A%2F%2Fmatsi.herokuapp.com%2Ffellows%2F';
-                        } else {
-                            $location.path('fellows/' + $rootScope.currentUser.uid);
                         }
                     });
                 }
