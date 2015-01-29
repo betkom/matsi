@@ -9,7 +9,7 @@ describe('matsi.controller test', function() {
         User,
         ctrl,
         $location,
-        $httpBackend,
+        $httpBackend;
         //timeout;
     beforeEach(module('Matsi'));
     beforeEach(inject(function($controller, $rootScope, $cookies, $injector, $timeout) {
