@@ -31,7 +31,7 @@ angular.module("matsi.controllers")
             $scope.navigate = function(page) {
                 currentPage = page;
                 $scope.currentPage = currentPage;
-                mentorsFilter();
+                $scope.mentorsFilter();
             };
             var lastPage = function() {
                 return Math.ceil(mentors.length / numPerPage);
@@ -120,14 +120,14 @@ angular.module("matsi.controllers")
                 }
             };
             $scope.modalCreate = function(size) {
-                var modalInstance = $modal.open({
+                $scope.modalInstance = $modal.open({
                     templateUrl: '/pages/create-rank.html',
                     controller: 'LevelCtrl',
                     size: size,
                 });
             };
             $scope.modalPopup = function(size){
-              var modalInstance = $modal.open({
+              $scope.modalInstance = $modal.open({
                     templateUrl: '/pages/all-levels.html',
                     controller: 'LevelCtrl',
                     size: size,

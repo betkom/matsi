@@ -9,9 +9,10 @@ describe('matsi.controller test', function() {
         User,
         ctrl,
         $location,
-        $httpBackend;
+        $httpBackend,
+        //timeout;
     beforeEach(module('Matsi'));
-    beforeEach(inject(function($controller, $rootScope, $cookies, $injector) {
+    beforeEach(inject(function($controller, $rootScope, $cookies, $injector, $timeout) {
         $httpBackend = $injector.get('$httpBackend');
         scope = $rootScope.$new();
         Fellow = $injector.get('Fellow');
@@ -22,21 +23,24 @@ describe('matsi.controller test', function() {
         Levels = $injector.get('Levels');
         User = $injector.get('User');
         $location = $injector.get('$location');
+         rootScope.currentUser = {
+                    uid: 'uid',
+                    fullName: 'Happy fellow'
+                };
         ctrl = $controller('FellowCtrl', {
             $scope: scope,
             $rootScope: scope
         });
+        timeout = $timeout(5000);
         $cookies.rootRef = 'https://brilliant-heat-9512.firebaseio.com/';
     }));
+    // beforeEach(inject(function(){
+
+    // }));
 
     describe('init', function(){
         describe('when URL contains a code', function() {
             it('should call backecnd post', function(){
-
-                rootScope.currentUser = {
-                    uid: 'uid',
-                    fullName: 'Happy fellow'
-                };
              
                 $httpBackend.expect('POST', '/smarterer/code/').respond({});
                 $httpBackend.expect('GET', 'pages/home.html').respond({});
@@ -61,6 +65,18 @@ describe('matsi.controller test', function() {
         });
     });
 
+    // describe('all fellows', function(){
+    //   it('should get fellow', function(){
+    //     spyOn(User, 'find');
+    //     timeout(function(){
+    //         scope.find().then(function(){
+
+    //         });
+    //     });
+    //     expect(scope.fellow).toBeDefined();
+    //   });
+    // });
+
     it('should expect backEndPost to have been called', function() {
         scope.fellow = {
           uid: 'google:244563632',
@@ -69,14 +85,18 @@ describe('matsi.controller test', function() {
           lastName: 'this is lname',
           fullName: 'happy fellow'
         };
-        // $httpBackend.expect('GET', 'pages/home.html').respond({});
-        // $httpBackend.expect('POST', '/plum/api/').respond({});
-        spyOn(Fellow, 'backEndPost');
-        //spyOn(Fellow, 'update');
-        //$httpBackend.flush();
+        $httpBackend.expect('POST', '/plum/api/').respond({
+          candidates: [
+            fellow = {
+              badges: ''
+            }
+          ]
+        });
+        $httpBackend.expect('GET', 'pages/home.html').respond({});
+        spyOn(Fellow, 'update');
         scope.plum();
-        expect(Fellow.backEndPost).toHaveBeenCalled();
-        //expect(Fellow.update).toHaveBeenCalled();
+        $httpBackend.flush();
+        expect(Fellow.update).toHaveBeenCalled();
     });
     it('should clear the date', function() {
         scope.dt = '2014-01-03';
@@ -96,21 +116,26 @@ describe('matsi.controller test', function() {
         scope.fellowsFilter();
         expect(scope.fellows.length).toBe(0);
     });
-    // it('should call filter', function(){
-    //     var start = 0,
-    //             end = 0,
-    //             currentPage = 1,
-    //             numPerPage = 2,
-    //             fellowsOnpage = [
-    //             scope.fellow1 = {},
-    //             scope.fellow2 = {}
-    //             ],
-    //             lastIndexOfFellows = 0;
-    //             scope1 = jasmine.createSpyObj('scope', ['fellowsFilter']);
-    //             scope.shuffle();
-    //             expect(scope1.fellowsFilter).toHaveBeenCalled();
+    it('should call filter', function(){
+        var start = 0,
+                end = 0,
+                currentPage = 1,
+                numPerPage = 2,
+                fellowsOnpage = [
+                scope.fellow1 = {},
+                scope.fellow2 = {}
+                ],
+                lastIndexOfFellows = 0;
+                spyOn(scope, 'fellowsFilter');
+                scope.shuffle();
+                expect(scope.fellowsFilter).toBeDefined();
 
-    // });
+    });
+    it('should get current Page', function(){
+        var page = 1;
+        scope.navigate(page);
+        expect(scope.currentPage).toBe(1);
+    });
     it('should expect findOne to have been called', function() {
         scope.currentUser = {
             uid: 'uid'

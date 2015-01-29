@@ -42,6 +42,26 @@ describe('matsi.controller test', function() {
         scope.mentorsFilter();
         expect(scope.mentors.length).toBe(0);
     });
+    it('should call filter', function(){
+        var start = 0,
+            end = 0,
+            currentPage = 1,
+            numPerPage = 2,
+            mentors = [
+            scope.mentor1 = {},
+            scope.mentor2 = {}
+            ],
+            lastIndexOfMentors = 0;
+            spyOn(scope, 'mentorsFilter');
+            scope.shuffle();
+            expect(scope.mentorsFilter).toBeDefined();
+
+    });
+    it('should get current Page', function(){
+        var page = 1;
+        scope.navigate(page);
+        expect(scope.currentPage).toBe(1);
+    });
 
     it('should expect checkAll to check all checkbox', function(){
         scope.mentorCheck = false;
@@ -125,5 +145,10 @@ describe('matsi.controller test', function() {
         spyOn(MailService, 'send');
         scope.sendMessage(scope.mentor);
         expect(MailService.send).toHaveBeenCalled();
+    });
+    it('should expect modal Instance to be defined', function(){
+      var sm = 'sm';
+      scope.modalCreate(sm);
+      expect(scope.modalInstance).toBeDefined();
     });
 });

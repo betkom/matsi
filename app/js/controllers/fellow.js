@@ -27,6 +27,29 @@ angular.module('matsi.controllers')
                 }
             };
 
+                        // plum api integrations
+            $scope.plum = function() {
+                var param = {
+                    email: $scope.fellow.plumEmail,
+                    fname: $scope.fellow.firstName,
+                    lname: $scope.fellow.lastName
+                };
+                var url = '/plum/api/';
+                Fellow.backEndPost(url, param, function(res) {
+                  
+                    var data = {
+                        uid: $scope.fellow.uid,
+                        plumBadges: res.candidates[0].badges
+                    };
+                    console.log(data, 'data');
+                    Fellow.update(data);
+                    var info = $scope.fellow.fullName + ' updated plum Badges ';
+                    var pic = 'fa fa-upload fa-fw';
+                    Log.save(info, pic);
+
+                });
+            };
+
             //Smarterer & plum Checkbox
             $scope.smartererCheck = false;
             $scope.plumCheck = false;
@@ -44,26 +67,7 @@ angular.module('matsi.controllers')
                 }
             };
 
-            // plum api integrations
-            $scope.plum = function() {
-                var param = {
-                    email: $scope.fellow.plumEmail,
-                    fname: $scope.fellow.firstName,
-                    lname: $scope.fellow.lastName
-                };
-                var url = '/plum/api/';
-                Fellow.backEndPost(url, param, function(res) {
-                    var data = {
-                        uid: $scope.fellow.uid,
-                        plumBadges: res.candidates[0].badges
-                    };
-                    console.log(data, 'data');
-                    Fellow.update(data);
-                    var info = $scope.fellow.fullName + ' updated plum Badges ';
-                    var pic = 'fa fa-upload fa-fw';
-                    Log.save(info, pic);
-                });
-            };
+
             //Developer rank
             $scope.levels = Levels.all().$loaded(function(val) {
                 $scope.levels = val;
@@ -123,6 +127,7 @@ angular.module('matsi.controllers')
             };
             $scope.navigate = function(page) {
                 currentPage = page;
+                console.log(currentPage, 'current page');
                 $scope.currentPage = currentPage;
                 $scope.fellowsFilter();
             };
@@ -156,8 +161,10 @@ angular.module('matsi.controllers')
             $scope.find = function() {
                 var uid = $rootScope.currentUser ? ($stateParams.uid || $rootScope.currentUser.uid) : $stateParams.uid;
                 if (uid) {
+                  console.log(uid, 'uid');
                     var fellow = User.find(uid);
                     if (fellow) {
+                      console.log(fellow, 'fellow');
                         fellow.$loaded(function(data) {
                             $scope.fellow = data;
                             $scope.uploadedResult = $scope.fellow.videoUrl;
@@ -206,6 +213,8 @@ angular.module('matsi.controllers')
                             console.log('smarterer');
                             // request smarterer authorization
                             window.location.href = 'https://smarterer.com/oauth/authorize?client_id=b30a2803ffe34bc68a6fe7757b039468&callback_url=http%3A%2F%2Fmatsi.herokuapp.com%2Ffellows%2F';
+                        }else{
+                          $location.path('fellows/' + $rootScope.currentUser.uid);
                         }
                     });
                 }
