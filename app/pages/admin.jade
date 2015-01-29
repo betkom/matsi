@@ -7,10 +7,8 @@
       a(ng-click="modalCreate(sm)") Add Developer Ranks
     li
       a(ng-click="modalPopup(sm)") View Developer Ranks
-  hr
   input(type="checkbox" checked=mentorCheck ng-click="checkAll()" ng-if="mentors.length > 1" value="Select All")
   .btn.btn-success.enableAll(ng-click="enableAll(mentors)" ng-if="mentors.length > 1") Enable All
-  hr
   .row
     .col-xs-6.col-sm-3(ng-repeat='mentor in mentors')
       input(type="checkbox" checked=allCheck ng-model="allCheck" ng-click="toggleCheck()")
