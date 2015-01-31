@@ -52,4 +52,5 @@ section.content.fellows
           hr
           .row
             my-connections(info="fellow" ng-repeat ="(user_id, user) in mentor.fellows")
-
+        .row
+          .col-md-2.btn.btn-danger.delete.pull-right(ng-click="confirmation(sm)" ng-if="currentUser.isAdmin") Delete User

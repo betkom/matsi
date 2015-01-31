@@ -116,6 +116,14 @@ Matsi.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', funct
             data: {
                 access: 'public'
             }
+        })
+        .state('delete-confirmation', {
+            url: '/delete-confirmation',
+            templateUrl: 'pages/delete-confirmation.html',
+            controller: 'FellowCtrl',
+            data: {
+                access: 'private'
+            }
         });
     $urlRouterProvider.otherwise("/");
 }]);

@@ -1,0 +1,10 @@
+//- md-dialog(ng-controller="DialogCtrl")
+//-   md-content
+//-     md-subheader Confirmation
+//-     p Are you sure you want to delete the user? click 'I Agree'
+//-   div.md-actions   
+//-     md-button(ng-click="answer('Agree')") I Agree   
+span.glyphicon.glyphicon-remove.pull-right(ng-click="ok()")
+section.content
+  .col-md-8 Are you sure you want delete the user? Click Yes
+  .btn.btn-danger.pull-right(ng-click="delete(fellow)") Yes	

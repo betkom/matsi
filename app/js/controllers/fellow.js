@@ -1,6 +1,6 @@
 angular.module('matsi.controllers')
-    .controller("FellowCtrl", ['$rootScope', '$scope', '$cookies', '$upload', '$sce', 'Fellow', '$http', '$stateParams', 'Mentor', 'MailService', '$mdDialog', '$mdToast', '$location', 'Utils', '$timeout', 'Log', '$state', 'Levels', 'User',
-        function($rootScope, $scope, $cookies, $upload, $sce, Fellow, $http, $stateParams, Mentor, MailService, $mdDialog, $mdToast, $location, Utils, $timeout, Log, $state, Levels, User) {
+    .controller("FellowCtrl", ['$rootScope', '$scope', '$cookies', '$upload', '$sce', 'Fellow', '$http', '$stateParams', 'Mentor', 'MailService', '$mdDialog', '$mdToast', '$location', 'Utils', '$timeout', 'Log', '$state', 'Levels', 'User', '$modal',
+        function($rootScope, $scope, $cookies, $upload, $sce, Fellow, $http, $stateParams, Mentor, MailService, $mdDialog, $mdToast, $location, Utils, $timeout, Log, $state, Levels, User, $modal) {
             //get code and redirect if current url is smarterer callback url
             $scope.fileUploaded = false;
             $scope.fileLoading = false;
@@ -178,10 +178,24 @@ angular.module('matsi.controllers')
                 this.showMessageBox = true;
             };
 
-            $scope.delete = function(fellowId) {
-                Fellow.delete(fellowId, function() {
-
+            $scope.confirmation = function(size) {
+              $scope.modalInstance = $modal.open({
+                  templateUrl: '/pages/delete-confirmation.html',
+                  controller: 'FellowCtrl',
+                  size: size,
+                  scope: $scope
                 });
+            };
+
+            $scope.ok = function() {
+              $scope.modalInstance.close();
+            };
+
+            $scope.delete = function(fellow) {
+                Fellow.delete(fellow);
+                $scope.modalInstance.close();
+                // window.location = location.path('/mentors');
+                $location.path('/fellows');
                 //window.location.reload();
             };
 

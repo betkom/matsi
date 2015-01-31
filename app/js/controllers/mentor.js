@@ -1,6 +1,6 @@
 angular.module("matsi.controllers")
-    .controller("MentorCtrl", ['$rootScope', '$scope', '$cookies', '$state', 'Mentor', '$stateParams', '$location', 'MailService', 'User', '$modal', '$log',
-        function($rootScope, $scope, $cookies, $state, Mentor, $stateParams, $location, MailService, User, $modal, $log) {
+    .controller("MentorCtrl", ['$rootScope', '$scope', '$cookies', '$state', 'Mentor', '$timeout','$stateParams', '$location', 'MailService', 'User', '$modal', '$log', 
+        function($rootScope, $scope, $cookies, $state, Mentor, $timeout, $stateParams, $location, MailService, User, $modal, $log) {
             $scope.checked = false;
             $scope.developer = false;
             $scope.toggleCheck = function() {
@@ -63,10 +63,29 @@ angular.module("matsi.controllers")
                     });
                 }
             };
-            $scope.delete = function(mentorId) {
-                Mentor.delete(mentorId);
+
+            //Delete confirmation 
+            $scope.confirmation = function(size) {
+              $scope.modalInstance = $modal.open({
+                  templateUrl: '/pages/delete-confirmation.html',
+                  controller: 'MentorCtrl',
+                  size: size,
+                  scope: $scope
+                });
+              // $timeout(function () {
+              //   $scope.modalInstance.close('closing');
+              // }, 4000);
+            };
+
+            $scope.ok = function() {
+              $scope.modalInstance.close();
+            };
+
+            $scope.delete = function(mentor) {
+              Mentor.delete(mentor);
                 //window.location = location.path('/mentors');
             };
+
             //get all deactivated mentor account
             $scope.disabled = function() {
                 $scope.mentors = Mentor.disabled();
