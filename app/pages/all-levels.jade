@@ -1,6 +1,6 @@
 span.glyphicon.glyphicon-remove.pull-right(ng-click="ok()")
 h2.col-md-12.text-center Developer Rank
-a.row.rank(ng-click="toggleCheck()") Add Developer Ranks
+a.row.rank(ng-click="toggleCheck('new')") Add Developer Ranks
 section.content(ng-if="newLevel")
 	.row
 		.col-md-4
@@ -14,7 +14,7 @@ section.content(ng-if="newLevel")
 				input.form-control(type="text", placeholder="enter rank color", ng-model="level.color")
 	.btn.btn-default.pull-right(ng-click="createLevel(level)") Add
 section
-	a.row.rank(ng-click="editCheck()") Edit Developer Rank
+	a.row.rank(ng-click="toggleCheck()") Edit Developer Rank
 	.container( ng-if="editLevel")
 		.unit-wrap
 			.col-md-8(ng-repeat="level in levels")

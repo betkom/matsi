@@ -4,11 +4,12 @@ angular.module('matsi.controllers')
             $scope.newLevel = false;
             $scope.editLevel = false;
 
-            $scope.toggleCheck = function() {
+            $scope.toggleCheck = function(val) {
+              if (val === "new"){
                 $scope.newLevel = !$scope.newLevel;
-            };
-            $scope.editCheck = function() {
+            } else {
                 $scope.editLevel = !$scope.editLevel;
+              }
             };
 
             //Developer rank
