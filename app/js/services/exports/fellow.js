@@ -15,10 +15,9 @@ module.exports = function(Refs, $rootScope, $firebase, $http) {
       }
     },
 
-    delete: function(fellow, cb) {
-      Refs.users.child(fellow.$id).&remove(cb);
-      Refs.users.child(fellow.$id).update({ removed: true });
-      
+    delete: function(fellowId, cb) {
+      Refs.users.child(fellowId).update({ removed: true });
+      Refs.users.child(fellowId).remove(cb);
     },
 
     all: function(cb) {

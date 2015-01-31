@@ -191,11 +191,11 @@ angular.module('matsi.controllers')
               $scope.modalInstance.close();
             };
 
-            $scope.delete = function(fellow) {
-                Fellow.delete(fellow);
+            $scope.delete = function(fellowId) {
+              Fellow.delete(fellowId, function() {
                 $scope.modalInstance.close();
-                // window.location = location.path('/mentors');
-                $location.path('/fellows');
+              });
+              $location.path('/fellows');
                 //window.location.reload();
             };
 

@@ -10,11 +10,11 @@ module.exports = function(Refs, $rootScope, $firebase) {
             }
             return mentors;
         },
-        delete: function(mentor) {
-            Refs.users.child(mentor.$id).update({
+        delete: function(mentorId) {
+            Refs.users.child(mentorId).update({
                 removed: true
             });
-            Refs.users.child(mentor.$id).remove();
+            Refs.users.child(mentorId).remove();
         },
         disabled: function(cb) {
             var mentors;
