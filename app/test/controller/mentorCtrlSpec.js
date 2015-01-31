@@ -148,7 +148,7 @@ describe('matsi.controller test', function() {
     });
     it('should expect modal Instance to be defined', function(){
       var sm = 'sm';
-      scope.modalCreate(sm);
+      scope.modalPopup(sm);
       expect(scope.modalInstance).toBeDefined();
     });
 });

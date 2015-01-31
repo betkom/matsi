@@ -138,13 +138,13 @@ angular.module("matsi.controllers")
                     });
                 }
             };
-            $scope.modalCreate = function(size) {
-                $scope.modalInstance = $modal.open({
-                    templateUrl: '/pages/create-rank.html',
-                    controller: 'LevelCtrl',
-                    size: size,
-                });
-            };
+            // $scope.modalCreate = function(size) {
+            //     $scope.modalInstance = $modal.open({
+            //         templateUrl: '/pages/create-rank.html',
+            //         controller: 'LevelCtrl',
+            //         size: size,
+            //     });
+            // };
             $scope.modalPopup = function(size){
               $scope.modalInstance = $modal.open({
                     templateUrl: '/pages/all-levels.html',

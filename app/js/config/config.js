@@ -102,13 +102,13 @@ Matsi.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', funct
             data: {
                 access: 'private'
             }
-        }).state('create-rank', {
-            url: '/create-rank',
-            templateUrl: 'pages/create-rank.html',
-            controller: '',
-              data: {
-            access: 'public'
-          }   
+        // }).state('create-rank', {
+        //     url: '/create-rank',
+        //     templateUrl: 'pages/create-rank.html',
+        //     controller: '',
+        //       data: {
+        //     access: 'public'
+        //   }   
         }).state('all-levels', {
             url: '/all-levels',
             templateUrl: 'pages/all-levels.html',

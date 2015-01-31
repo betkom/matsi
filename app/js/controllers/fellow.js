@@ -196,7 +196,6 @@ angular.module('matsi.controllers')
                 $scope.modalInstance.close();
               });
               $location.path('/fellows');
-                //window.location.reload();
             };
 
             $scope.update = function() {
