@@ -3,6 +3,7 @@ describe('matsi.controller test', function() {
         ctrl,
         Mentor,
         User,
+        modalInstance,
         MailService,
         mockMentor = {
            uid: 'happy-mentor-id',
@@ -15,8 +16,16 @@ describe('matsi.controller test', function() {
     beforeEach(module('Matsi'));
     beforeEach(inject(function($controller, $rootScope, $cookies, $injector) {
         scope = $rootScope;
+        scope.modalInstance = {                    // Create a mock object using spies
+        close: jasmine.createSpy('modalInstance.close'),
+        dismiss: jasmine.createSpy('modalInstance.dismiss'),
+        result: {
+          then: jasmine.createSpy('modalInstance.result.then')
+        }
+      };
         ctrl = $controller('MentorCtrl', {
-            $scope: scope
+            $scope: scope,
+            $modalInstance: modalInstance
         });
         Mentor = $injector.get('Mentor');
         User = $injector.get('User');
@@ -41,6 +50,26 @@ describe('matsi.controller test', function() {
                 lastIndexOfMentors = 0;
         scope.mentorsFilter();
         expect(scope.mentors.length).toBe(0);
+    });
+    it('should call filter', function(){
+        var start = 0,
+            end = 0,
+            currentPage = 1,
+            numPerPage = 2,
+            mentors = [
+            scope.mentor1 = {},
+            scope.mentor2 = {}
+            ],
+            lastIndexOfMentors = 0;
+            spyOn(scope, 'mentorsFilter');
+            scope.shuffle();
+            expect(scope.mentorsFilter).toBeDefined();
+
+    });
+    it('should get current Page', function(){
+        var page = 1;
+        scope.navigate(page);
+        expect(scope.currentPage).toBe(1);
     });
 
     it('should expect checkAll to check all checkbox', function(){
@@ -125,5 +154,18 @@ describe('matsi.controller test', function() {
         spyOn(MailService, 'send');
         scope.sendMessage(scope.mentor);
         expect(MailService.send).toHaveBeenCalled();
+    });
+    it('should expect modal Instance to be defined', function(){
+      var sm = 'sm';
+      scope.modalPopup(sm);
+      expect(scope.modalInstance).toBeDefined();
+    });
+    it('should expect scope.ok to call modal close', function(){
+      scope.ok();
+      expect(scope.modalInstance.close).toHaveBeenCalled();
+    });
+    it('should expect confirmation to be called', function(){
+      scope.confirmation();
+      expect(scope.modalInstance.close).toBeDefined();
     });
 });

@@ -51,4 +51,12 @@ describe('matsi.controller test', function() {
       scope.ok();
       expect(modalInstance.close).toHaveBeenCalled();
     });
+    it('should expect toggleCheck scope to be truthy ', function() {
+        scope.newLevel = false;
+        scope.editLevel = false;
+        scope.toggleCheck('new');
+        expect(scope.newLevel).toBeTruthy();
+        scope.toggleCheck();
+        expect(scope.editLevel).toBeTruthy();
+    });
 });

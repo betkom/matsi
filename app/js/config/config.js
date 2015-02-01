@@ -93,7 +93,7 @@ Matsi.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', funct
             controller: '',
              data: {
             access: 'private'
-          }   
+            }   
         })
         .state('admin-view', {
             url: '/admin',
@@ -101,20 +101,22 @@ Matsi.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', funct
             controller: 'MentorCtrl',
             data: {
                 access: 'private'
-            }
-        }).state('create-rank', {
-            url: '/create-rank',
-            templateUrl: 'pages/create-rank.html',
-            controller: '',
-              data: {
-            access: 'public'
-          }   
-        }).state('all-levels', {
+            } 
+        })
+        .state('all-levels', {
             url: '/all-levels',
             templateUrl: 'pages/all-levels.html',
             controller: '',
             data: {
                 access: 'public'
+            }
+        })
+        .state('delete-confirmation', {
+            url: '/delete-confirmation',
+            templateUrl: 'pages/delete-confirmation.html',
+            controller: 'FellowCtrl',
+            data: {
+                access: 'private'
             }
         });
     $urlRouterProvider.otherwise("/");

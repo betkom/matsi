@@ -20,7 +20,7 @@ section.content.log(ng-controller="FellowCtrl")
           a(ng-click="allLogs()" ng-if="showLog") View all activity    
       .container(ng-init="allLogs()" ng-hide="showFellows || showFellows1")
         h4 Activity Log
-        .col-md-7(ng-repeat="log in logs")
+        .col-md-9.activity-log(ng-repeat="log in logs")
           i(ng-class="log.icon")
           span.log {{log.value}} on {{log.timestamp | date}}
       .row(ng-if="showFellows")

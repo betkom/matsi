@@ -13,7 +13,7 @@ section.content.fellows
               h5
                 p.text-muted.text-wrap {{fellow.fullName}}
               p.text-muted.text-wrap {{fellow.joinedDate | date }}
-        .btn.btn-danger.delete(ng-click="delete(fellow.uid)" ng-if="currentUser.isAdmin") Delete
+        //- .btn.btn-danger.delete(ng-click="delete(fellow.uid)" ng-if="currentUser.isAdmin") Delete
     nav
       ul.pagination
         li

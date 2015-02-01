@@ -28,10 +28,13 @@ ul.log li{
     padding-right: 20px;
     list-style: none;   
 }
-.rank li{
-    display: inline;
-    padding-right: 20px;
-    list-style: none;
+.rank{
+  font-size: 14px;
+  padding-top: 2.5em;
+}
+.rank:hover {
+    color: #0096ee;
+    cursor: pointer;
 }
 p.log{
     padding-left: 10px;
@@ -552,9 +555,6 @@ input[type="text"]:focus{
         border-left: none;
     }
 }
-.delete{
-    padding-bottom: 20px;
-}
 .mentors {
     span {
         display: block;
@@ -575,6 +575,18 @@ input[type="text"]:focus{
     & > div:last-child {
         padding-right: 15px;
     }
+}
+.md-bar1 {
+  background-color: #B0E2FF !important;
+}
+.md-bar2 {
+  background-color: #5CACFE !important;
+}
+.fa-fw {
+  padding-right: 1em;
+}
+.activity-log {
+  padding: .5em;
 }
 .form-control {
     height: 40px;

@@ -1,6 +1,21 @@
 span.glyphicon.glyphicon-remove.pull-right(ng-click="ok()")
-section.content
-	.container
+h2.col-md-12.text-center Developer Rank
+a.row.rank(ng-click="toggleCheck('new')") Add Developer Ranks
+section.content(ng-if="newLevel")
+	.row
+		.col-md-4
+			.form-group
+				input.form-control(type="text", placeholder="enter rank id", ng-model="level.$id")
+		.col-md-4
+			.form-group
+				input.form-control(type="text", placeholder="enter rank name", ng-model="level.name")
+		.col-md-4
+			.form-group
+				input.form-control(type="text", placeholder="enter rank color", ng-model="level.color")
+	.btn.btn-default.pull-right(ng-click="createLevel(level)") Add
+section
+	a.row.rank(ng-click="toggleCheck()") Edit Developer Rank
+	.container( ng-if="editLevel")
 		.unit-wrap
 			.col-md-8(ng-repeat="level in levels")
 				.row

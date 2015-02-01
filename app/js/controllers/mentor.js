@@ -1,6 +1,6 @@
 angular.module("matsi.controllers")
-    .controller("MentorCtrl", ['$rootScope', '$scope', '$cookies', '$state', 'Mentor', '$stateParams', '$location', 'MailService', 'User', '$modal', '$log',
-        function($rootScope, $scope, $cookies, $state, Mentor, $stateParams, $location, MailService, User, $modal, $log) {
+    .controller("MentorCtrl", ['$rootScope', '$scope', '$cookies', '$state', 'Mentor', '$timeout','$stateParams', '$location', 'MailService', 'User', '$modal', '$log', 
+        function($rootScope, $scope, $cookies, $state, Mentor, $timeout, $stateParams, $location, MailService, User, $modal, $log) {
             $scope.checked = false;
             $scope.developer = false;
             $scope.toggleCheck = function() {
@@ -31,7 +31,7 @@ angular.module("matsi.controllers")
             $scope.navigate = function(page) {
                 currentPage = page;
                 $scope.currentPage = currentPage;
-                mentorsFilter();
+                $scope.mentorsFilter();
             };
             var lastPage = function() {
                 return Math.ceil(mentors.length / numPerPage);
@@ -63,10 +63,29 @@ angular.module("matsi.controllers")
                     });
                 }
             };
+
+            //Delete confirmation 
+            $scope.confirmation = function(size) {
+              $scope.modalInstance = $modal.open({
+                  templateUrl: '/pages/delete-confirmation.html',
+                  controller: 'MentorCtrl',
+                  size: size,
+                  scope: $scope
+                });
+              // $timeout(function () {
+              //   $scope.modalInstance.close('closing');
+              // }, 4000);
+            };
+
+            $scope.ok = function() {
+              $scope.modalInstance.close();
+            };
+
             $scope.delete = function(mentorId) {
-                Mentor.delete(mentorId);
+              Mentor.delete(mentorId);
                 //window.location = location.path('/mentors');
             };
+
             //get all deactivated mentor account
             $scope.disabled = function() {
                 $scope.mentors = Mentor.disabled();
@@ -119,15 +138,15 @@ angular.module("matsi.controllers")
                     });
                 }
             };
-            $scope.modalCreate = function(size) {
-                var modalInstance = $modal.open({
-                    templateUrl: '/pages/create-rank.html',
-                    controller: 'LevelCtrl',
-                    size: size,
-                });
-            };
+            // $scope.modalCreate = function(size) {
+            //     $scope.modalInstance = $modal.open({
+            //         templateUrl: '/pages/create-rank.html',
+            //         controller: 'LevelCtrl',
+            //         size: size,
+            //     });
+            // };
             $scope.modalPopup = function(size){
-              var modalInstance = $modal.open({
+              $scope.modalInstance = $modal.open({
                     templateUrl: '/pages/all-levels.html',
                     controller: 'LevelCtrl',
                     size: size,

@@ -1,16 +1,11 @@
 .container(ng-if="currentUser.isAdmin === false " ng-cloak)
   h3 You are not an Administrator.
 .container(ng-init="disabled()", ng-if="currentUser.isAdmin === true ")
-  h2.light Administrator
-  ul.rank
-    li
-      a(ng-click="modalCreate(sm)") Add Developer Ranks
-    li
-      a(ng-click="modalPopup(sm)") View Developer Ranks
-  hr
+  .row
+    .col-md-6.h2.light Administrator
+    .col-md-3.pull-right.a.rank(ng-click="modalPopup(lg)") View Developer Ranks
   input(type="checkbox" checked=mentorCheck ng-click="checkAll()" ng-if="mentors.length > 1" value="Select All")
   .btn.btn-success.enableAll(ng-click="enableAll(mentors)" ng-if="mentors.length > 1") Enable All
-  hr
   .row
     .col-xs-6.col-sm-3(ng-repeat='mentor in mentors')
       input(type="checkbox" checked=allCheck ng-model="allCheck" ng-click="toggleCheck()")
