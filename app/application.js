@@ -19,6 +19,7 @@
     require("./js/controllers/mentor.js");
     require("./js/controllers/fellow.js");
     require("./js/controllers/levels.js");
+    require("./js/controllers/user.js");
 
     require("./js/directives/mentor-request.js");
     require("./js/directives/my-connections.js");
