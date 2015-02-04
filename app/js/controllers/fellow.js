@@ -20,7 +20,6 @@ angular.module('matsi.controllers')
                             uid: $rootScope.currentUser.uid,
                             badges: res.badges
                         };
-                        console.log(data, 'data from smarterer');
                         Fellow.update(data);
                         var info = $rootScope.currentUser.fullName + ' updated Smarterer badges ';
                         var pic = 'fa fa-upload fa-fw';
@@ -44,7 +43,6 @@ angular.module('matsi.controllers')
                         uid: $scope.fellow.uid,
                         plumBadges: res.candidates[0].badges
                     };
-                    console.log(data, 'data');
                     Fellow.update(data);
                     var info = $scope.fellow.fullName + ' updated plum Badges ';
                     var pic = 'fa fa-upload fa-fw';
@@ -57,16 +55,10 @@ angular.module('matsi.controllers')
             $scope.smartererCheck = false;
             $scope.plumCheck = false;
             $scope.toggleCheck = function(val) {
-              console.log($scope.smartererCheck, 'first smarterer');
-              console.log($scope.plumCheck, 'first plum');
                 if (val === 'smarterer'){
                     $scope.smartererCheck = !$scope.smartererCheck;
-                    console.log($scope.smartererCheck, 'second smarterer');
-                    console.log($scope.plumCheck, 'second plum');
                 } else {
                     $scope.plumCheck = !$scope.plumCheck;
-                    console.log($scope.smartererCheck, 'third smarterer');
-                    console.log($scope.plumCheck, 'third plum');
                 }
             };
 
@@ -130,7 +122,6 @@ angular.module('matsi.controllers')
             };
             $scope.navigate = function(page) {
                 currentPage = page;
-                console.log(currentPage, 'current page');
                 $scope.currentPage = currentPage;
                 $scope.fellowsFilter();
             };
@@ -164,14 +155,11 @@ angular.module('matsi.controllers')
             $scope.find = function() {
                 var uid = $rootScope.currentUser ? ($stateParams.uid || $rootScope.currentUser.uid) : $stateParams.uid;
                 if (uid) {
-                  console.log(uid, 'uid');
                     var fellow = User.find(uid);
                     if (fellow) {
-                      console.log(fellow, 'fellow');
                         fellow.$loaded(function(data) {
                             $scope.fellow = data;
                             $scope.uploadedResult = $scope.fellow.videoUrl;
-                            console.log(data.level, 'level');
                             if(data.level){
                             $scope.level = Levels.find(data.level);
                           }
@@ -222,11 +210,9 @@ angular.module('matsi.controllers')
                             );
                         }
                         if ($scope.plumCheck) {
-                          console.log('plum');
                             $scope.plum();
                         }
                         if ($scope.smartererCheck) {
-                            console.log('smarterer');
                             // request smarterer authorization
                             window.location.href = 'https://smarterer.com/oauth/authorize?client_id=b30a2803ffe34bc68a6fe7757b039468&callback_url=http%3A%2F%2Fmatsi.herokuapp.com%2Ffellows%2F';
                         }else{
