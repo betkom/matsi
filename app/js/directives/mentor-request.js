@@ -1,4 +1,7 @@
-angular.module("matsi.directives")
+'use strict';
+
+
+angular.module('matsi.directives')
     .directive('mentorRequest', function() {
         return {
             restrict: 'E',

@@ -1,4 +1,7 @@
-angular.module("matsi.directives")
+'use strict';
+
+
+angular.module('matsi.directives')
     .directive('myConnections', function() {
         return {
             restrict: 'E',

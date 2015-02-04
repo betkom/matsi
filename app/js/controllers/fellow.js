@@ -1,5 +1,8 @@
+'use strict';
+
+
 angular.module('matsi.controllers')
-    .controller("FellowCtrl", ['$rootScope', '$scope', '$cookies', '$upload', '$sce', 'Fellow', '$http', '$stateParams', 'Mentor', 'MailService', '$mdDialog', '$mdToast', '$location', 'Utils', '$timeout', 'Log', '$state', 'Levels', 'User', '$modal',
+    .controller('FellowCtrl', ['$rootScope', '$scope', '$cookies', '$upload', '$sce', 'Fellow', '$http', '$stateParams', 'Mentor', 'MailService', '$mdDialog', '$mdToast', '$location', 'Utils', '$timeout', 'Log', '$state', 'Levels', 'User', '$modal',
         function($rootScope, $scope, $cookies, $upload, $sce, Fellow, $http, $stateParams, Mentor, MailService, $mdDialog, $mdToast, $location, Utils, $timeout, Log, $state, Levels, User, $modal) {
             //get code and redirect if current url is smarterer callback url
             $scope.fileUploaded = false;
@@ -56,7 +59,7 @@ angular.module('matsi.controllers')
             $scope.toggleCheck = function(val) {
               console.log($scope.smartererCheck, 'first smarterer');
               console.log($scope.plumCheck, 'first plum');
-                if (val === "smarterer"){
+                if (val === 'smarterer'){
                     $scope.smartererCheck = !$scope.smartererCheck;
                     console.log($scope.smartererCheck, 'second smarterer');
                     console.log($scope.plumCheck, 'second plum');
@@ -255,7 +258,7 @@ angular.module('matsi.controllers')
                 $scope.fellow.reason = $scope.fellow.message;
                 MailService.send(1, $scope.fellow);
                 Fellow.request($scope.fellow);
-                var info = $scope.fellow.fullName + " received a mentor request ";
+                var info = $scope.fellow.fullName + ' received a mentor request ';
                 var pic = 'fa fa-tag fa-fw';
                 if ($scope.fellow.fullName) {
                     Log.save(info, pic);

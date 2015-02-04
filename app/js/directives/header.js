@@ -1,4 +1,7 @@
-angular.module("matsi.directives")
+'use strict';
+
+
+angular.module('matsi.directives')
   .directive('header', function() {
     return {
       restrict: 'E',
@@ -63,9 +66,9 @@ angular.module("matsi.directives")
       $scope.login = function() {
         var options = {
           remember: false,
-          scope: "email"
+          scope: 'email'
         };
-        Refs.root.authWithOAuthRedirect("google", function(err, authData) {
+        Refs.root.authWithOAuthRedirect('google', function(err, authData) {
           if (err) {
             alert('error logging in');
           } else {

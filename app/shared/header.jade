@@ -8,9 +8,9 @@ nav.navbar.navbar-static-top(role='navigation')
         span.icon-bar
       a.navbar-brand(href='/') Matsi
     div(ng-controller='UserCtrl')  
-      input.search-bar(type='text', data-toggle='dropdown', ng-model='query', placeholder='SEARCH', autofocus='', ng-keyup='getUser()')
+      input.search-bar(type='text', data-toggle='dropdown', ng-model='query', placeholder='SEARCH', autofocus='')
       ul.dropdown-menu(role='menu')
-          li(ng-repeat="user in users | filter:query | orderBy: 'fullName' ", ng-hide="showUser")
+          li(ng-repeat="user in users | filter:query | limitTo:5 | orderBy: 'fullName' ")
             a(href="{{user.role}}/{{user.uid}}") {{user.fullName}}
     div.collapse.navbar-collapse.navbar-right.navbar-ex1-collapse
       ul.nav.navbar-nav

@@ -1,11 +1,14 @@
+'use strict';
+
+
 angular.module('matsi.controllers')
-    .controller("LevelCtrl", ['$rootScope', '$scope', '$cookies', 'Levels', '$modalInstance',
+    .controller('LevelCtrl', ['$rootScope', '$scope', '$cookies', 'Levels', '$modalInstance',
         function($rootScope, $scope, $cookies, Levels, $modalInstance) {
             $scope.newLevel = false;
             $scope.editLevel = false;
 
             $scope.toggleCheck = function(val) {
-              if (val === "new"){
+              if (val === 'new'){
                 $scope.newLevel = !$scope.newLevel;
             } else {
                 $scope.editLevel = !$scope.editLevel;

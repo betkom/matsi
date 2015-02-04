@@ -1,5 +1,8 @@
-angular.module("matsi.controllers")
-    .controller("MentorCtrl", ['$rootScope', '$scope', '$cookies', '$state', 'Mentor', '$timeout','$stateParams', '$location', 'MailService', 'User', '$modal', '$log', 
+'use strict';
+
+
+angular.module('matsi.controllers')
+    .controller('MentorCtrl', ['$rootScope', '$scope', '$cookies', '$state', 'Mentor', '$timeout','$stateParams', '$location', 'MailService', 'User', '$modal', '$log', 
         function($rootScope, $scope, $cookies, $state, Mentor, $timeout, $stateParams, $location, MailService, User, $modal, $log) {
             $scope.checked = false;
             $scope.developer = false;
