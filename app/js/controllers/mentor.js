@@ -2,7 +2,7 @@
 
 
 angular.module('matsi.controllers')
-    .controller('MentorCtrl', ['$rootScope', '$scope', '$cookies', '$state', 'Mentor', '$timeout','$stateParams', '$location', 'MailService', 'User', '$modal', '$log', 
+    .controller('MentorCtrl', ['$rootScope', '$scope', '$cookies', '$state', 'Mentor', '$timeout','$stateParams', '$location', 'MailService', 'User', '$modal', '$log',
         function($rootScope, $scope, $cookies, $state, Mentor, $timeout, $stateParams, $location, MailService, User, $modal, $log) {
             $scope.checked = false;
             $scope.developer = false;
@@ -67,7 +67,7 @@ angular.module('matsi.controllers')
                 }
             };
 
-            //Delete confirmation 
+            //Delete confirmation
             $scope.confirmation = function(size) {
               $scope.modalInstance = $modal.open({
                   templateUrl: '/pages/delete-confirmation.html',
@@ -75,9 +75,7 @@ angular.module('matsi.controllers')
                   size: size,
                   scope: $scope
                 });
-              // $timeout(function () {
-              //   $scope.modalInstance.close('closing');
-              // }, 4000);
+
             };
 
             $scope.ok = function() {
@@ -86,7 +84,6 @@ angular.module('matsi.controllers')
 
             $scope.delete = function(mentorId) {
               Mentor.delete(mentorId);
-                //window.location = location.path('/mentors');
             };
 
             //get all deactivated mentor account
@@ -141,13 +138,6 @@ angular.module('matsi.controllers')
                     });
                 }
             };
-            // $scope.modalCreate = function(size) {
-            //     $scope.modalInstance = $modal.open({
-            //         templateUrl: '/pages/create-rank.html',
-            //         controller: 'LevelCtrl',
-            //         size: size,
-            //     });
-            // };
             $scope.modalPopup = function(size){
               $scope.modalInstance = $modal.open({
                     templateUrl: '/pages/all-levels.html',
