@@ -11,12 +11,13 @@ section.content.mentors(ng-init="find()")
 section.content.fellows
   .container
     .row
-      col-sm-12              
+      col-sm-12
         .unit-wrap.bio
           .user-profile
             h4 Bio
             hr
             p {{mentor.longBio}}
+            p(ng-hide="mentor.longBio") Not available
         .unit-wrap.bio
           .user-profile
             h4 Profile Details
