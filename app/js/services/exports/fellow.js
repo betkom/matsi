@@ -1,4 +1,4 @@
-module.exports = function(Refs, $rootScope, $firebase, $http) {
+module.exports = function(Refs, $rootScope, $firebaseObject,$firebaseArray, $http) {
   return {
     
     update: function(fellow, cb) {
@@ -23,7 +23,7 @@ module.exports = function(Refs, $rootScope, $firebase, $http) {
     all: function(cb) {
       var ref = Refs.users.orderByChild('role').equalTo('-fellow-');
       if (!cb) {
-        return $firebase(ref).$asArray();
+        return $firebaseArray(ref)
       }
       else {
         return ref.once('value', cb);
@@ -42,11 +42,11 @@ module.exports = function(Refs, $rootScope, $firebase, $http) {
     request: function(fellow, cb) {
       cb = cb || function() {};
       Refs.users.child($rootScope.currentUser.uid).child('sentRequests').child(fellow.uid).set({
-        timestamp: Firebase.ServerValue.TIMESTAMP,
+        timestamp: firebase.database.ServerValue.TIMESTAMP,
       }, function(err) {
         if (!err) {
           Refs.users.child(fellow.uid).child('requests').child($rootScope.currentUser.uid).set({
-            timestamp: Firebase.ServerValue.TIMESTAMP,
+            timestamp: firebase.database.ServerValue.TIMESTAMP,
             picture: $rootScope.currentUser.picture,
             firstName: $rootScope.currentUser.firstName
           }, cb);
@@ -59,18 +59,18 @@ module.exports = function(Refs, $rootScope, $firebase, $http) {
       var mentorRef =  Refs.users.child(mentor.uid);
       var ref =  Refs.users.child($rootScope.currentUser.uid);
       ref.child('mentors').child(mentor.uid).set({
-        timestamp: Firebase.ServerValue.TIMESTAMP
+        timestamp: firebase.database.ServerValue.TIMESTAMP
       }, function(err) {
         if (!err) {
           ref.update({
             isMentored: true
           });
           mentorRef.child('fellows').child($rootScope.currentUser.uid).set({
-            timestamp: Firebase.ServerValue.TIMESTAMP
+            timestamp: firebase.database.ServerValue.TIMESTAMP
           }, cb);
           mentorRef.child('history').push({
             fellow: $rootScope.currentUser.uid,
-            timestamp: Firebase.ServerValue.TIMESTAMP
+            timestamp: firebase.database.ServerValue.TIMESTAMP
           });
           ref.child('requests').child(mentor.uid).remove();
           mentorRef.child('sentRequests').child($rootScope.currentUser.uid).remove();

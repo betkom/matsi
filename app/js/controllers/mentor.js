@@ -2,8 +2,8 @@
 
 
 angular.module('matsi.controllers')
-    .controller('MentorCtrl', ['$rootScope', '$scope', '$cookies', '$state', 'Mentor', '$timeout','$stateParams', '$location', 'MailService', 'User', '$modal', '$log',
-        function($rootScope, $scope, $cookies, $state, Mentor, $timeout, $stateParams, $location, MailService, User, $modal, $log) {
+    .controller('MentorCtrl', ['$rootScope', '$scope', '$cookies', '$state', 'Mentor', '$timeout','$stateParams', '$location', 'MailService', 'User', '$uibModal', '$log',
+        function($rootScope, $scope, $cookies, $state, Mentor, $timeout, $stateParams, $location, MailService, User, $uibModal, $log) {
             $scope.checked = false;
             $scope.developer = false;
             $scope.toggleCheck = function() {
@@ -69,7 +69,7 @@ angular.module('matsi.controllers')
 
             //Delete confirmation
             $scope.confirmation = function(size) {
-              $scope.modalInstance = $modal.open({
+              $scope.modalInstance = $uibModal.open({
                   templateUrl: '/pages/delete-confirmation.html',
                   controller: 'MentorCtrl',
                   size: size,
@@ -139,7 +139,7 @@ angular.module('matsi.controllers')
                 }
             };
             $scope.modalPopup = function(size){
-              $scope.modalInstance = $modal.open({
+              $scope.modalInstance = $uibModal.open({
                     templateUrl: '/pages/all-levels.html',
                     controller: 'LevelCtrl',
                     size: size,

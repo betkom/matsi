@@ -1,9 +1,9 @@
-module.exports = function(Refs, $rootScope, $firebase) {
+module.exports = function(Refs, $rootScope, $firebaseObject, $firebaseArray) {
     return {
         all: function(cb) {
             var mentors;
             if (!cb) {
-                mentors = $firebase(Refs.users.orderByChild('disabled').equalTo(false)).$asArray();
+                mentors = $firebaseArray(Refs.users.orderByChild('disabled').equalTo(false))
             }
             else {
                 mentors = Refs.users.orderByChild('role').equalTo('-mentor-').once('value', cb);
@@ -19,7 +19,7 @@ module.exports = function(Refs, $rootScope, $firebase) {
         disabled: function(cb) {
             var mentors;
             if (!cb) {
-                mentors = $firebase(Refs.users.orderByChild('disabled').equalTo(true)).$asArray();
+                mentors = $firebaseArray(Refs.users.orderByChild('disabled').equalTo(true))
             }
             else {
                 mentors = Refs.users.orderByChild('disabled').equalTo(true).once('value', cb);
@@ -27,7 +27,8 @@ module.exports = function(Refs, $rootScope, $firebase) {
             return mentors;
         },
         enable: function(mentor, cb) {
-            mentor = angular.copy(mentor);
+            // mentor = angular.copy(mentor);
+            mentor = Object.assign(mentor);
             delete mentor.$$conf;
             delete mentor.$id;
             delete mentor.$priority;
@@ -44,7 +45,8 @@ module.exports = function(Refs, $rootScope, $firebase) {
             if (!$rootScope.currentUser || ($rootScope.currentUser && $rootScope.currentUser.uid != mentor.uid && !$rootScope.currentUser.isAdmin)) {
                 return;
             }
-            mentor = angular.copy(mentor);
+            mentor = Object.assign(mentor);
+            // mentor = angular.copy(mentor);
             delete mentor.$$conf;
             delete mentor.$id;
             delete mentor.$priority;

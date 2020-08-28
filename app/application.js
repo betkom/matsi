@@ -1,7 +1,7 @@
 (function() {
     'use strict';
     angular.module('matsi.services', ['firebase', 'ngCookies']);
-    angular.module('matsi.controllers', ['firebase', 'ngCookies', 'ngSanitize', 'angularFileUpload', 'ui.bootstrap']);
+    angular.module('matsi.controllers', ['firebase', 'ngCookies']);
     angular.module('matsi.directives', ['firebase', 'ngCookies']);
 
     require('./js/config/config.js');

@@ -2,8 +2,8 @@
 
 
 angular.module('matsi.controllers')
-    .controller('FellowCtrl', ['$rootScope', '$scope', '$cookies', '$upload', '$sce', 'Fellow', '$http', '$stateParams', 'Mentor', 'MailService', '$mdDialog', '$mdToast', '$location', 'Utils', '$timeout', 'Log', '$state', 'Levels', 'User', '$modal',
-        function($rootScope, $scope, $cookies, $upload, $sce, Fellow, $http, $stateParams, Mentor, MailService, $mdDialog, $mdToast, $location, Utils, $timeout, Log, $state, Levels, User, $modal) {
+    .controller('FellowCtrl', ['$rootScope', '$scope', '$cookies', '$sce', 'Fellow', '$http', '$stateParams', 'Mentor', 'MailService', '$mdDialog', '$mdToast', '$location', 'Utils', '$timeout', 'Log', '$state', 'Levels', 'User', '$uibModal', 'Upload',
+        function($rootScope, $scope, $cookies, $sce, Fellow, $http, $stateParams, Mentor, MailService, $mdDialog, $mdToast, $location, Utils, $timeout, Log, $state, Levels, User, $uibModal, Upload) {
             //get code and redirect if current url is smarterer callback url
             $scope.fileUploaded = false;
             $scope.fileLoading = false;
@@ -170,7 +170,7 @@ angular.module('matsi.controllers')
             };
 
             $scope.confirmation = function(size) {
-              $scope.modalInstance = $modal.open({
+              $scope.modalInstance = $uibModal.open({
                   templateUrl: '/pages/delete-confirmation.html',
                   controller: 'FellowCtrl',
                   size: size,
@@ -304,7 +304,7 @@ angular.module('matsi.controllers')
                     filename: $scope.files[indexOftheFile].name,
                     'Content-Type': $scope.files[indexOftheFile].type
                 };
-                $scope.videoFiles[indexOftheFile] = $upload.upload({
+                $scope.videoFiles[indexOftheFile] = Upload.upload({
                     url: 'https://kehesjay.s3-us-west-2.amazonaws.com/',
                     method: 'POST',
                     headers: {

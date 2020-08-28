@@ -8,28 +8,37 @@ angular.module('matsi.directives')
       controller: 'HeaderCtrl'
     };
   })
-  .controller('HeaderCtrl', ['$rootScope', '$scope', '$firebase', '$cookies', 'Fellow', '$timeout', '$stateParams', '$location', 'MailService', '$state', 'Refs', 'Utils', '$mdDialog', '$mdToast',
-    function($rootScope, $scope, $firebase, $cookies, Fellow, $timeout, $stateParams, $location, MailService, $state, Refs, Utils, $mdDialog, $mdToast) {
+  .controller('HeaderCtrl', ['$rootScope', '$scope', '$firebaseAuth', '$cookies', 'Fellow', '$timeout', '$stateParams', '$location', 'MailService', '$state', 'Refs', 'Utils', '$mdDialog', '$mdToast',
+    function($rootScope, $scope, $firebaseAuth, $cookies, Fellow, $timeout, $stateParams, $location, MailService, $state, Refs, Utils, $mdDialog, $mdToast) {
       $rootScope.currentUser = null;
       $rootScope.allowUser = false;
+      
+      var provider = new firebase.auth.GoogleAuthProvider();
+      var authUs = $firebaseAuth();
+      
+     
       $scope.auth = function() {
-        Refs.root.onAuth(function(authData) {
+        console.log(authUs, 'authUs');
+        authUs.$onAuthStateChanged(function(authData) {
+          console.log(authData, 'data')
           if (authData) {
             var user = buildUserObjectFromGoogle(authData);
             Refs.users.child(user.uid).once('value', function(snap) {
               if (!snap.val()) {
                 var confirm = $mdDialog.confirm()
                   .title('Andela Terms and Conditions')
-                  .content("Andela will not pay any mentor, It's a voluntary position. During the period a mentor is signed up with andela, Andela reserves the right to evaluate a mentor's impact on its fellows and the performance of a fellow and therefore reserves the right to terminate a mentor's or a fellow's account. If you are satisfied with the conditions, click 'I Agree'")
+                  .textContent("Andela will not pay any mentor, It's a voluntary position. During the period a mentor is signed up with andela, Andela reserves the right to evaluate a mentor's impact on its fellows and the performance of a fellow and therefore reserves the right to terminate a mentor's or a fellow's account. If you are satisfied with the conditions, click 'I Agree'")
                   .ariaLabel('Lucky day')
                   .ok('I Agree')
                   .cancel('I disagree');
                 $mdDialog.show(confirm).then(function() {
-                    user.created = Firebase.ServerValue.TIMESTAMP;
+                    user.created = firebase.database.ServerValue.TIMESTAMP;
                     user.isAdmin = false;
-                    user.role = user.email.indexOf('@andela.co') > -1 ? '-fellow-' : '-mentor-';
+                    user.role = '-fellow-'
+                    // user.role = user.email.indexOf('@andela.co') > -1 ? '-fellow-' : '-mentor-';
                     if (user.role === '-mentor-') {
-                      user.disabled = user.role !== "-fellow-";
+                      user.disabled = false
+                      // user.disabled = user.role !== "-fellow-";
                     }
                     if (!user.disabled) {
                       user.isMentored = false;
@@ -41,11 +50,17 @@ angular.module('matsi.directives')
                     $location.path('fellows/' + user.uid + '/edit');
                     Utils.setUser(user, $scope);
 
-                  },
-                  function() {$mdDialog.hide();$scope.logout();});
+                  }, function(err){
+                    $mdDialog.hide();
+                    $scope.logout();
+                  }).catch(function() {
+                    $mdDialog.hide();
+                    $scope.logout();
+                  })
+                  
               } else {
                 user = snap.val();
-                user.picture = authData.google.cachedUserProfile.picture;
+                user.picture = authData.photoURL;
                 Refs.users.child(user.uid).update({
                   picture: user.picture
                 });
@@ -68,19 +83,21 @@ angular.module('matsi.directives')
           remember: false,
           scope: 'email'
         };
-        Refs.root.authWithOAuthRedirect('google', function(err, authData) {
+        authUs.$signInWithPopup(provider, function(err, authData) {
           if (err) {
             alert('error logging in');
           } else {
             alert('login successful');
             $rootScope.currentUser.picture = authData.picture;
           }
-        }, options);
+        });
       };
       $scope.logout = function() {
-        Refs.root.unauth();
-        $rootScope.currentUser = null;
-        $state.go('home');
+        authUs.$signOut(function() {
+          console.log('in here')
+          $rootScope.currentUser = null;
+          $state.go('home');
+        });
       };
       $scope.profile = function(val) {
         if ($rootScope.currentUser.role === '-fellow-') {
@@ -101,13 +118,14 @@ angular.module('matsi.directives')
   ]);
 
 function buildUserObjectFromGoogle(authData) {
+  console.log(authData.additionalUserInfo, 'add')
   return {
     uid: authData.uid,
-    fullName: authData.google.displayName,
-    email: authData.google.email,
-    accessToken: authData.google.accessToken,
-    firstName: authData.google.cachedUserProfile.given_name,
-    lastName: authData.google.cachedUserProfile.family_name,
-    picture: authData.google.cachedUserProfile.picture
+    fullName: authData.displayName || '',
+    email: authData.email,
+    accessToken: authData.accessToken || '',
+    firstName: authData.given_name || '',
+    lastName: authData.family_name || '',
+    picture: authData.photoURL || ''
   };
 }

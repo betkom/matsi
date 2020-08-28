@@ -1,4 +1,4 @@
 angular.module("matsi.services")
-  .factory('Levels', ['$firebase', '$rootScope', 'Refs', function($firebase, $rootScope, Refs) {
-    return require('./exports/levels')($firebase, $rootScope, Refs);
+  .factory('Levels', ['$firebaseObject', '$firebaseArray', '$rootScope', 'Refs', function($firebaseObject, $firebaseArray, $rootScope, Refs) {
+    return require('./exports/levels')($firebaseObject, $firebaseArray, $rootScope, Refs);
   }]);

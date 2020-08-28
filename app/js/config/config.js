@@ -1,4 +1,5 @@
 window.Matsi = angular.module("Matsi", [
+    'firebase',
     'matsi.controllers',
     'matsi.services',
     'matsi.directives',
@@ -7,7 +8,8 @@ window.Matsi = angular.module("Matsi", [
     'ui.router',
     'ui.bootstrap',
     'ngSanitize',
-    'angularFileUpload'
+    'ngFileUpload'
+    
 ]);
 Matsi.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', function($stateProvider, $urlRouterProvider, $locationProvider, $rootScope) {
     $locationProvider.html5Mode(true);

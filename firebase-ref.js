@@ -1,4 +1,5 @@
 module.exports = {
-    dev : 'https://brilliant-heat-9512.firebaseio.com/',
-    prod : 'https://brilliant-heat-9512.firebaseio.com/'
+    dev : 'https://matsi-a555a.firebaseio.com/',
+    prod : 'https://matsi-a555a.firebaseio.com/'
 };
+

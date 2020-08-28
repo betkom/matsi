@@ -1,4 +1,4 @@
 angular.module("matsi.services")
-  .factory('Fellow', ['$firebase', '$rootScope', 'Refs', '$http', function($firebase, $rootScope, Refs, $http) {
-    return require('./exports/fellow')(Refs,$rootScope,$firebase,$http);
+  .factory('Fellow', ['$firebaseObject', '$firebaseArray', '$rootScope', 'Refs', '$http', function($firebaseObject,$firebaseArray, $rootScope, Refs, $http) {
+    return require('./exports/fellow')(Refs,$rootScope,$firebaseObject,$firebaseArray,$http);
   }]);

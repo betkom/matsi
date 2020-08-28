@@ -33,9 +33,9 @@ var paths = {
     ],
     libTest: ['lib/tests/service.spec.js'],
     unitTest: [
-      'public/lib/ng-file-upload/angular-file-upload-shim.min.js',
       'public/lib/angular/angular.min.js',
-      'public/lib/ng-file-upload/angular-file-upload.min.js',
+      'public/lib/ng-file-upload/ng-file-upload-shim.min.js',
+      'public/lib/ng-file-upload/ng-file-upload.min.js',
       'public/lib/angular-mocks/angular-mocks.js',
       'public/lib/moment/moment.js',
       'public/lib/firebase/firebase.js',
@@ -55,38 +55,43 @@ var paths = {
     styles: 'app/styles/*.+(less|css)'
 };
 
-gulp.task('bower', function() {
+gulp.task('bower', function(done) {
   return bower()
     .pipe(gulp.dest('public/lib/'));
+    done();
 });
 
-gulp.task('lint:js', function() {
-  return gulp.src(paths.scripts)
+gulp.task('lint:js', function(done) {
+   gulp.src(paths.scripts)
     .pipe(jshint())
     .pipe(jshint.reporter('default'));
+    done();
 });
 
-gulp.task('lint:less', function () {
-    return gulp.src('app/styles/*.less')
+gulp.task('lint:less', function (done) {
+    gulp.src('app/styles/*.less')
         .pipe(recess())
         .pipe(recess.reporter());
+    done();
 });
 
-gulp.task('jade', function() {
+gulp.task('jade', function(done) {
     gulp.src('./app/**/*.jade')
         .pipe(jade())
         .pipe(gulp.dest('./public/'));
+    done();
 });
 
-gulp.task('less', function() {
+gulp.task('less', function(done) {
     gulp.src(paths.styles)
         .pipe(less({
             paths: [path.join(__dirname, 'styles')]
         }))
         .pipe(gulp.dest('./public/css'));
+    done();
 });
 
-gulp.task('nodemon', function() {
+gulp.task('nodemon', function(done) {
     nodemon({
             script: 'index.js',
             ext: 'js',
@@ -96,20 +101,23 @@ gulp.task('nodemon', function() {
         .on('restart', function() {
             console.log('>> node restart');
         });
+    done();
 });
 
 
-gulp.task('watch', function() {
+gulp.task('watch', function(done) {
     // livereload.listen({ port: 35729 });
-    gulp.watch(paths.jade, ['jade']);
-    gulp.watch(paths.styles, ['less']);
-    gulp.watch(paths.scripts, ['browserify']);
+    gulp.watch(paths.jade, gulp.series('jade'));
+    gulp.watch(paths.styles, gulp.series('less'));
+    gulp.watch(paths.scripts, gulp.series('browserify'));
     // gulp.watch(paths.public).on('change', livereload.changed);
+    done();
 });
 
-gulp.task('static-files', function() {
+gulp.task('static-files', function(done) {
    return gulp.src(paths.staticFiles)
     .pipe(gulp.dest('public/'));
+    done();
 });
 
 gulp.task('watchify', function() {
@@ -131,7 +139,7 @@ gulp.task('watchify', function() {
     return rebundle();
 });
 
-gulp.task('browserify', function() {
+gulp.task('browserify', function(done) {
  var b = browserify();
  b.add('./app/application.js');
  return b.bundle()
@@ -139,17 +147,20 @@ gulp.task('browserify', function() {
  .on('error', gutil.log.bind(gutil, 'Browserify Error: in browserify gulp task'))
  .pipe(source('index.js'))
  .pipe(gulp.dest('./public/js'));
+ 
+ done();
 });
 
-gulp.task('test:lib', function() {
+gulp.task('test:lib', function(done) {
     return gulp.src(paths.libTest)
         .pipe(mocha({
             reporter: 'spec',
             timeout: 60000
         }));
+    done();
 });
 
-gulp.task('test:ui',['browserify'], function() {
+gulp.task('test:ui', gulp.series('browserify', function(done) {
     // Be sure to return the stream
     return gulp.src(paths.unitTest)
         .pipe(karma({
@@ -157,7 +168,8 @@ gulp.task('test:ui',['browserify'], function() {
             action: 'run'
         }))
         .pipe(exit());
-});
+    done();
+}));
 
 
 gulp.task('protractor',function(cb){
@@ -173,7 +185,7 @@ gulp.task('protractor',function(cb){
 });
 
 
-gulp.task('test:one', ['browserify'], function() {
+gulp.task('test:one', gulp.series('browserify', function(done) {
 
    var argv = process.argv.slice(3);
    console.log(argv);
@@ -194,13 +206,16 @@ gulp.task('test:one', ['browserify'], function() {
      // Make sure failed tests cause gulp to exit non-zero
      throw err;
    });
-});
+   done()
+}));
 
-gulp.task('test',['test:ui','test:lib']);
-gulp.task('build', ['jade', 'less', 'browserify','static-files','bower']);
-gulp.task('production', ['nodemon','build']);
-gulp.task('e2e',['protractor']);
-gulp.task('heroku:production', ['build']);
-gulp.task('default', ['nodemon', 'watch', 'build']);
-gulp.task('lint',['lint:less','lint:js']);
+gulp.task('test', gulp.series('test:ui','test:lib'));
+gulp.task('build', gulp.series('jade', 'less', 'browserify','static-files'));
+gulp.task('production', gulp.series('nodemon','build'));
+gulp.task('e2e', gulp.series('protractor'));
+gulp.task('heroku:production', gulp.series('build'));
+gulp.task('default', gulp.series('nodemon', 'watch', 'build', function(done) {
+    done();
+}));
+gulp.task('lint', gulp.series('lint:less','lint:js'));
 

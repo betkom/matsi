@@ -1,9 +1,10 @@
 module.exports = function(rootRef) {
-	var config = rootRef.child('config');
+    console.log(rootRef, 'rootRef')
+	var config = rootRef.database().ref('config');
     return {
         root: rootRef,
-        users: rootRef.child('users'),
-        logs: rootRef.child('logs'),
+        users: rootRef.database().ref('users'),
+        logs: rootRef.database().ref('logs'),
         levels: config.child('levels')
     };
 };

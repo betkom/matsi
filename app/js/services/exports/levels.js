@@ -1,27 +1,29 @@
-module.exports = function($firebase, $rootScope, Refs) {
+module.exports = function($firebaseObject, $firebaseArray, $rootScope, Refs) {
   return {
     all: function(cb) {
+      var levels = firebase.database().ref('levels')
+       console.log(Refs, 'refs')
             if (cb) {
-              return Refs.levels.once('value', cb);
+              return levels.once('value', cb);
             }
             else {
-              return $firebase(Refs.levels).$asArray();
+              return $firebaseArray(levels);
             }
         },
     find: function(id, cb) {
-      var ref = Refs.levels;
+      var ref = firebase.database().ref('levels')
       if (cb) {
           return ref.child(id).once('value', cb);
       }
       else {
-          return $firebase(ref.child(id)).$asObject();
+          return $firebaseObject(ref.child(id));
       }
     },
 
     create: function(level, cb) {
       cb = cb|| function(){};
       if($rootScope.currentUser.isAdmin) {
-        Refs.levels.child(level.$id).set({
+        firebase.database().ref('levels').child(level.$id).set({
           name: level.name,
           color: level.color
         }, cb);
@@ -29,14 +31,15 @@ module.exports = function($firebase, $rootScope, Refs) {
     },
 
     delete: function(level){
+      
       if($rootScope.currentUser.isAdmin){
-        Refs.levels.child(level.$id).remove();
+        firebase.database().ref('levels').child(level.$id).remove();
       }
     },
      update: function(level, cb) {
       cb = cb || function() {};
       if($rootScope.currentUser.isAdmin) {
-        Refs.levels.child(level.$id).update({name:level.name, color: level.color}, cb);
+        firebase.database().ref('levels').child(level.$id).update({name:level.name, color: level.color}, cb);
       }
      }
 
