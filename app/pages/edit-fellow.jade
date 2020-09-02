@@ -38,7 +38,7 @@ section.content.fellows(ng-init="find()")
                   label Date Joined
                   .form-group
                     .input-group
-                      input.form-control.ui-datepicker(type='text', data-ng-model="fellow.joinedDate", datepicker-popup='{{format}}', is-open='$parent.opened', min-date='"2014-03-01"', max-date='minDate', datepicker-options='dateOptions', date-disabled='disabled(date, mode)', close-text='Close')
+                      input.form-control.ui-datepicker(type='text', ng-model="fellow.joinedDate", uib-datepicker-popup='{{format}}', is-open='$parent.opened', min-date='"2014-03-01"', max-date='minDate', datepicker-options='dateOptions', date-disabled='disabled(date, mode)', close-text='Close')
                       span.input-group-btn
                         button.btn.btn-default(type='button', ng-click='open($event)')
                           i.glyphicon.glyphicon-calendar
@@ -55,7 +55,7 @@ section.content.fellows(ng-init="find()")
         .unit-wrap.bio
           label Upload Video   
           .form-group.controls
-            input.form-control(type="file" ng-file-select="onFileSelect($files, $index)" ng-model="fellow.videoUrl" name="fileselect")
+            input.form-control(type="file" ngf-select="upload($file)" ng-model="fellow.videoUrl" name="fileselect")
             p(data-ng-if="changeSize") video too large or invalid format, please change video   
             p(data-ng-if="fileLoading") Uploading video file, please wait....
               md-progress-linear(md-mode="indeterminate")

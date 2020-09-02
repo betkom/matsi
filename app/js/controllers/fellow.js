@@ -279,51 +279,73 @@ angular.module('matsi.controllers')
             $scope.scePermit = function(path) {      
                 return $sce.trustAsResourceUrl(path);    
             };
-            $scope.onFileSelect = function($files, $index) {
+            $scope.upload = function($file) {
+                console.log('got called')
                 $scope.fileUploaded = true;
-                $scope.files = $files;
-                if ($scope.files[0].size < 7000000 && ($scope.files[0].type === 'video/mp4' || $scope.files[0].type === 'video/mkv' || $scope.files[0].type === 'video/wmv')) {
+                $scope.file = $file;
+                console.log('in here')
+                if ($scope.file.size < 7000000 && ($scope.file.type === 'video/mp4' || $scope.file.type === 'video/mkv' || $scope.file.type === 'video/wmv')) {
                     $scope.videoFiles = [];
                     $scope.correctFormat = true;
                     $scope.changeSize = false;
-                    if ($scope.files) {
-                        $scope.start(0, $index);
+                    if ($scope.file) {
+                        $scope.start();
                     }
                 } else {
                     $scope.changeSize = true;
                 }
             };
-            $scope.start = function(indexOftheFile, $index) {
+            $scope.start = function() {
                 $scope.fileLoading = true;
-                var formData = {
-                    key: $scope.files[indexOftheFile].name,
-                    AWSAccessKeyID: 'AKIAIWGDKQ33PXY36LQA',
-                    acl: 'private',
-                    policy: 'ewogICJleHBpcmF0aW9uIjogIjIwMjAtMDEtMDFUMDA6MDA6MDBaIiwKICAiY29uZGl0aW9ucyI6IFsKICAgIHsiYnVja2V0IjogImtlaGVzamF5In0sCiAgICBbInN0YXJ0cy13aXRoIiwgIiRrZXkiLCAiIl0sCiAgICB7ImFjbCI6ICJwcml2YXRlIn0sCiAgICBbInN0YXJ0cy13aXRoIiwgIiRDb250ZW50LVR5cGUiLCAiIl0sCiAgICBbInN0YXJ0cy13aXRoIiwgIiRmaWxlbmFtZSIsICIiXSwKICAgIFsiY29udGVudC1sZW5ndGgtcmFuZ2UiLCAwLCA1MjQyODgwMDBdCiAgXQp9',
-                    signature: 'PLzajm+JQ9bf/rv9lZJzChPwiBc=',
-                    filename: $scope.files[indexOftheFile].name,
-                    'Content-Type': $scope.files[indexOftheFile].type
+                var query = {
+                    filename: $scope.file.name,
+                    type: $scope.file.type
                 };
-                $scope.videoFiles[indexOftheFile] = Upload.upload({
-                    url: 'https://kehesjay.s3-us-west-2.amazonaws.com/',
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': $scope.files[indexOftheFile].type
-                    },
-                    data: formData,
-                    file: $scope.files[indexOftheFile]
+                $http.post('/signing', query)
+                .then(function(result) {
+                    console.log(result, 'what is result')
+                    var fields = result.data.fields
+                    delete result.data.fields['success_action_status']
+                    var formData = {
+                        key: fields.key,
+                        AWSAccessKeyID: fields.AWSAccessKeyId,
+                        acl: fields.acl,
+                        policy: fields.policy,
+                        signature: fields.signature,
+                        filename: $scope.file.name,
+                        'Content-Type': $scope.file.type
+                    }
+                    console.log(Upload, 'what')
+                    $scope.videoFiles[0] = Upload.upload({
+                        headers: {
+                        'Content-Type': $scope.file.type
+                        },
+                        url: result.data.url, //s3Url
+                        method: 'POST',
+                        data: formData,
+                        file: $scope.file
+                    })
+                    $scope.videoFiles[0].then(function(response) {
+                        // file is uploaded successfully
+                        console.log(response, 'response')
+                        // console.log(config, 'config')
+                        // console.log('file ' + config.file.name + 'is uploaded successfully. Response: ' + data);
+                    }, function(response) {
+                        console.log(response, 'response')
+                        if (response.status > 0) $scope.errorMsg = response.status + ': ' + response.data;
+                        alert('Connection Timed out');
+                    }, function(evt) {
+                        console.log('what happend')
+                    })
+                })
+                .catch(function(data, status, headers, config) {
+                    console.log(data, 'data error')
+                    console.log(status, 'status')
+                    console.log(headers, 'headers')
+                    // called    asynchronously if an error occurs
+                    // or server returns response with an error status.
                 });
-                $scope.videoFiles[indexOftheFile].then(function(response) {
-                    $timeout(function() {
-                        var videoUrl = 'https://kehesjay.s3-us-west-2.amazonaws.com/' + $scope.files[indexOftheFile].name;
-                        $scope.uploadedResult = videoUrl;
-                        $scope.fileUploaded = false;
-                        $scope.fileLoading = false;
-                    }, 6000);
-                }, function(response) {
-                    if (response.status > 0) $scope.errorMsg = response.status + ': ' + response.data;
-                    alert('Connection Timed out');
-                }, function(evt) {});
+
             };
         }
     ]);

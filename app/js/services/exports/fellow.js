@@ -6,7 +6,8 @@ module.exports = function(Refs, $rootScope, $firebaseObject,$firebaseArray, $htt
         return;
       } 
       else {
-        fellow = angular.copy(fellow);
+        // fellow = angular.copy(fellow);
+        fellow = Object.assign(fellow);
         delete fellow.$$conf;
         delete fellow.$priority;
         delete fellow.$id;
