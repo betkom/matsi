@@ -74,7 +74,7 @@
     "moment": "^2.27.0",
     "multer": "^1.4.2",
     "needle": "^2.5.0",
-    "nodemailer": "1.*.*",
+    "nodemailer": "6.*.*",
     "stringify": "^5.2.0",
     "uglify-js": "^3.10.2",
     "unzip": "^0.1.11",
